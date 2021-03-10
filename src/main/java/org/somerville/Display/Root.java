@@ -9,4 +9,8 @@ public class Root {
     private JButton LogInButton;
     private JButton viewProductsButton;
     private JLabel title;
+
+    public static void run() {
+        System.out.println("TestRun");
+    }
 }
