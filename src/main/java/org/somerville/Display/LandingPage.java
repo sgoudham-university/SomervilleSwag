@@ -21,6 +21,7 @@ public class LandingPage {
                 frame.pack();
                 frame.setVisible(true);
                 oldFrame.setVisible(false);
+                System.out.println("Testing git ");
             }
         });
     }
@@ -31,5 +32,6 @@ public class LandingPage {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
     }
 }
