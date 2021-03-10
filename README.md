@@ -11,9 +11,9 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 ## Table of Contents
 
 - [Project Description](#Project-Purpose-&-Description)
-- [App Functionality](#App-Functionality)  
+- [App Functionality](#App-Functionality)
 - [Architecture](#Architecture)
-    - [Benefits & Challenges](#Benefits-&-Challenges)
+    - [Benefits & Challenges](#benefits--challenges)
     - [Class Diagrams](#Class-Diagrams)
     - [Retrospective Actions](#Retrospective-Actions)
 
@@ -33,6 +33,8 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 - Purchase Somerville Goodies
 
 ## Architecture
+
+![Architecture Diagram](https://i.imgur.com/B9jrXLq.png)
 
 - Data
   - SQLite Database Used
