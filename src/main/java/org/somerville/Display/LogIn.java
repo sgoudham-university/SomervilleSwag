@@ -16,6 +16,9 @@ public class LogIn {
     private JButton backButton;
 
     public LogIn(JFrame oldframe, Customer customer, Order order) {
+        if(customer != null){
+            confirmButton.setText("Sign Out");
+        }
 
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -34,6 +37,12 @@ public class LogIn {
                 /**
                  * needs to call create customer logic
                  */
+                if(!customer.equals(null)){
+                    customer.equals(null);
+                }
+                else {
+                    //customer = *todologic*
+                }
             }
         });
     }

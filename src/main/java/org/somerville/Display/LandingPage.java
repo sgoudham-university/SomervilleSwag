@@ -32,7 +32,7 @@ public class LandingPage {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new SignUp(oldframe).root);
+                frame.setContentPane(new SignUp(oldframe, customer, order).root);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
