@@ -1,6 +1,7 @@
 package org.somerville.Display;
 
 import org.somerville.Data.Model.Customer;
+import org.somerville.Data.Model.Order;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -12,12 +13,12 @@ public class Basket {
     private JButton buyNowButton;
     private JButton backButton;
 
-    public Basket(JFrame oldframe, Customer customer) {
+    public Basket(JFrame oldframe, Customer customer, Order order) {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new LandingPage(oldframe, customer).root);
+                frame.setContentPane(new LandingPage(oldframe, customer, order).root);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
@@ -29,7 +30,7 @@ public class Basket {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new Purchase(oldframe, customer).root);
+                frame.setContentPane(new Purchase(oldframe, customer, order).root);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);

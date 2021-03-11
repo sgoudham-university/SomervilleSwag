@@ -1,6 +1,7 @@
 package org.somerville.Display;
 
 import org.somerville.Data.Model.Customer;
+import org.somerville.Data.Model.Order;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,16 +20,18 @@ public class LandingPage {
     /**
      * We are going to keep oldframe as the anchor point for the data, e.g. keeping the order lines and customer details
      * Customer needs to be passed between frames so we can track if they are logged in or not
+     * We will pass order between frames so it is tracked through navigation
      * @param oldframe
      * @param customer
+     * @param order
      */
 
-    public LandingPage(JFrame oldframe, Customer customer) {
+    public LandingPage(JFrame oldframe, Customer customer, Order order) {
 
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
+                JFrame frame = new JFrame("Somerville Swag");
                 frame.setContentPane(new SignUp(oldframe).root);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
@@ -40,8 +43,8 @@ public class LandingPage {
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
-                frame.setContentPane(new LogIn(oldframe, customer).root);
+                JFrame frame = new JFrame("Somerville Swag");
+                frame.setContentPane(new LogIn(oldframe, customer, order).root);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
@@ -52,8 +55,8 @@ public class LandingPage {
         viewBasketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
-                frame.setContentPane(new Basket(oldframe, customer).root);
+                JFrame frame = new JFrame("Somerville Swag");
+                frame.setContentPane(new Basket(oldframe, customer, order).root);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
@@ -65,9 +68,10 @@ public class LandingPage {
 
     public static void main(String[] args) {
         Customer cust = null;
+        Order order = null;
 
         JFrame frame = new JFrame("Somerville Swag");
-        frame.setContentPane(new LandingPage(frame, cust).root);
+        frame.setContentPane(new LandingPage(frame, cust, order).root);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
