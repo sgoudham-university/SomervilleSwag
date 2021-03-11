@@ -1,19 +1,27 @@
 package org.somerville.swag.data.source;
 
-import org.somerville.swag.data.exeption.FileWriterException;
+import org.somerville.swag.data.exception.FileWriterException;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 
-public class TextFileWriter {
+import static org.somerville.swag.data.source.util.Constants.*;
 
-    private static final String RESOURCE = "src/main/resources/";
+public class MyTextFileWriter implements MyFileWriter {
+
     private String fileToWrite;
 
-    public TextFileWriter(String fileToWrite) {
-        this.fileToWrite = RESOURCE + fileToWrite;
+    public MyTextFileWriter() {
+        this.fileToWrite = RESOURCES_PATH + LOG_FILE + DOT_TEXT;
     }
 
+    public MyTextFileWriter(String fileToWrite, boolean test) {
+        String PATH = test ? TEST_RESOURCES_PATH : RESOURCES_PATH;
+        this.fileToWrite = PATH + fileToWrite;
+    }
+
+    @Override
     public void writeToFile(String message, boolean append) throws FileWriterException {
         try (FileWriter fileWriter = new FileWriter(fileToWrite, append)) {
             fileWriter.write(message + "\n");
@@ -25,5 +33,9 @@ public class TextFileWriter {
 
     public void setFileToWrite(String fileToWrite) {
         this.fileToWrite = fileToWrite;
+    }
+
+    public String getFileToWrite() {
+        return fileToWrite;
     }
 }

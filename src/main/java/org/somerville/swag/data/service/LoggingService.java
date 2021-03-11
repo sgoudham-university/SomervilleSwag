@@ -1,6 +1,6 @@
 package org.somerville.swag.data.service;
 
-import org.somerville.swag.data.exeption.FileWriterException;
+import org.somerville.swag.data.exception.FileWriterException;
 
 public interface LoggingService {
     void logDatabaseWriteSuccess(String insertSQLStatement) throws FileWriterException;
