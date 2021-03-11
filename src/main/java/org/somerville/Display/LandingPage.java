@@ -6,32 +6,62 @@ import java.awt.event.ActionListener;
 
 public class LandingPage {
     private JButton signUpButton;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
-    private JPanel root;
+    private JButton logInButton;
+    private JButton viewBasketButton;
+    private JButton addToBasketButton;
+    public JPanel root;
+    private JList ListOfProducts;
+    private JPanel ImagePanel;
+    private JSpinner QuantitySpinner;
 
-    public LandingPage(JFrame oldFrame) {
+    public LandingPage(JFrame oldframe) {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame();
-                frame.setContentPane(new SignUp(oldFrame).root);
+                frame.setContentPane(new SignUp(oldframe).root);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.pack();
                 frame.setVisible(true);
-                oldFrame.setVisible(false);
-                System.out.println("Testing git ");
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
+        });
+
+        logInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame();
+                frame.setContentPane(new LogIn(oldframe).root);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
+        });
+        viewBasketButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame();
+                frame.setContentPane(new Basket(oldframe).root);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+                SwingUtilities.getWindowAncestor(root).dispose();
             }
         });
     }
 
+    /**
+     * We're going to dispose and rebuild each frame as required
+     *
+     * need a method to take in data on frame rebuild
+     */
+
     public static void main(String[] args) {
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("Somerville Swag");
         frame.setContentPane(new LandingPage(frame).root);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-
     }
 }
