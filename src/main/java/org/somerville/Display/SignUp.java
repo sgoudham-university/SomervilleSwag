@@ -20,5 +20,13 @@ public class SignUp {
                 SwingUtilities.getWindowAncestor(root).dispose();
             }
         });
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /**
+                 * Needs to call create customer logic
+                 */
+            }
+        });
     }
 }
