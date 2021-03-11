@@ -26,14 +26,6 @@
           <grid row="2" column="0" row-span="3" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="1de0" class="javax.swing.JButton" binding="buyNowButton" default-binding="true">
-        <constraints>
-          <grid row="3" column="2" row-span="2" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Buy Now"/>
-        </properties>
-      </component>
       <component id="50533" class="javax.swing.JButton" binding="backButton" default-binding="true">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -62,6 +54,14 @@
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
+      <component id="1de0" class="javax.swing.JButton" binding="buyNowButton" default-binding="true">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Buy Now"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

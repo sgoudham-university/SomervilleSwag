@@ -22,6 +22,18 @@ public class Basket {
                 SwingUtilities.getWindowAncestor(root).dispose();
             }
         });
+
+        buyNowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Somerville Swag");
+                frame.setContentPane(new Purchase(oldframe).root);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
+        });
     }
 
 }
