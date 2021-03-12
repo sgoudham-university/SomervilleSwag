@@ -18,6 +18,7 @@ CREATE TABLE Product (
     Name TEXT NOT NULL,
     Description TEXT NOT NULL,
     Price REAL NOT NULL,
+    StockLevel INTEGER NOT NULL,
     ImagePath TEXT NOT NULL
 );
 
