@@ -1,4 +1,4 @@
-package org.somerville.Display;
+package org.somerville.swag.display;
 
 import javax.swing.*;
 
