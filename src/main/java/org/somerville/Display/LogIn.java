@@ -16,6 +16,7 @@ public class LogIn {
     private JButton backButton;
 
     public LogIn(JFrame oldframe, Customer customer, Order order) {
+
         if(customer != null){
             confirmButton.setText("Sign Out");
         }
