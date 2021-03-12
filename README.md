@@ -36,20 +36,38 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 
 ![Architecture Diagram](https://i.imgur.com/B9jrXLq.png)
 
-- Data
+- **Data**
   - SQLite Database Used
-- Engine
+- **Engine**
   - Design Patterns Used - Singleton, State, Adapter
-- Display 
+- **Display** 
   - JavaX.Swing (JFrames/JPanels)
   - Logging Information Exported to File
 
 ### Benefits & Challenges
 
-- Benefits 
-  - PlaceHolder
-- Challenges
-  - PlaceHolder
+- **Benefits**
+  
+  1. SQLite Database is incredibly beneficial as it is a flat-file relational database using SQL. 
+     It's incredibly lightweight and blazingly fast, providing speed as well as reliability. 
+     Therefore, perfect for our small GUI application that will not store large amounts of data.
+     
+  2. - Mixture of Singleton/State/Adapter patterns have been used. This adheres to clean coding standards and principles while 
+     also making this application maintainable for any future features / bug fixes.
+       
+     - Singletons allow us to ensure only 1 instance of an object is available throughout the entire program, 
+     such as the LoggingService. 
+     
+     - States allow us to remove lots of conditional logic from the main engine and distribute through classes and methods.
+     
+     - Adapters are used here to stub out classes in order to achieve more test coverage and enforce the Single Responsibility principle, 
+     in which functions should only perform one action.
+  
+  3. JFrames/JPanels will be used for the display, allowing users to interact with the application with ease. 
+    
+- **Challenges**
+  
+  1. Implementing State Design Patterns is quite difficult when dealing with asynchronous event listeners of the JFrames/JPanels
 
 ### Class Diagrams
 
