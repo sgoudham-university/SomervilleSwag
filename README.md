@@ -1,12 +1,14 @@
 # SomervilleSwag
 
-## Authors
-Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven Ferguson
+![SomervilleSwag Logo](https://i.imgur.com/0B8qdVN.png)
 
 ![version-shield](https://img.shields.io/badge/version-v1.0.SNAPSHOT-informational)
 ![project-type-shield](https://img.shields.io/badge/project%20type-group_project-blueviolet)
 ![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/SomervilleSwag)
 ![issues-shield](https://img.shields.io/github/issues/sgoudham-university/SomervilleSwag?label=issues)
+
+## Authors
+Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven Ferguson
 
 ## Table of Contents
 
