@@ -1,4 +1,4 @@
-package org.somerville.swag.data.display;
+package org.somerville.swag.display;
 
 import org.somerville.swag.data.entities.Customer;
 import org.somerville.swag.data.entities.Order;
@@ -27,6 +27,9 @@ public class LandingPage {
      */
 
     public LandingPage(JFrame oldframe, Customer customer, Order order) {
+        JButton signUpButton = new JButton();
+        JButton logInButton = new JButton();
+        JButton viewBasketButton = new JButton();
 
         signUpButton.addActionListener(new ActionListener() {
             @Override

@@ -1,4 +1,4 @@
-package org.somerville.swag.data.display;
+package org.somerville.swag.display;
 
 import org.somerville.swag.data.entities.Customer;
 import org.somerville.swag.data.entities.Order;
@@ -7,13 +7,19 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Basket {
-    private JTable tblBasket;
+public class LogIn {
     public JPanel root;
-    private JButton buyNowButton;
+    private JTextField textField2;
+    private JTextField textField1;
+    private JButton confirmButton;
     private JButton backButton;
 
-    public Basket(JFrame oldframe, Customer customer, Order order) {
+    public LogIn(JFrame oldframe, Customer customer, Order order) {
+
+        if(customer != null){
+            confirmButton.setText("Sign Out");
+        }
+
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -25,18 +31,19 @@ public class Basket {
                 SwingUtilities.getWindowAncestor(root).dispose();
             }
         });
-
-        buyNowButton.addActionListener(new ActionListener() {
+        confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new Purchase(oldframe, customer, order).root);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-                SwingUtilities.getWindowAncestor(root).dispose();
+                /**
+                 * needs to call create customer logic
+                 */
+                if(!customer.equals(null)){
+                    customer.equals(null);
+                }
+                else {
+                    //customer = *todologic*
+                }
             }
         });
     }
-
 }

@@ -1,4 +1,4 @@
-package org.somerville.swag.data.display;
+package org.somerville.swag.display;
 
 import org.somerville.swag.data.entities.Customer;
 import org.somerville.swag.data.entities.Order;
