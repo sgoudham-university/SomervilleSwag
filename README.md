@@ -2,10 +2,12 @@
   <img src="https://i.imgur.com/0B8qdVN.png" alt="SomervilleSwag">
 </p>
 
-![version-shield](https://img.shields.io/badge/version-v1.0.SNAPSHOT-informational)
-![project-type-shield](https://img.shields.io/badge/project%20type-group_project-blueviolet)
-![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/SomervilleSwag)
-![issues-shield](https://img.shields.io/github/issues/sgoudham-university/SomervilleSwag?label=issues)
+<p align="center">
+  <img src="https://img.shields.io/badge/version-v1.0.SNAPSHOT-informational" alt="version-shield">
+  <img src="https://img.shields.io/badge/project%20type-group_project-blueviolet" alt="project-type-shield">
+  <img src="https://img.shields.io/github/last-commit/sgoudham-university/SomervilleSwag" alt="last-commit-shield">
+  <img src="https://img.shields.io/github/issues/sgoudham-university/SomervilleSwag?label=issues" alt="issues-shield">
+</p>
 
 ## Authors
 Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven Ferguson
