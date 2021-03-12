@@ -7,6 +7,7 @@
   <img src="https://img.shields.io/badge/project%20type-group_project-blueviolet" alt="project-type-shield">
   <img src="https://img.shields.io/github/last-commit/sgoudham-university/SomervilleSwag" alt="last-commit-shield">
   <img src="https://img.shields.io/github/issues/sgoudham-university/SomervilleSwag?label=issues" alt="issues-shield">
+  <img src="https://img.shields.io/github/issues-pr/sgoudham-university/SomervilleSwag?label=pull%20requests" alt="pull-requests-shield">
 </p>
 
 ## Authors
