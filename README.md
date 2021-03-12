@@ -1,6 +1,6 @@
-# SomervilleSwag
-
-![SomervilleSwag Logo](https://i.imgur.com/0B8qdVN.png)
+<p align="center">
+  <img src="https://i.imgur.com/0B8qdVN.png" alt="SomervilleSwag">
+</p>
 
 ![version-shield](https://img.shields.io/badge/version-v1.0.SNAPSHOT-informational)
 ![project-type-shield](https://img.shields.io/badge/project%20type-group_project-blueviolet)
