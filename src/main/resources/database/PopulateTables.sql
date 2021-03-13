@@ -8,5 +8,3 @@ VALUES
     ('Head Bobble', 'Non-stop groovin. It never gets old', 16.0, 5, 'src/main/resources/product/images/derek_headbobble.png'),
     ('SomerSpecs', 'Yo dawg we heard you like glasses', 27.0, 5, 'src/main/resources/product/images/derek_specs.png'),
     ('SomerSocks', 'Comes in various colours and all edge cases covered!', 15.0, 5, 'src/main/resources/product/images/derek_socks.png');
-
-
