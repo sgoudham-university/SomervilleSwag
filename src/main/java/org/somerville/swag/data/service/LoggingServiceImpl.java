@@ -27,43 +27,47 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseWriteSuccess(String insertSQLStatement) throws FileWriterException {
+    public void logDatabaseWriteSuccess(String insertSQLStatement) {
         String logMessage = events.getDatabaseWriteSuccess() + ": " + insertSQLStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseWriteFailure(String insertSQLStatement, String failureMessage) throws FileWriterException {
+    public void logDatabaseWriteFailure(String insertSQLStatement, String failureMessage) {
         String logMessage = events.getDatabaseWriteFailure() + ": " + failureMessage + " - Statement: " + insertSQLStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseReadSuccess(String selectSQLStatement) throws FileWriterException {
+    public void logDatabaseReadSuccess(String selectSQLStatement) {
         String logMessage = events.getDatabaseReadSuccess() + ": " + selectSQLStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseReadFailure(String selectSQLStatement, String failureMessage) throws FileWriterException {
+    public void logDatabaseReadFailure(String selectSQLStatement, String failureMessage) {
         String logMessage  = events.getDatabaseReadFailure() + ": " + failureMessage + " - Statement: " + selectSQLStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseConnectSuccess(String successMessage) throws FileWriterException {
+    public void logDatabaseConnectSuccess(String successMessage) {
         String logMessage = events.getDatabaseConnectSuccess() + ": " + successMessage;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseConnectFailure(String databaseUrl, String failureMessage) throws FileWriterException {
+    public void logDatabaseConnectFailure(String databaseUrl, String failureMessage) {
         String logMessage  = events.getDatabaseConnectFailure() + ": " + failureMessage + " - Database: " + databaseUrl;
         writeLog(logMessage);
     }
 
-    private void writeLog(String logMessage) throws FileWriterException {
+    private void writeLog(String logMessage) {
         logger.info(logMessage);
-        textFileWriter.writeToFile(logMessage, true);
+        try {
+            textFileWriter.writeToFile(logMessage, true);
+        } catch (FileWriterException fwe) {
+            logger.info(fwe.getMessage());
+        }
     }
 }
