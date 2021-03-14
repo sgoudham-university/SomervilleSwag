@@ -4,6 +4,7 @@ import org.somerville.swag.data.entities.Customer;
 import org.somerville.swag.data.entities.Order;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -17,25 +18,15 @@ public class Purchase {
     public JPanel root;
 
     public Purchase(JFrame oldframe, Customer customer, Order order) {
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new Basket(oldframe, customer, order).root);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-                SwingUtilities.getWindowAncestor(root).dispose();
-            }
+        backButton.addActionListener(actionEvent -> {
+            Container contentPane = new Basket(oldframe, customer, order).root;
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
         });
 
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                /**
-                 * needs to call card validation logic
-                 */
-            }
+        confirmButton.addActionListener(actionEvent -> {
+            /**
+             * needs to call card validation logic
+             */
         });
     }
 }

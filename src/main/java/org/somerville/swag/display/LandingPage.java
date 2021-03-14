@@ -4,6 +4,7 @@ import org.somerville.swag.data.entities.Customer;
 import org.somerville.swag.data.entities.Order;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,40 +29,19 @@ public class LandingPage {
 
     public LandingPage(JFrame oldframe, Customer customer, Order order) {
 
-        signUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new SignUp(oldframe, customer, order).root);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-                SwingUtilities.getWindowAncestor(root).dispose();
-            }
+        signUpButton.addActionListener(actionEvent -> {
+            Container contentPane = new SignUp(oldframe, customer, order).root;
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
         });
 
-        logInButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new LogIn(oldframe, customer, order).root);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-                SwingUtilities.getWindowAncestor(root).dispose();
-            }
+        logInButton.addActionListener(actionEvent -> {
+            Container contentPane = new LogIn(oldframe, customer, order).root;
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
         });
 
-        viewBasketButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new Basket(oldframe, customer, order).root);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-                SwingUtilities.getWindowAncestor(root).dispose();
-            }
+        viewBasketButton.addActionListener(actionEvent -> {
+            Container contentPane = new Basket(oldframe, customer, order).root;
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
         });
     }
 
@@ -70,10 +50,7 @@ public class LandingPage {
         Customer cust = null;
         Order order = null;
 
-        JFrame frame = new JFrame("Somerville Swag");
-        frame.setContentPane(new LandingPage(frame, cust, order).root);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        Container contentPane = new LandingPage(new JFrame(), cust, order).root;
+        new JFrameBuilder.Builder().buildDefaultJFrame(contentPane);
     }
 }
