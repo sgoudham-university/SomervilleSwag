@@ -4,8 +4,7 @@ import org.somerville.swag.data.entities.Customer;
 import org.somerville.swag.data.entities.Order;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
 
 public class LogIn {
     public JPanel root;
@@ -20,29 +19,21 @@ public class LogIn {
             confirmButton.setText("Sign Out");
         }
 
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame("Somerville Swag");
-                frame.setContentPane(new LandingPage(oldframe, customer, order).root);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.pack();
-                frame.setVisible(true);
-                SwingUtilities.getWindowAncestor(root).dispose();
-            }
+        backButton.addActionListener(actionEvent -> {
+            Container contentPane = new LandingPage(oldframe, customer, order).root;
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, true);
+            SwingUtilities.getWindowAncestor(root).dispose();
         });
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                /**
-                 * needs to call create customer logic
-                 */
-                if(!customer.equals(null)){
-                    customer.equals(null);
-                }
-                else {
-                    //customer = *todologic*
-                }
+
+        confirmButton.addActionListener(actionEvent -> {
+            /**
+             * needs to call create customer logic
+             */
+            if(!customer.equals(null)){
+                customer.equals(null);
+            }
+            else {
+                //customer = *todologic*
             }
         });
     }
