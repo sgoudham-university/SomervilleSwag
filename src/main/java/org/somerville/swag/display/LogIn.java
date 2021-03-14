@@ -1,10 +1,12 @@
 package org.somerville.swag.display;
 
-import org.somerville.swag.data.entities.Customer;
-import org.somerville.swag.data.entities.Order;
+import org.somerville.swag.data.entity.Customer;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class LogIn {
     public JPanel root;
@@ -13,28 +15,13 @@ public class LogIn {
     private JButton confirmButton;
     private JButton backButton;
 
-    public LogIn(JFrame oldframe, Customer customer, Order order) {
-
-        if(customer != null){
-            confirmButton.setText("Sign Out");
-        }
+    public LogIn(JFrame oldFrame, Customer customer) {
 
         backButton.addActionListener(actionEvent -> {
-            Container contentPane = new LandingPage(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, true);
+            new JFrameBuilder.Builder().buildDefaultJFrame(new LandingPage(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
-        confirmButton.addActionListener(actionEvent -> {
-            /**
-             * needs to call create customer logic
-             */
-            if(!customer.equals(null)){
-                customer.equals(null);
-            }
-            else {
-                //customer = *todologic*
-            }
-        });
+        confirmButton.addActionListener(actionEvent -> customer.logIn());
     }
 }
