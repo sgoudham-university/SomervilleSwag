@@ -9,14 +9,14 @@ public class GuestState extends State {
 
     @Override
     public void customerLoggedIn(Customer customer) {
-        if(customer.getUsername().equals("")){               //maybe null?
-            customer.setState(new GuestState(customer));
-        }
+
     }
 
     @Override
     public void customerGuest(Customer customer) {
-
+        if(customer.getUsername().equals("")){               //maybe null?
+            customer.setState(new GuestState(customer));
+        }
     }
 
 

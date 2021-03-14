@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GuestStateTest {
     /**
-     * unsure if assert stmt is correct. Will look into
+     * unsure if assert stmt is correct.
      */
 
     @Test

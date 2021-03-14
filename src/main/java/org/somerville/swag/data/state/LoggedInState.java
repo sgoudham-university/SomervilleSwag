@@ -10,7 +10,7 @@ public class LoggedInState extends State{
 
     @Override
     public void customerLoggedIn(Customer customer) {
-        if(customer.getUsername() != null) { //maybe "" becaues string?
+        if(!customer.getUsername().equals("")) {
             customer.setState(new LoggedInState(customer));
         }
     }
