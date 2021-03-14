@@ -1,6 +1,8 @@
 package org.somerville.swag.display;
 
 import org.junit.jupiter.api.Test;
+import org.somerville.swag.data.entities.Customer;
+import org.somerville.swag.data.entities.Order;
 
 import javax.swing.*;
 
@@ -13,15 +15,20 @@ class JFrameBuilderTest {
 
     @Test
     void shouldBuildJFrameWithAllSetters() {
+        JFrame oldframe = new JFrame();
+        Customer customer = new Customer();
+        Order order = new Order();
+        Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
+
         String expectedTitle = "Somerville Swag";
-        Container expectedContentPane = spy(JPanel.class);
+        Container spyContentPane = spy(expectedContentPane.getClass());
         int expectedDefaultCloseOperation = JFrame.EXIT_ON_CLOSE;
         boolean expectedVisibility = false;
         Component expectedRelativeLocation = null;
 
         JFrame expectedJFrame = new JFrame();
         expectedJFrame.setTitle(expectedTitle);
-        expectedJFrame.setContentPane(expectedContentPane);
+        expectedJFrame.setContentPane(spyContentPane);
         expectedJFrame.setDefaultCloseOperation(expectedDefaultCloseOperation);
         expectedJFrame.pack();
         expectedJFrame.setLocationRelativeTo(expectedRelativeLocation);
@@ -29,7 +36,7 @@ class JFrameBuilderTest {
 
         JFrame actualJFrame = new JFrameBuilder.Builder()
                 .withTitle(expectedTitle)
-                .withContentPane(expectedContentPane)
+                .withContentPane(spyContentPane)
                 .withDefaultCloseOperation(expectedDefaultCloseOperation)
                 .isVisible(expectedVisibility)
                 .build();
@@ -42,22 +49,27 @@ class JFrameBuilderTest {
 
     @Test
     void shouldBuildDefaultJFrame() {
+        JFrame oldframe = new JFrame();
+        Customer customer = new Customer();
+        Order order = new Order();
+        Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
+
         String expectedTitle = "Somerville Swag";
-        Container expectedContentPane = spy(JPanel.class);
+        Container spyContentPane = spy(expectedContentPane.getClass());
         int expectedDefaultCloseOperation = JFrame.EXIT_ON_CLOSE;
         boolean expectedVisibility = false;
         Component expectedRelativeLocation = null;
 
         JFrame expectedJFrame = new JFrame();
         expectedJFrame.setTitle(expectedTitle);
-        expectedJFrame.setContentPane(expectedContentPane);
+        expectedJFrame.setContentPane(spyContentPane);
         expectedJFrame.setDefaultCloseOperation(expectedDefaultCloseOperation);
         expectedJFrame.pack();
         expectedJFrame.setLocationRelativeTo(expectedRelativeLocation);
         expectedJFrame.setVisible(expectedVisibility);
 
         JFrame actualJFrame = new JFrameBuilder.Builder()
-                .buildDefaultJFrame(expectedContentPane, expectedVisibility);
+                .buildDefaultJFrame(spyContentPane, expectedVisibility);
 
         assertEquals(expectedJFrame.getTitle(), actualJFrame.getTitle());
         assertEquals(expectedJFrame.getContentPane(), actualJFrame.getContentPane());
