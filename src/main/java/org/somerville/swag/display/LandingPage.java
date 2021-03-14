@@ -36,9 +36,7 @@ public class LandingPage {
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
-        listOfProducts.addListSelectionListener(e -> {
-
-        });
+        addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket());
     }
 
 
