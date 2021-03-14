@@ -1,10 +1,13 @@
 package org.somerville.swag.display;
 
-import org.somerville.swag.data.entities.Customer;
-import org.somerville.swag.data.entities.Order;
+import org.somerville.swag.data.entity.Customer;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.JSpinner;
 
 public class LandingPage {
     private JButton signUpButton;
@@ -12,46 +15,35 @@ public class LandingPage {
     private JButton viewBasketButton;
     private JButton addToBasketButton;
     public JPanel root;
-    private JList ListOfProducts;
-    private JPanel ImagePanel;
-    private JSpinner QuantitySpinner;
+    private JList listOfProducts;
+    private JPanel imagePanel;
+    private JSpinner quantitySpinner;
 
-    /**
-     * We are going to keep oldframe as the anchor point for the data, e.g. keeping the order lines and customer details
-     * Customer needs to be passed between frames so we can track if they are logged in or not
-     * We will pass order between frames so it is tracked through navigation
-     * @param oldframe
-     * @param customer
-     * @param order
-     */
-
-    public LandingPage(JFrame oldframe, Customer customer, Order order) {
+    public LandingPage(JFrame oldFrame, Customer customer) {
 
         signUpButton.addActionListener(actionEvent -> {
-            Container contentPane = new SignUp(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane,true);
+            new JFrameBuilder.Builder().buildDefaultJFrame(new SignUp(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         logInButton.addActionListener(actionEvent -> {
-            Container contentPane = new LogIn(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane,true);
+            new JFrameBuilder.Builder().buildDefaultJFrame(new LogIn(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         viewBasketButton.addActionListener(actionEvent -> {
-            Container contentPane = new Basket(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane,true);
+            new JFrameBuilder.Builder().buildDefaultJFrame(new Basket(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
+        });
+
+        listOfProducts.addListSelectionListener(e -> {
+
         });
     }
 
 
     public static void main(String[] args) {
-        Customer cust = null;
-        Order order = null;
-
-        Container contentPane = new LandingPage(new JFrame(), cust, order).root;
-        new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, true);
+        Customer customer = new Customer();
+        new JFrameBuilder.Builder().buildDefaultJFrame(new LandingPage(new JFrame(), customer).root, true);
     }
 }
