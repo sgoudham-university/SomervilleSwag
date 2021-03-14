@@ -11,7 +11,6 @@ public class JFrameBuilder {
         private Container contentPane;
         private int defaultCloseOperation;
         private boolean isVisible;
-        private JPanel windowAncestor;
 
         public Builder withTitle(String title) {
             this.title = title;
@@ -33,11 +32,6 @@ public class JFrameBuilder {
             return this;
         }
 
-        public Builder disposeOfWindowAncestor(JPanel jPanel) {
-            this.windowAncestor = jPanel;
-            return this;
-        }
-
         public JFrame build() {
             JFrame jFrame = new JFrame();
             jFrame.setTitle(this.title);
@@ -46,29 +40,18 @@ public class JFrameBuilder {
             jFrame.pack();
             jFrame.setLocationRelativeTo(null);
             jFrame.setVisible(this.isVisible);
-            SwingUtilities.getWindowAncestor(this.windowAncestor).dispose();
             return jFrame;
         }
 
-        public void buildDefaultJFrame(Container contentPane) {
+        public JFrame buildDefaultJFrame(Container contentPane, boolean isVisible) {
             JFrame jFrame = new JFrame();
             jFrame.setTitle("Somerville Swag");
             jFrame.setContentPane(contentPane);
             jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             jFrame.pack();
             jFrame.setLocationRelativeTo(null);
-            jFrame.setVisible(true);
-        }
-
-        public void buildDefaultJFrame(Container contentPane, JPanel windowAncestor) {
-            JFrame jFrame = new JFrame();
-            jFrame.setTitle("Somerville Swag");
-            jFrame.setContentPane(contentPane);
-            jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            jFrame.pack();
-            jFrame.setLocationRelativeTo(null);
-            jFrame.setVisible(true);
-            SwingUtilities.getWindowAncestor(windowAncestor).dispose();
+            jFrame.setVisible(isVisible);
+            return jFrame;
         }
     }
 }
