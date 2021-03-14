@@ -1,10 +1,10 @@
 package org.somerville.swag.data.service;
 
-import org.somerville.swag.data.exception.FileWriterException;
-
 public interface LoggingService {
-    void logDatabaseWriteSuccess(String insertSQLStatement) throws FileWriterException;
-    void logDatabaseWriteFailure(String insertSQLStatement, String failureMessage) throws FileWriterException;
-    void logDatabaseReadSuccess( String selectSQLStatement) throws FileWriterException;
-    void logDatabaseReadFailure(String selectSQLStatement, String failureMessage) throws FileWriterException;
+    void logDatabaseWriteSuccess(String insertSQLStatement);
+    void logDatabaseWriteFailure(String insertSQLStatement, String failureMessage);
+    void logDatabaseReadSuccess(String selectSQLStatement);
+    void logDatabaseReadFailure(String selectSQLStatement, String failureMessage);
+    void logDatabaseConnectSuccess(String successMessage);
+    void logDatabaseConnectFailure(String databaseUrl, String failureMessage);
 }
