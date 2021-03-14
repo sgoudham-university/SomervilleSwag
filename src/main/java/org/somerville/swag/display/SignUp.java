@@ -1,10 +1,8 @@
 package org.somerville.swag.display;
 
-import org.somerville.swag.data.entities.Customer;
-import org.somerville.swag.data.entities.Order;
+import org.somerville.swag.data.entity.Customer;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class SignUp {
     private JTextField textField1;
@@ -13,25 +11,13 @@ public class SignUp {
     private JButton backButton;
     public JPanel root;
 
-    public SignUp(JFrame oldframe, Customer customer, Order order) {
-
-        // TODO: Not sure why this event doesn't follow the format of others? - Goudham
-//        backButton.addActionListener(actionEvent -> {
-//            oldframe.setVisible(true);
-//            SwingUtilities.getWindowAncestor(root).dispose();
-//        });
+    public SignUp(JFrame oldFrame, Customer customer) {
 
         backButton.addActionListener(actionEvent -> {
-            Container contentPane = new LandingPage(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, true);
+            new JFrameBuilder.Builder().buildDefaultJFrame(new LandingPage(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
-        confirmButton.addActionListener(actionEvent -> {
-            /**
-             * Needs to call create customer logic
-             */
-
-        });
+        confirmButton.addActionListener(actionEvent -> customer.signUp());
     }
 }
