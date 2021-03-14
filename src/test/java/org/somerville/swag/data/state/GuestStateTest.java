@@ -1,26 +1,33 @@
 package org.somerville.swag.data.state;
 
 import org.junit.jupiter.api.Test;
-import org.somerville.swag.data.entities.Customer;
+import org.somerville.swag.data.entity.Customer;
+import org.somerville.swag.data.entity.CustomerState;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GuestStateTest {
-    /**
-     * unsure if assert stmt is correct.
-     */
 
     @Test
-    void test_customerLoggedInState() {
-        Customer c = new Customer("test","test");
-        State s = new LoggedInState(c);
-        assertEquals(c.getState(), s.customer.getState());
+    void customerShouldInstantiateWithLoggedInState() {
+        Customer expectedCustomer = new Customer("test", "test");
+        CustomerState actualCustomerState = new LoggedIn(expectedCustomer);
+        assertThat(actualCustomerState, is(expectedCustomer.getCustomerState()));
     }
 
     @Test
-    void test_CustomerGuestState() {
-        Customer c = new Customer();
-        State s = new LoggedInState(c);
-        assertEquals(c.getState(), s.customer.getState());
+    void customerShouldInstantiateWithGuestState() {
+        Customer expectedCustomer = new Customer();
+        CustomerState actualCustomerState = new Guest(expectedCustomer);
+        assertThat(actualCustomerState, is(expectedCustomer.getCustomerState()));
+    }
+
+    @Test
+    void customerStateShouldNotBeNull() {
+        Customer expectedCustomer = new Customer();
+        assertNotNull(expectedCustomer.getCustomerState());
     }
 }
