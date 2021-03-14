@@ -1,6 +1,5 @@
 package org.somerville.swag.display;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.somerville.swag.data.entities.Customer;
 import org.somerville.swag.data.entities.Order;
@@ -13,36 +12,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JFrameBuilderTest {
 
-    static JFrame expectedJFrame;
-    static String expectedTitle;
-    static Container expectedContentPane;
-    static int expectedDefaultCloseOperation;
-    static boolean expectedVisibility;
-    static Component expectedRelativeLocation;
-
-    @BeforeAll
-    static void init() {
+    @Test
+    void shouldBuildJFrameWithAllSetters() {
         JFrame oldframe = null;
         Customer customer = null;
         Order order = null;
 
-        expectedTitle = "Somerville Swag";
-        expectedContentPane = new LandingPage(oldframe, customer, order).root;
-        expectedDefaultCloseOperation = JFrame.EXIT_ON_CLOSE;
-        expectedVisibility = false;
-        expectedRelativeLocation = null;
+        String expectedTitle = "Somerville Swag";
+        Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
+        int expectedDefaultCloseOperation = JFrame.EXIT_ON_CLOSE;
+        boolean expectedVisibility = false;
+        Component expectedRelativeLocation = null;
 
-        expectedJFrame = new JFrame();
+        JFrame expectedJFrame = new JFrame();
         expectedJFrame.setTitle(expectedTitle);
         expectedJFrame.setContentPane(expectedContentPane);
         expectedJFrame.setDefaultCloseOperation(expectedDefaultCloseOperation);
         expectedJFrame.pack();
         expectedJFrame.setLocationRelativeTo(expectedRelativeLocation);
         expectedJFrame.setVisible(expectedVisibility);
-    }
 
-    @Test
-    void shouldBuildJFrameWithAllSetters() {
         JFrame actualJFrame = new JFrameBuilder.Builder()
                 .withTitle(expectedTitle)
                 .withContentPane(expectedContentPane)
@@ -58,6 +47,24 @@ class JFrameBuilderTest {
 
     @Test
     void shouldBuildDefaultJFrame() {
+        JFrame oldframe = null;
+        Customer customer = null;
+        Order order = null;
+
+        String expectedTitle = "Somerville Swag";
+        Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
+        int expectedDefaultCloseOperation = JFrame.EXIT_ON_CLOSE;
+        boolean expectedVisibility = false;
+        Component expectedRelativeLocation = null;
+
+        JFrame expectedJFrame = new JFrame();
+        expectedJFrame.setTitle(expectedTitle);
+        expectedJFrame.setContentPane(expectedContentPane);
+        expectedJFrame.setDefaultCloseOperation(expectedDefaultCloseOperation);
+        expectedJFrame.pack();
+        expectedJFrame.setLocationRelativeTo(expectedRelativeLocation);
+        expectedJFrame.setVisible(expectedVisibility);
+
         JFrame actualJFrame = new JFrameBuilder.Builder()
                 .buildDefaultJFrame(expectedContentPane, expectedVisibility);
 
