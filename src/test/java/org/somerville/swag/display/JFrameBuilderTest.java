@@ -1,8 +1,7 @@
 package org.somerville.swag.display;
 
 import org.junit.jupiter.api.Test;
-import org.somerville.swag.data.entities.Customer;
-import org.somerville.swag.data.entities.Order;
+import org.somerville.swag.data.entity.Customer;
 
 import javax.swing.*;
 
@@ -17,8 +16,7 @@ class JFrameBuilderTest {
     void shouldBuildJFrameWithAllSetters() {
         JFrame oldframe = new JFrame();
         Customer customer = new Customer();
-        Order order = new Order();
-        Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
+        Container expectedContentPane = new LandingPage(oldframe, customer).root;
 
         String expectedTitle = "Somerville Swag";
         Container spyContentPane = spy(expectedContentPane.getClass());
@@ -51,8 +49,7 @@ class JFrameBuilderTest {
     void shouldBuildDefaultJFrame() {
         JFrame oldframe = new JFrame();
         Customer customer = new Customer();
-        Order order = new Order();
-        Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
+        Container expectedContentPane = new LandingPage(oldframe, customer).root;
 
         String expectedTitle = "Somerville Swag";
         Container spyContentPane = spy(expectedContentPane.getClass());
