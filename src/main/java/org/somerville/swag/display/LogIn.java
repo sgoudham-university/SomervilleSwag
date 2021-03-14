@@ -5,8 +5,6 @@ import org.somerville.swag.data.entities.Order;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LogIn {
     public JPanel root;
@@ -17,13 +15,14 @@ public class LogIn {
 
     public LogIn(JFrame oldframe, Customer customer, Order order) {
 
-        if(customer == null){
+        if(customer != null){
             confirmButton.setText("Sign Out");
         }
 
         backButton.addActionListener(actionEvent -> {
             Container contentPane = new LandingPage(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, true);
+            SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         confirmButton.addActionListener(actionEvent -> {

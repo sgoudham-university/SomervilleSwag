@@ -5,8 +5,6 @@ import org.somerville.swag.data.entities.Order;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LandingPage {
     private JButton signUpButton;
@@ -31,17 +29,20 @@ public class LandingPage {
 
         signUpButton.addActionListener(actionEvent -> {
             Container contentPane = new SignUp(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane,true);
+            SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         logInButton.addActionListener(actionEvent -> {
             Container contentPane = new LogIn(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane,true);
+            SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         viewBasketButton.addActionListener(actionEvent -> {
             Container contentPane = new Basket(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane,true);
+            SwingUtilities.getWindowAncestor(root).dispose();
         });
     }
 
@@ -51,6 +52,6 @@ public class LandingPage {
         Order order = null;
 
         Container contentPane = new LandingPage(new JFrame(), cust, order).root;
-        new JFrameBuilder.Builder().buildDefaultJFrame(contentPane);
+        new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, true);
     }
 }

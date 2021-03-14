@@ -5,8 +5,6 @@ import org.somerville.swag.data.entities.Order;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Purchase {
     private JTextField textField1;
@@ -20,7 +18,8 @@ public class Purchase {
     public Purchase(JFrame oldframe, Customer customer, Order order) {
         backButton.addActionListener(actionEvent -> {
             Container contentPane = new Basket(oldframe, customer, order).root;
-            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, root);
+            new JFrameBuilder.Builder().buildDefaultJFrame(contentPane, true);
+            SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         confirmButton.addActionListener(actionEvent -> {
