@@ -1,25 +1,20 @@
 package org.somerville.swag.display;
 
 import org.junit.jupiter.api.Test;
-import org.somerville.swag.data.entities.Customer;
-import org.somerville.swag.data.entities.Order;
 
 import javax.swing.*;
 
 import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.spy;
 
 class JFrameBuilderTest {
 
     @Test
     void shouldBuildJFrameWithAllSetters() {
-        JFrame oldframe = new JFrame();
-        Customer customer = new Customer();
-        Order order = new Order();
-
         String expectedTitle = "Somerville Swag";
-        Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
+        Container expectedContentPane = spy(JPanel.class);
         int expectedDefaultCloseOperation = JFrame.EXIT_ON_CLOSE;
         boolean expectedVisibility = false;
         Component expectedRelativeLocation = null;
@@ -47,12 +42,8 @@ class JFrameBuilderTest {
 
     @Test
     void shouldBuildDefaultJFrame() {
-        JFrame oldframe = new JFrame();
-        Customer customer = new Customer();
-        Order order = new Order();
-
         String expectedTitle = "Somerville Swag";
-        Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
+        Container expectedContentPane = spy(JPanel.class);
         int expectedDefaultCloseOperation = JFrame.EXIT_ON_CLOSE;
         boolean expectedVisibility = false;
         Component expectedRelativeLocation = null;
