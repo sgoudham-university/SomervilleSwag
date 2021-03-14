@@ -14,9 +14,9 @@ class JFrameBuilderTest {
 
     @Test
     void shouldBuildJFrameWithAllSetters() {
-        JFrame oldframe = null;
-        Customer customer = null;
-        Order order = null;
+        JFrame oldframe = new JFrame();
+        Customer customer = new Customer();
+        Order order = new Order();
 
         String expectedTitle = "Somerville Swag";
         Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
@@ -47,9 +47,9 @@ class JFrameBuilderTest {
 
     @Test
     void shouldBuildDefaultJFrame() {
-        JFrame oldframe = null;
-        Customer customer = null;
-        Order order = null;
+        JFrame oldframe = new JFrame();
+        Customer customer = new Customer();
+        Order order = new Order();
 
         String expectedTitle = "Somerville Swag";
         Container expectedContentPane = new LandingPage(oldframe, customer, order).root;
