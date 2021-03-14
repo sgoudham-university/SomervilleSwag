@@ -50,6 +50,18 @@ public class LoggingServiceImpl implements LoggingService {
         writeLog(logMessage);
     }
 
+    @Override
+    public void logDatabaseConnectSuccess(String successMessage) throws FileWriterException {
+        String logMessage = events.getDatabaseConnectSuccess() + ": " + successMessage;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseConnectFailure(String databaseUrl, String failureMessage) throws FileWriterException {
+        String logMessage  = events.getDatabaseConnectFailure() + ": " + failureMessage + " - Database: " + databaseUrl;
+        writeLog(logMessage);
+    }
+
     private void writeLog(String logMessage) throws FileWriterException {
         logger.info(logMessage);
         textFileWriter.writeToFile(logMessage, true);
