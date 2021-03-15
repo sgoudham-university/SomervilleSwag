@@ -18,7 +18,7 @@
   },
   "files":
   [
-    {"includePattern": "target/(.*)", "excludePattern": "target/.*.zip$", "uploadPattern": "/$1",
+    {"includePattern": "target\\/(.*\\-jar-with-dependencies.jar)", "excludePattern": "target/.*.zip$", "uploadPattern": "/$1",
       "matrixParams": {
         "override": 1
       }
