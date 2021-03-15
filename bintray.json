@@ -2,7 +2,7 @@
   "package": {
     "name": "${project.name}",
     "repo": "maven",
-    "subject": "diversit-eu",
+    "subject": "sgoudham",
     "website_url": "${project.url}",
     "issue_tracker_url": "${project.url}/issues",
     "vcs_url": "${project.url}",
