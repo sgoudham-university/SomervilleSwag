@@ -7,6 +7,6 @@ public class Constants {
     public static final String DOT_TEXT = ".txt";
 
     public static final String JDBC_URL = "jdbc:sqlite:";
-    public static final String DATABASE_URL = RESOURCES_PATH + "SomervilleSwagDB.db";
+    public static final String DATABASE_URL = RESOURCES_PATH + "database/SomervilleSwagDB.db";
 
 }
