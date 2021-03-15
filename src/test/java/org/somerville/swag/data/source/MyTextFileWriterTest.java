@@ -31,8 +31,14 @@ class MyTextFileWriterTest {
         String expectedMessage = "testMessage";
         String expectedInvalidFile = "";
 
-        String expectedErrorMessage = expectedInvalidFile + " (The system cannot find the path specified)";
-        FileWriterException expectedException = new FileWriterException(expectedErrorMessage, new IOException());
+        String expectedExceptionMessage;
+        if (System.getProperty("os.name").equals("Windows 10")) {
+            expectedExceptionMessage = expectedInvalidFile + " (The system cannot find the path specified)";
+        } else {
+            expectedExceptionMessage = expectedInvalidFile + " (No such file or directory)";
+        }
+
+        FileWriterException expectedException = new FileWriterException(expectedExceptionMessage, new IOException());
 
         myFileWriter.setFileToWrite(expectedInvalidFile);
         Exception actualException = assertThrows(FileWriterException.class, () -> myFileWriter.writeToFile(expectedMessage, true));
