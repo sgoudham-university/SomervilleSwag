@@ -1,4 +1,4 @@
-package org.somerville.swag.data.state;
+package org.somerville.swag.data.entity.state;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.CustomerState;
