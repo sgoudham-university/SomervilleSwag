@@ -18,12 +18,12 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-  deploy:
-  - on:
-      branch: main
-      repo: sgoudham-university/SomervilleSwag
-    provider: bintray
-    skip_cleanup: true
-    file: target/bintray.json
-    user: sgoudham
-    key: $BINTRAY_API_KEY
+deploy:
+  on:
+    branch: main
+    repo: sgoudham-university/SomervilleSwag
+  provider: bintray
+  skip_cleanup: true
+  file: target/bintray.json
+  user: sgoudham
+  key: $BINTRAY_API_KEY
