@@ -1,4 +1,4 @@
-package org.somerville.swag.data.state;
+package org.somerville.swag.data.entity.state;
 
 import org.junit.jupiter.api.Test;
 import org.somerville.swag.data.entity.Customer;
@@ -14,16 +14,19 @@ class GuestStateTest {
 
     @Test
     void customerShouldInstantiateWithLoggedInState() {
-        Customer expectedCustomer = new Customer("test", "test", new Order());
-        CustomerState actualCustomerState = new LoggedIn(expectedCustomer);
-        assertThat(actualCustomerState, is(expectedCustomer.getCustomerState()));
+        String expectedEmail = "testEmail";
+        String expectedPassword = "testPassword";
+        Customer actualCustomer = new Customer(expectedEmail, expectedPassword, new Order());
+
+        CustomerState expectedCustomerState = new LoggedIn(actualCustomer);
+        assertThat(actualCustomer.getCustomerState(), is(expectedCustomerState));
     }
 
     @Test
     void customerShouldInstantiateWithGuestState() {
-        Customer expectedCustomer = new Customer();
-        CustomerState actualCustomerState = new Guest(expectedCustomer);
-        assertThat(actualCustomerState, is(expectedCustomer.getCustomerState()));
+        Customer actualCustomer = new Customer();
+        CustomerState expectedCustomerState = new Guest(actualCustomer);
+        assertThat(actualCustomer.getCustomerState(), is(expectedCustomerState));
     }
 
     @Test
