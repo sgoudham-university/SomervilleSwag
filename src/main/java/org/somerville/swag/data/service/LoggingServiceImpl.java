@@ -27,26 +27,26 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseWriteSuccess(String insertSQLStatement) {
-        String logMessage = events.getDatabaseWriteSuccess() + ": " + insertSQLStatement;
+    public void logDatabaseInsertSuccess(String insertStatement, int rowsUpdated) {
+        String logMessage = events.getDatabaseWriteSuccess() + " - Rows Updated: " + rowsUpdated + " - " + insertStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseWriteFailure(String insertSQLStatement, String failureMessage) {
-        String logMessage = events.getDatabaseWriteFailure() + ": " + failureMessage + " - Statement: " + insertSQLStatement;
+    public void logDatabaseInsertFailure(String insertStatement, String failureMessage) {
+        String logMessage = events.getDatabaseWriteFailure() + ": " + failureMessage + " - Statement: " + insertStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseReadSuccess(String selectSQLStatement) {
-        String logMessage = events.getDatabaseReadSuccess() + ": " + selectSQLStatement;
+    public void logDatabaseSelectSuccess(String selectQuery) {
+        String logMessage = events.getDatabaseReadSuccess() + ": " + selectQuery;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseReadFailure(String selectSQLStatement, String failureMessage) {
-        String logMessage  = events.getDatabaseReadFailure() + ": " + failureMessage + " - Statement: " + selectSQLStatement;
+    public void logDatabaseSelectFailure(String selectQuery, String failureMessage) {
+        String logMessage  = events.getDatabaseReadFailure() + ": " + failureMessage + " - Statement: " + selectQuery;
         writeLog(logMessage);
     }
 
