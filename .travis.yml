@@ -16,7 +16,7 @@ after_success:
 
 deploy:
   on:
-    branch: main
+    branch: release
     repo: sgoudham-university/SomervilleSwag
   provider: bintray
   skip_cleanup: true
