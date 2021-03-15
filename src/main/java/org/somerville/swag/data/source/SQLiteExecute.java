@@ -1,6 +1,7 @@
 package org.somerville.swag.data.source;
 
 import org.somerville.swag.data.exception.SQLConnectionException;
+import org.somerville.swag.data.exception.SQLStatementException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,24 +17,24 @@ public class SQLiteExecute implements DBExecute {
     }
 
     @Override
-    public ResultSet executeSelect(String selectQuery) {
+    public ResultSet executeSelect(String selectQuery) throws SQLStatementException {
         ResultSet resultSet = null;
         try (Connection connection = this.connection.connect()) {
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(selectQuery);
-        } catch (SQLConnectionException | SQLException ioe) {
-            //placeholder exception to be thrown - EH
+        } catch (SQLConnectionException | SQLException err) {
+            throw new SQLStatementException(err.getMessage(), err);
         }
         return resultSet;
     }
 
     @Override
-    public void executeInsert(String insertStatement) {
+    public void executeInsert(String insertStatement) throws SQLStatementException {
         try (Connection connection = this.connection.connect()) {
             Statement statement = connection.createStatement();
             int rowsUpdated = statement.executeUpdate(insertStatement);
-        } catch (SQLConnectionException | SQLException ioe) {
-            //placeholder exception to be thrown - EH
+        } catch (SQLConnectionException | SQLException err) {
+            throw new SQLStatementException(err.getMessage(), err);
         }
     }
 }
