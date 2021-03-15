@@ -1,5 +1,6 @@
 language: java
-jdk: openjdk11
+jdk:
+  - openjdk11
 
 # Faster Builds
 sudo: false
@@ -11,7 +12,8 @@ branches:
   only:
     - main
 
-script: mvn verify
+script:
+  - mvn verify
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
