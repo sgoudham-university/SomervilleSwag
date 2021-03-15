@@ -37,7 +37,6 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 ## App Functionality 
 - Sign Up
 - Log In
-- Amend Customer Details  
 - Browse Products
 - Add & Remove Products To/From Cart
 - Purchase Somerville Goodies
