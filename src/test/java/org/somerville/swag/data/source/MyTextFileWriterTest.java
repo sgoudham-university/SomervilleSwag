@@ -29,9 +29,9 @@ class MyTextFileWriterTest {
     @Test
     void failToWriteToFile() {
         String expectedMessage = "testMessage";
-        String expectedInvalidFile = "src\\main\\resources";
+        String expectedInvalidFile = "";
 
-        String expectedErrorMessage = expectedInvalidFile + " (Access is denied)";
+        String expectedErrorMessage = expectedInvalidFile + " (The system cannot find the path specified)";
         FileWriterException expectedException = new FileWriterException(expectedErrorMessage, new IOException());
 
         myFileWriter.setFileToWrite(expectedInvalidFile);
