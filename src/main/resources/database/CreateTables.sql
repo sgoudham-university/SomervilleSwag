@@ -6,7 +6,7 @@ CREATE TABLE Customer (
     Email TEXT NOT NULL,
     Password TEXT NOT NULL,
     AddressLine1 TEXT NOT NULL,
-    AddressLine2 TEXT NOT NULL,
+    AddressLine2 TEXT,
     City TEXT NOT NULL,
     Postcode TEXT,
     PhoneNumber TEXT NULL
