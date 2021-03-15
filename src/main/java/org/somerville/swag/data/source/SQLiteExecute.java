@@ -1,7 +1,6 @@
 package org.somerville.swag.data.source;
 
-import org.somerville.swag.data.exception.DatabaseException;
-import org.somerville.swag.data.exception.FileWriterException;
+import org.somerville.swag.data.exception.SQLConnectionException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,7 +21,7 @@ public class SQLiteExecute implements DBExecute {
         try (Connection connection = this.connection.connect()) {
             Statement statement = connection.createStatement();
             resultSet = statement.executeQuery(selectQuery);
-        } catch (DatabaseException | SQLException ioe) {
+        } catch (SQLConnectionException | SQLException ioe) {
             //placeholder exception to be thrown - EH
         }
         return resultSet;
@@ -33,7 +32,7 @@ public class SQLiteExecute implements DBExecute {
         try (Connection connection = this.connection.connect()) {
             Statement statement = connection.createStatement();
             int rowsUpdated = statement.executeUpdate(insertStatement);
-        } catch (DatabaseException | SQLException ioe) {
+        } catch (SQLConnectionException | SQLException ioe) {
             //placeholder exception to be thrown - EH
         }
     }

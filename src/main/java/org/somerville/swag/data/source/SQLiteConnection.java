@@ -1,6 +1,6 @@
 package org.somerville.swag.data.source;
 
-import org.somerville.swag.data.exception.DatabaseException;
+import org.somerville.swag.data.exception.SQLConnectionException;
 import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
 
@@ -25,24 +25,24 @@ public class SQLiteConnection implements DBConnection {
     }
 
     @Override
-    public Connection connect() throws DatabaseException {
+    public Connection connect() throws SQLConnectionException {
         return connect(databaseUrl);
     }
 
     @Override
-    public Connection connect(String databaseUrl) throws DatabaseException {
+    public Connection connect(String databaseUrl) throws SQLConnectionException {
         connection = null;
         try{
             connection = DriverManager.getConnection(databaseUrl);
             loggingService.logDatabaseConnectSuccess("Successful Connection to Database: " + databaseUrl);
         } catch (SQLException sqle) {
             loggingService.logDatabaseConnectFailure(databaseUrl, sqle.getMessage());
-            throw new DatabaseException(sqle.getMessage(), sqle);
+            throw new SQLConnectionException(sqle.getMessage(), sqle);
         }
         return connection;
     }
 
-    public void setDatabaseUrlAndConnectTo(String databaseUrl) throws DatabaseException {
+    public void setDatabaseUrlAndConnectTo(String databaseUrl) throws SQLConnectionException {
         this.databaseUrl = databaseUrl;
         connect(this.databaseUrl);
     }

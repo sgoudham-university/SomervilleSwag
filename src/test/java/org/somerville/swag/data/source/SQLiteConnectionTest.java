@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.somerville.swag.data.exception.DatabaseException;
+import org.somerville.swag.data.exception.SQLConnectionException;
 import org.somerville.swag.data.service.LoggingService;
 
 import java.sql.SQLException;
@@ -33,7 +33,7 @@ class SQLiteConnectionTest {
     }
 
     @Test
-    void successfullyConnectToDatabase() throws DatabaseException {
+    void successfullyConnectToDatabase() throws SQLConnectionException {
         String expectedDatabasePath = "src/test/resources/database/";
         String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
         String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
@@ -50,7 +50,7 @@ class SQLiteConnectionTest {
     }
 
     @Test
-    void successfullySwitchDatabaseConnection() throws DatabaseException {
+    void successfullySwitchDatabaseConnection() throws SQLConnectionException {
         String expectedDatabasePath = "src/test/resources/database/";
         String expectedFirstDatabaseName = "TestFirstSomervilleSwagDB.db";
         String expectedSecondDatabaseName = "TestSecondSomervilleSwagDB.db";
@@ -73,7 +73,7 @@ class SQLiteConnectionTest {
     }
 
     @Test
-    void successfullySwitchConnectionWithNewDatabaseUrl() throws DatabaseException {
+    void successfullySwitchConnectionWithNewDatabaseUrl() throws SQLConnectionException {
         String expectedDatabasePath = "src/test/resources/database/";
         String expectedFirstDatabaseName = "TestFirstSomervilleSwagDB.db";
         String expectedSecondDatabaseName = "TestSecondSomervilleSwagDB.db";
@@ -98,13 +98,13 @@ class SQLiteConnectionTest {
         String expectedDatabaseUrl = "InvalidDatabase.db";
 
         String expectedExceptionMessage = "No suitable driver found for InvalidDatabase.db";
-        DatabaseException expectedException = new DatabaseException(expectedExceptionMessage, new SQLException());
+        SQLConnectionException expectedException = new SQLConnectionException(expectedExceptionMessage, new SQLException());
 
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setLoggingService(loggingService);
         sqLiteConnection.setDatabaseUrl(expectedDatabaseUrl);
 
-        DatabaseException thrownException = assertThrows(DatabaseException.class, sqLiteConnection::connect);
+        SQLConnectionException thrownException = assertThrows(SQLConnectionException.class, sqLiteConnection::connect);
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
         verify(loggingService, times(1)).logDatabaseConnectFailure(expectedDatabaseUrl, expectedExceptionMessage);
