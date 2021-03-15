@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.6.2" alt="version-shield">
+  <img src="https://img.shields.io/badge/version-0.6.2-informational" alt="version-shield">
   <img src="https://img.shields.io/badge/project%20type-group_project-blueviolet" alt="project-type-shield">
   <img src="https://img.shields.io/github/contributors/sgoudham-university/SomervilleSwag" alt="contributors-shield">
   <img src="https://img.shields.io/github/issues/sgoudham-university/SomervilleSwag?label=issues" alt="issues-shield">
