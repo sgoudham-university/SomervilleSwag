@@ -41,7 +41,7 @@
             <border type="none"/>
             <children/>
           </grid>
-          <component id="67ee6" class="javax.swing.JSpinner" binding="quantityspinner">
+          <component id="67ee6" class="javax.swing.JSpinner" binding="quantitySpinner">
             <constraints>
               <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <minimum-size width="20" height="-1"/>
