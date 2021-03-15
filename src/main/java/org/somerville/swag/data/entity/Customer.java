@@ -1,7 +1,7 @@
 package org.somerville.swag.data.entity;
 
-import org.somerville.swag.data.state.Guest;
-import org.somerville.swag.data.state.LoggedIn;
+import org.somerville.swag.data.entity.state.Guest;
+import org.somerville.swag.data.entity.state.LoggedIn;
 
 public class Customer {
     private String email;
