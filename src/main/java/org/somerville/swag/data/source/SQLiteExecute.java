@@ -5,7 +5,6 @@ import org.somerville.swag.data.exception.SQLStatementException;
 import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,15 +15,14 @@ public class SQLiteExecute implements DBExecute {
 
     private LoggingService loggingService = LoggingServiceImpl.getInstance();
 
-    public SQLiteExecute(DBConnection connection) throws SQLException {
+    public SQLiteExecute(DBConnection connection) {
         this.connection = connection;
     }
 
     @Override
     public ResultSet executeSelect(String selectQuery) throws SQLStatementException {
-        ResultSet resultSet = null;
-        try (Connection conn = connection.connect()) {
-            Statement statement = conn.createStatement();
+        ResultSet resultSet;
+        try ( Statement statement = connection.connect().createStatement()) {
             resultSet = statement.executeQuery(selectQuery);
             loggingService.logDatabaseSelectSuccess(selectQuery);
         } catch (SQLConnectionException | SQLException err) {
@@ -36,13 +34,20 @@ public class SQLiteExecute implements DBExecute {
 
     @Override
     public void executeInsert(String insertStatement) throws SQLStatementException {
-        try (Connection conn = connection.connect()) {
-            Statement statement = conn.createStatement();
+        try (Statement statement = connection.connect().createStatement()) {
             int rowsUpdated = statement.executeUpdate(insertStatement);
             loggingService.logDatabaseInsertSuccess(insertStatement, rowsUpdated);
         } catch (SQLConnectionException | SQLException err) {
             loggingService.logDatabaseInsertFailure(insertStatement, err.getMessage());
             throw new SQLStatementException(err.getMessage(), err);
         }
+    }
+
+    public void setLoggingService(LoggingService loggingService) {
+        this.loggingService = loggingService;
+    }
+
+    public void setConnection(DBConnection connection) {
+        this.connection = connection;
     }
 }
