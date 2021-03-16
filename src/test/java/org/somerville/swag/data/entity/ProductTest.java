@@ -10,8 +10,8 @@ class ProductTest {
 
     @Test
     void getFormattedPriceReturnsCorrectFormat() {
-        BigDecimal bd = BigDecimal.valueOf(19.99);
-        Product p = new Product(1,"Name","Desc", bd,10,"Path");
-        assertEquals("£19.99", p.getFormattedPrice());
+        BigDecimal actualBigDecimal = BigDecimal.valueOf(19.99);
+        Product expectedProduct = new Product(1,"Name","Desc", actualBigDecimal,10,"Path");
+        assertEquals("£19.99", expectedProduct.getFormattedPrice());
     }
 }
