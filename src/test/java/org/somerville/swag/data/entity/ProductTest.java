@@ -9,9 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductTest {
 
     @Test
-    void getFormattedPriceReturnsCorrectFormat() {
+    void getFormattedPriceIsFormattedCorrectly() {
+        String expectedFormattedPrice = "£19.99";
         BigDecimal actualPrice = BigDecimal.valueOf(19.99);
-        Product expectedProduct = new Product(1,"Name","Desc", actualPrice,10,"Path");
-        assertEquals("£19.99", expectedProduct.getFormattedPrice());
+        Product actualProduct = new Product(1,"Name","Desc", actualPrice,10,"Path");
+
+        String actualFormattedPrice = actualProduct.getFormattedPrice();
+
+        assertEquals(expectedFormattedPrice, actualFormattedPrice);
     }
 }
