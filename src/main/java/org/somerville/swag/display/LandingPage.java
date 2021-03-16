@@ -69,6 +69,8 @@ public class LandingPage {
                 JFormattedTextField spin=((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
                 spin.setEditable(false);
                 quantitySpinner.setModel(model);
+
+                lblDesc.setText(selectedProduct.getDescription());
             }
         });
         //---------------------- END SPINNER BLOCK ---------------------------------------------------------------------
