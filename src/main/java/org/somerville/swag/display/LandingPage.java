@@ -40,7 +40,7 @@ public class LandingPage {
         /**
          * below is code to have the landing page Jlist display products
          */
-        HashMap<Integer, Product> productMap = new HashMap<>(); //set this to the DB write fucntion
+        HashMap<Integer, Product> productMap = new HashMap<>(); //set this to the DB read fucntion
         productMap.put(0, productA);
         productMap.put(1, productB);
 
