@@ -4,6 +4,7 @@ import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Product;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -22,6 +23,7 @@ public class LandingPage {
     private JList listOfProducts;
     private JPanel imagePanel;
     private JSpinner quantitySpinner;
+    private JLabel lblDesc;
 
     public LandingPage(JFrame oldFrame, Customer customer) {
 
@@ -52,8 +54,25 @@ public class LandingPage {
         }
         listOfProducts.setModel(listModel);
 
-        //---------------------END OF LIST CREATION---------------------------------------------------------------------
+        //---------------------END OF LIST CREATION--------------------------------------------------------------------
 
+    // -------------------- BEGIN DYNAMIC DISPLAY BLOCK ----------------------------------------------------------------
+        //-------------------- BEGIN SPINNER BLOCK ---------------------------------------------------------------------
+        listOfProducts.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                Object selectedObject = (Object) listOfProducts.getSelectedValue();
+                Product selectedProduct = (Product) selectedObject;
+
+                SpinnerModel model = new SpinnerNumberModel(1,1,selectedProduct.getStockLevel(),1);
+                JSpinner spinner= new JSpinner();
+                JFormattedTextField spin=((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
+                spin.setEditable(false);
+                quantitySpinner.setModel(model);
+            }
+        });
+        //---------------------- END SPINNER BLOCK ---------------------------------------------------------------------
+    // -------------------- BEGIN DYNAMIC DISPLAY BLOCK ----------------------------------------------------------------
 
         signUpButton.addActionListener(actionEvent -> {
             new JFrameBuilder.Builder().buildDefaultJFrame(new SignUp(oldFrame, customer).root,true);
