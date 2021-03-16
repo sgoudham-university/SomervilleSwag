@@ -74,5 +74,8 @@ public class Product {
         this.imagepath = imagepath;
     }
 
-
+    @Override
+    public String toString(){
+        return this.getName();
+    }
 }
