@@ -36,7 +36,11 @@ public class LandingPage {
         Product productA = new Product(0,"Product A","Description A", BigDecimal.valueOf(19.99), 5, "Path");
         Product productB = new Product(0,"Product B","Description B", BigDecimal.valueOf(29.99), 10, "Path");
 
-        HashMap<Integer, Product> productMap = new HashMap<>();
+        //-------------------- BEGIN LIST CREATION----------------------------------------------------------------------
+        /**
+         * below is code to have the landing page Jlist display products
+         */
+        HashMap<Integer, Product> productMap = new HashMap<>(); //set this to the DB write fucntion
         productMap.put(0, productA);
         productMap.put(1, productB);
 
@@ -47,8 +51,6 @@ public class LandingPage {
             }
         }
         listOfProducts.setModel(listModel);
-
-
 
         //---------------------END OF LIST CREATION---------------------------------------------------------------------
 
