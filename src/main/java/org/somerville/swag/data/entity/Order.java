@@ -40,4 +40,9 @@ public class Order {
     public void setOrderLinesList(ArrayList<OrderLine> orderLinesList) {
         this.orderLinesList = orderLinesList;
     }
+
+    public ArrayList<OrderLine> addOrderLineToOrder(ArrayList<OrderLine> existingOrderLines, OrderLine orderLine){
+        existingOrderLines.add(orderLine);
+        return existingOrderLines;
+    }
 }
