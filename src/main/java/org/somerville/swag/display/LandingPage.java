@@ -57,7 +57,6 @@ public class LandingPage {
         //---------------------END OF LIST CREATION--------------------------------------------------------------------
 
     // -------------------- BEGIN DYNAMIC DISPLAY BLOCK ----------------------------------------------------------------
-        //-------------------- BEGIN SPINNER BLOCK ---------------------------------------------------------------------
         listOfProducts.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -73,7 +72,6 @@ public class LandingPage {
                 lblDesc.setText(selectedProduct.getDescription());
             }
         });
-        //---------------------- END SPINNER BLOCK ---------------------------------------------------------------------
     // -------------------- BEGIN DYNAMIC DISPLAY BLOCK ----------------------------------------------------------------
 
         signUpButton.addActionListener(actionEvent -> {
@@ -103,7 +101,7 @@ public class LandingPage {
             OrderLine orderLine = new OrderLine(selectedProduct, quantity);
             Order order = customer.getCurrentOrder();
             order.addOrderLineToOrder(order.getOrderLinesList(), orderLine);
-        }   //should be making and tracking order lines now. Will need to test.
+        }
     }
 
 
