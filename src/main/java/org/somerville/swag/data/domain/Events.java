@@ -13,26 +13,24 @@ public class Events {
     private static final String DATABASE_READ_SUCCESS_SUFFIX = ".database_read_success";
     private static final String DATABASE_READ_FAILURE_SUFFIX = ".database_read_failure";
 
-
-
     public String getProjectPrefix() {
         return "org.somerville.swag";
     }
     public String getDatabaseConnectSuccess() { return getProjectPrefix() + DATABASE_CONNECT_SUCCESS_SUFFIX; }
     public String getDatabaseConnectFailure() { return getProjectPrefix() + DATABASE_CONNECT_FAILURE_SUFFIX;}
 
-    public String getDatabaseCreateTablesSuccessSuffix() {
+    public String getDatabaseCreateTablesSuccess() {
         return getProjectPrefix() + DATABASE_CREATE_TABLES_SUCCESS_SUFFIX;
     }
-    public String getDatabaseCreateTablesFailureSuffix() {
+    public String getDatabaseCreateTablesFailure() {
         return getProjectPrefix() + DATABASE_CREATE_TABLES_FAILURE_SUFFIX;
     }
 
-    public String getDatabasePopulateTablesSuccessSuffix() {
+    public String getDatabasePopulateTablesSuccess() {
         return getProjectPrefix() + DATABASE_POPULATE_TABLES_SUCCESS_SUFFIX;
     }
 
-    public String getDatabasePopulateTablesFailureSuffix() {
+    public String getDatabasePopulateTablesFailure() {
         return getProjectPrefix() + DATABASE_POPULATE_TABLES_FAILURE_SUFFIX;
     }
 
