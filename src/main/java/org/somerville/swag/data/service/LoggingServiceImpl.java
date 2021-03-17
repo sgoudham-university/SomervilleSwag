@@ -27,6 +27,18 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
+    public void logDatabaseConnectSuccess(String successMessage) {
+        String logMessage = events.getDatabaseConnectSuccess() + ": " + successMessage;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseConnectFailure(String databaseUrl, String failureMessage) {
+        String logMessage  = events.getDatabaseConnectFailure() + ": " + failureMessage + " - Database: " + databaseUrl;
+        writeLog(logMessage);
+    }
+
+    @Override
     public void logDatabaseInsertSuccess(String insertStatement, int rowsUpdated) {
         String logMessage = events.getDatabaseWriteSuccess() + " - Rows Updated: " + rowsUpdated + " - " + insertStatement;
         writeLog(logMessage);
@@ -51,14 +63,26 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseConnectSuccess(String successMessage) {
-        String logMessage = events.getDatabaseConnectSuccess() + ": " + successMessage;
+    public void logDatabaseCreateTablesSuccess(String fileName) {
+        String logMessage = events.getDatabaseCreateTablesSuccess() + ": " + fileName;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseConnectFailure(String databaseUrl, String failureMessage) {
-        String logMessage  = events.getDatabaseConnectFailure() + ": " + failureMessage + " - Database: " + databaseUrl;
+    public void logDatabaseCreateTablesFailure(String fileName, String failureMessage) {
+        String logMessage  = events.getDatabaseCreateTablesFailure() + ": " + failureMessage + " - Script Name: " + fileName;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabasePopulateTablesSuccess(String fileName) {
+        String logMessage = events.getDatabasePopulateTablesSuccess() + ": " + fileName;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabasePopulateTablesFailure(String fileName, String failureMessage) {
+        String logMessage  = events.getDatabasePopulateTablesFailure() + ": " + failureMessage + " - Script Name: " + fileName;
         writeLog(logMessage);
     }
 
