@@ -42,7 +42,12 @@ public class Order {
     }
 
     public ArrayList<OrderLine> addOrderLineToOrder(ArrayList<OrderLine> existingOrderLines, OrderLine orderLine){
+        this.orderLinesList = existingOrderLines;
         existingOrderLines.add(orderLine);
-        return existingOrderLines;
+        return orderLinesList;
+    }
+
+    public OrderLine getSingleOrderLine(ArrayList<OrderLine> orderLines, int index){
+        return orderLines.get(index);
     }
 }
