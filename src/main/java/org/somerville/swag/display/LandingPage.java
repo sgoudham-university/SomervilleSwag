@@ -1,6 +1,8 @@
 package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
+import org.somerville.swag.data.entity.Order;
+import org.somerville.swag.data.entity.OrderLine;
 import org.somerville.swag.data.entity.Product;
 
 import javax.swing.*;
@@ -90,7 +92,18 @@ public class LandingPage {
         });
 
         addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket());
+        if(listOfProducts.getSelectedIndex() == -1){
+            System.out.println("No product selected");
+        } else {
+            int quantity = (int) quantitySpinner.getValue();
 
+            Object selectedObject = (Object)listOfProducts.getSelectedValue();
+            Product selectedProduct = (Product)selectedObject;
+
+            OrderLine orderLine = new OrderLine(selectedProduct, quantity);
+            Order order = customer.getCurrentOrder();
+            order.addOrderLineToOrder(order.getOrderLinesList(), orderLine);
+        }   //should be making and tracking order lines now. Will need to test.
     }
 
 
