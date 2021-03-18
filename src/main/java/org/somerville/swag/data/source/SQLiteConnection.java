@@ -13,7 +13,6 @@ import static org.somerville.swag.data.source.util.Constants.*;
 public class SQLiteConnection implements DBConnection {
 
     private static SQLiteConnection instance;
-    private Connection connection;
     private String databaseUrl = JDBC_URL + DATABASE_URL;
 
     private LoggingService loggingService = LoggingServiceImpl.getInstance();
@@ -31,7 +30,7 @@ public class SQLiteConnection implements DBConnection {
 
     @Override
     public Connection connect(String databaseUrl) throws SQLConnectionException {
-        connection = null;
+        Connection connection;
         try{
             connection = DriverManager.getConnection(databaseUrl);
             loggingService.logDatabaseConnectSuccess("Successful Connection to Database: " + databaseUrl);
