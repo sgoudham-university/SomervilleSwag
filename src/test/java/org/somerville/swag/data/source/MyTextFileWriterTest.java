@@ -24,7 +24,7 @@ class MyTextFileWriterTest {
     }
 
     @Test
-    void successfullyWriteToFile() throws FileWriterException {
+    void successfullyWriteToFileFake() throws FileWriterException {
         String expectedFirstMessage = "firstTestMessage";
         String expectedSecondMessage = "secondTestMessage";
         MyFakeTextFileWriter actualFakeTextFileWriter = new MyFakeTextFileWriter();
@@ -38,7 +38,7 @@ class MyTextFileWriterTest {
     }
 
     @Test
-    void failToWriteToFile() throws FileWriterException {
+    void failToWriteToFileFake() throws FileWriterException {
         String expectedMessage = "testMessage";
         String expectedInvalidFile = "";
         String expectedExceptionMessage = "Failed to Write To File!";
@@ -53,6 +53,32 @@ class MyTextFileWriterTest {
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
         assertThat(actualFakeTextFileWriter.getFileToWrite(), is(expectedInvalidFile));
         assertThat(actualFakeTextFileWriter.getFakeFile(), is(empty()));
+    }
+
+    @Test
+    void successfullyWriteToFile() {
+        String expectedMessage = "testMessage";
+        assertDoesNotThrow(() -> myFileWriter.writeToFile(expectedMessage, true));
+    }
+
+    @Test
+    void failToWriteToFile() {
+        String expectedMessage = "testMessage";
+        String expectedInvalidFile = "";
+
+        String expectedExceptionMessage;
+        if (System.getProperty("os.name").equals("Windows 10")) {
+            expectedExceptionMessage = expectedInvalidFile + " (The system cannot find the path specified)";
+        } else {
+            expectedExceptionMessage = expectedInvalidFile + " (No such file or directory)";
+        }
+
+        FileWriterException expectedException = new FileWriterException(expectedExceptionMessage, new IOException());
+
+        myFileWriter.setFileToWrite(expectedInvalidFile);
+        Exception actualException = assertThrows(FileWriterException.class, () -> myFileWriter.writeToFile(expectedMessage, true));
+
+        assertThat(actualException.getMessage(), is(expectedException.getMessage()));
     }
 
     @Test
