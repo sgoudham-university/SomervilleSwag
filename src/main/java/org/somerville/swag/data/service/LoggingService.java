@@ -5,8 +5,8 @@ public interface LoggingService {
     void logDatabaseConnectFailure(String databaseUrl, String failureMessage);
     void logDatabaseCreateTablesSuccess(String fileName);
     void logDatabaseCreateTablesFailure(String fileName, String failureMessage);
-    void logDatabasePopulateTablesSuccess(String fileName);
-    void logDatabasePopulateTablesFailure(String fileName, String failureMessage);
+    void logDatabasePopulateProductTableSuccess(String fileName);
+    void logDatabasePopulateProductTableFailure(String fileName, String failureMessage);
     void logDatabaseInsertSuccess(String insertStatement, int rowsUpdated);
     void logDatabaseInsertFailure(String insertStatement, String failureMessage);
     void logDatabaseSelectSuccess(String selectQuery);

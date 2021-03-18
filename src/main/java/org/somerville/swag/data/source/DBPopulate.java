@@ -33,12 +33,12 @@ public class DBPopulate {
         }
     }
 
-    public void populateProductsTable() {
+    public void populateProductTable() {
         try (Connection connection = sqLiteConnection.connect()) {
             runScript(POPULATE_TABLES_SCRIPT, connection);
-            loggingService.logDatabasePopulateTablesSuccess(POPULATE_TABLES_SCRIPT);
+            loggingService.logDatabasePopulateProductTableSuccess(POPULATE_TABLES_SCRIPT);
         } catch (FileNotFoundException | SQLConnectionException | SQLException err) {
-            loggingService.logDatabasePopulateTablesFailure(POPULATE_TABLES_SCRIPT, err.getMessage());
+            loggingService.logDatabasePopulateProductTableFailure(POPULATE_TABLES_SCRIPT, err.getMessage());
         }
     }
 
