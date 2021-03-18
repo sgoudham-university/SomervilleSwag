@@ -1,8 +1,6 @@
 package org.somerville.swag.display;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Order;
 import org.somerville.swag.data.entity.OrderLine;
 import org.somerville.swag.data.entity.Product;
@@ -19,7 +17,7 @@ class LandingPageTest {
         Product expectedProduct = new Product(0, "Test Product", "TestDescription", BigDecimal.valueOf(10.99), 5, "TestPath");
         OrderLine actualOrderLine = new OrderLine(actualProduct, 1);
         Order expectedOrder = new Order();
-        expectedOrder.addOrderLineToOrder(expectedOrder.getOrderLinesList(), actualOrderLine);
+        expectedOrder.addOrderLine(actualOrderLine);
 
         assertEquals(actualOrderLine, expectedOrder.getSingleOrderLine(expectedOrder.getOrderLinesList(),0));
     }

@@ -8,11 +8,7 @@ import org.somerville.swag.data.entity.Product;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,7 +96,7 @@ public class LandingPage {
 
             OrderLine orderLine = new OrderLine(selectedProduct, quantity);
             Order order = customer.getCurrentOrder();
-            order.addOrderLineToOrder(order.getOrderLinesList(), orderLine);
+            order.addOrderLine(orderLine);
         }
     }
 
