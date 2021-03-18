@@ -5,6 +5,7 @@ import org.somerville.swag.data.domain.Events;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.somerville.swag.data.exception.FileWriterException;
+import org.somerville.swag.data.service.util.Clock;
 import org.somerville.swag.data.source.MyFileWriter;
 import org.somerville.swag.data.source.MyTextFileWriter;
 
@@ -16,8 +17,10 @@ public class LoggingServiceImpl implements LoggingService {
 
     private static LoggingServiceImpl instance;
 
+    private Clock clock = new Clock();
+
     private final Events events = new Events();
-    private final MyFileWriter textFileWriter = new MyTextFileWriter();
+    private MyFileWriter textFileWriter = new MyTextFileWriter();
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingService.class);
 
@@ -66,23 +69,21 @@ public class LoggingServiceImpl implements LoggingService {
         writeLog(logMessage);
     }
 
-    private void writeLog(String logMessage) {
+    public void writeLog(String logMessage) {
         logger.info(logMessage);
         try {
-            textFileWriter.writeToFile(getFormattedDateTime() + logMessage, true);
+            String currentTime = clock.getCurrentTime();
+            textFileWriter.writeToFile(currentTime + logMessage, true);
         } catch (FileWriterException fwe) {
             logger.info(fwe.getMessage());
         }
     }
 
-    private String getFormattedDateTime(){
-        LocalDateTime localDateTime = LocalDateTime.now();
+    public void setTextFileWriter(MyFileWriter textFileWriter) {
+        this.textFileWriter = textFileWriter;
+    }
 
-        String pattern = "yyyy-MM-dd HH:mm:ss";
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        String formatDateTime = localDateTime.format(formatter);
-
-        return formatDateTime;
+    public void setClock(Clock clock) {
+        this.clock = clock;
     }
 }
