@@ -1,6 +1,13 @@
 package org.somerville.swag.data.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.somerville.swag.data.exception.FileWriterException;
+import org.somerville.swag.data.service.util.Clock;
+import org.somerville.swag.data.source.MyFileWriter;
+import org.somerville.swag.data.source.MyTextFileWriter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,20 +16,54 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class LoggingServiceImplTest {
 
-    @Test
-    void dateTimeFormatsReturnsCorrectString()  {
-        LocalDateTime localDateTime = LocalDateTime.of(2010, Month.APRIL,23,12,12,12);
+    @Mock
+    Clock clock;
 
-        String pattern = "yyyy-MM-dd HH:mm:ss";
+    @Mock
+    MyTextFileWriter myTextFileWriter;
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
-        String formatDateTime = localDateTime.format(formatter);
+    LoggingServiceImpl loggingService = LoggingServiceImpl.getInstance();
 
-        String fakeDateTime = "2010-04-23 12:12:12";
-        assertEquals(formatDateTime, fakeDateTime);
+    @BeforeEach
+    void init_mocks() {
+        MockitoAnnotations.initMocks(this);
     }
 
+    @Test
+    void successfullyWriteToLog() throws FileWriterException {
+        String expectedCurrentTime = "2010-04-23 12:12:12";
+        String expectedLogMessage = "testLogMessage";
+
+        loggingService.setClock(clock);
+        loggingService.setTextFileWriter(myTextFileWriter);
+
+        when(clock.getCurrentTime()).thenReturn(expectedCurrentTime);
+        doNothing().when(myTextFileWriter).writeToFile(expectedCurrentTime + expectedLogMessage, true);
+
+        assertDoesNotThrow(() -> loggingService.writeLog(expectedLogMessage));
+
+        verify(myTextFileWriter, times(1)).writeToFile(expectedCurrentTime + expectedLogMessage, true);
+        verifyNoMoreInteractions(myTextFileWriter);
+    }
+
+    @Test
+    void failToWriteToLog() throws FileWriterException {
+        String expectedCurrentTime = "2010-04-23 12:12:12";
+        String expectedLogMessage = "testLogMessage";
+
+        loggingService.setClock(clock);
+        loggingService.setTextFileWriter(myTextFileWriter);
+
+        when(clock.getCurrentTime()).thenReturn(expectedCurrentTime);
+        doNothing().when(myTextFileWriter).writeToFile(expectedCurrentTime + expectedLogMessage, true);
+
+        assertDoesNotThrow(() -> loggingService.writeLog(expectedLogMessage));
+
+        verify(myTextFileWriter, times(1)).writeToFile(expectedCurrentTime + expectedLogMessage, true);
+        verifyNoMoreInteractions(myTextFileWriter);
+    }
 }
