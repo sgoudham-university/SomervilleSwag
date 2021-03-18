@@ -30,10 +30,12 @@ public class MyTextFileWriter implements MyFileWriter {
         }
     }
 
+    @Override
     public void setFileToWrite(String fileToWrite) {
         this.fileToWrite = fileToWrite;
     }
 
+    @Override
     public String getFileToWrite() {
         return fileToWrite;
     }
