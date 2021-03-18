@@ -4,7 +4,6 @@ import org.somerville.swag.data.exception.FileWriterException;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 
 import static org.somerville.swag.data.source.util.Constants.*;
 
@@ -17,8 +16,8 @@ public class MyTextFileWriter implements MyFileWriter {
     }
 
     public MyTextFileWriter(String fileToWrite, boolean test) {
-        String PATH = test ? TEST_RESOURCES_PATH : RESOURCES_PATH;
-        this.fileToWrite = PATH + fileToWrite;
+        String path = test ? TEST_RESOURCES_PATH : RESOURCES_PATH;
+        this.fileToWrite = path + fileToWrite;
     }
 
     @Override
