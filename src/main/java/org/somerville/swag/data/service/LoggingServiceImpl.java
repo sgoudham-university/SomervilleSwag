@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.somerville.swag.data.exception.FileWriterException;
 import org.somerville.swag.data.service.util.Clock;
+import org.somerville.swag.data.service.util.ClockImpl;
 import org.somerville.swag.data.source.MyFileWriter;
 import org.somerville.swag.data.source.MyTextFileWriter;
 
@@ -13,7 +14,7 @@ public class LoggingServiceImpl implements LoggingService {
 
     private static LoggingServiceImpl instance;
 
-    private Clock clock = new Clock();
+    private Clock clock = new ClockImpl();
 
     private final Events events = new Events();
     private MyFileWriter textFileWriter = new MyTextFileWriter();
