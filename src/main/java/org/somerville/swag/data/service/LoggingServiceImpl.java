@@ -8,6 +8,10 @@ import org.somerville.swag.data.exception.FileWriterException;
 import org.somerville.swag.data.source.MyFileWriter;
 import org.somerville.swag.data.source.MyTextFileWriter;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class LoggingServiceImpl implements LoggingService {
 
     private static LoggingServiceImpl instance;
@@ -65,9 +69,20 @@ public class LoggingServiceImpl implements LoggingService {
     private void writeLog(String logMessage) {
         logger.info(logMessage);
         try {
-            textFileWriter.writeToFile(logMessage, true);
+            textFileWriter.writeToFile(getFormattedDateTime() + logMessage, true);
         } catch (FileWriterException fwe) {
             logger.info(fwe.getMessage());
         }
+    }
+
+    private String getFormattedDateTime(){
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
+        String formatDateTime = localDateTime.format(formatter);
+
+        return formatDateTime;
     }
 }
