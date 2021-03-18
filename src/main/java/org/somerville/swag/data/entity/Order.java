@@ -41,6 +41,8 @@ public class Order {
         this.orderLinesList = orderLinesList;
     }
 
+
+    //change this shit to make use of class instances
     public ArrayList<OrderLine> addOrderLineToOrder(ArrayList<OrderLine> existingOrderLines, OrderLine orderLine){
         this.orderLinesList = existingOrderLines;
         existingOrderLines.add(orderLine);
