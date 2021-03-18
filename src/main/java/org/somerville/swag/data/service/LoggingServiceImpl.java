@@ -9,10 +9,6 @@ import org.somerville.swag.data.service.util.Clock;
 import org.somerville.swag.data.source.MyFileWriter;
 import org.somerville.swag.data.source.MyTextFileWriter;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class LoggingServiceImpl implements LoggingService {
 
     private static LoggingServiceImpl instance;
@@ -22,7 +18,7 @@ public class LoggingServiceImpl implements LoggingService {
     private final Events events = new Events();
     private MyFileWriter textFileWriter = new MyTextFileWriter();
 
-    private static final Logger logger = LoggerFactory.getLogger(LoggingService.class);
+    private Logger logger = LoggerFactory.getLogger(LoggingService.class);
 
     private LoggingServiceImpl() { BasicConfigurator.configure(); }
 
@@ -70,10 +66,10 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     public void writeLog(String logMessage) {
-        logger.info(logMessage);
+        String actualLogMessage = clock.getCurrentTime() + logMessage;
+        logger.info(actualLogMessage);
         try {
-            String currentTime = clock.getCurrentTime();
-            textFileWriter.writeToFile(currentTime + logMessage, true);
+            textFileWriter.writeToFile(actualLogMessage, true);
         } catch (FileWriterException fwe) {
             logger.info(fwe.getMessage());
         }
@@ -85,5 +81,9 @@ public class LoggingServiceImpl implements LoggingService {
 
     public void setClock(Clock clock) {
         this.clock = clock;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
     }
 }
