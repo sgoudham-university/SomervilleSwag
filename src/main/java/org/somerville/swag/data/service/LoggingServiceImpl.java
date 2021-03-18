@@ -5,6 +5,8 @@ import org.somerville.swag.data.domain.Events;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.somerville.swag.data.exception.FileWriterException;
+import org.somerville.swag.data.service.util.Clock;
+import org.somerville.swag.data.service.util.ClockImpl;
 import org.somerville.swag.data.source.MyFileWriter;
 import org.somerville.swag.data.source.MyTextFileWriter;
 
@@ -12,10 +14,12 @@ public class LoggingServiceImpl implements LoggingService {
 
     private static LoggingServiceImpl instance;
 
-    private final Events events = new Events();
-    private final MyFileWriter textFileWriter = new MyTextFileWriter();
+    private Clock clock = new ClockImpl();
 
-    private static final Logger logger = LoggerFactory.getLogger(LoggingService.class);
+    private final Events events = new Events();
+    private MyFileWriter textFileWriter = new MyTextFileWriter();
+
+    private Logger logger = LoggerFactory.getLogger(LoggingService.class);
 
     private LoggingServiceImpl() { BasicConfigurator.configure(); }
 
@@ -62,12 +66,25 @@ public class LoggingServiceImpl implements LoggingService {
         writeLog(logMessage);
     }
 
-    private void writeLog(String logMessage) {
-        logger.info(logMessage);
+    public void writeLog(String logMessage) {
+        String actualLogMessage = clock.getCurrentTime() + " " + logMessage;
+        logger.info(actualLogMessage);
         try {
-            textFileWriter.writeToFile(logMessage, true);
+            textFileWriter.writeToFile(actualLogMessage, true);
         } catch (FileWriterException fwe) {
             logger.info(fwe.getMessage());
         }
+    }
+
+    public void setTextFileWriter(MyFileWriter textFileWriter) {
+        this.textFileWriter = textFileWriter;
+    }
+
+    public void setClock(Clock clock) {
+        this.clock = clock;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
     }
 }
