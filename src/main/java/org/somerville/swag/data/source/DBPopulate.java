@@ -68,8 +68,4 @@ public class DBPopulate {
     public void setLoggingService(LoggingService loggingService) {
         this.loggingService = loggingService;
     }
-
-    public DBConnection getConnection() {
-        return connection;
-    }
 }
