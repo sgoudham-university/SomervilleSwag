@@ -57,7 +57,7 @@ class DBPopulateTest {
         String expectedInvalidFileName = "";
         String expectedScriptPath = "src\\main\\resources\\database";
         String expectedCreateTablesScript = expectedScriptPath + expectedInvalidFileName;
-        String expectedExceptionMessage = expectedScriptPath + " (Access is denied)";
+        String expectedExceptionMessage = getExpectedSystemExceptionMessage(expectedScriptPath);
 
         dbPopulate.setCreateTablesScript(expectedCreateTablesScript);
         dbPopulate.createTables();
@@ -73,7 +73,7 @@ class DBPopulateTest {
         String expectedInvalidFileName = "";
         String expectedScriptPath = "src\\main\\resources\\database";
         String expectedPopulateProductTableScript = expectedScriptPath + expectedInvalidFileName;
-        String expectedExceptionMessage = expectedScriptPath + " (Access is denied)";
+        String expectedExceptionMessage = getExpectedSystemExceptionMessage(expectedScriptPath);
 
         dbPopulate.setPopulateProductTableScript(expectedPopulateProductTableScript);
         dbPopulate.populateProductTable();
@@ -88,6 +88,16 @@ class DBPopulateTest {
         String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
         String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
         return "Successful Connection to Database: " + expectedDatabaseUrl;
+    }
+
+    private String getExpectedSystemExceptionMessage(String expectedScriptPath) {
+        String expectedExceptionMessage;
+        if (System.getProperty("os.name").equals("Windows 10")) {
+            expectedExceptionMessage = expectedScriptPath + " (Access is denied)";
+        } else {
+            expectedExceptionMessage = expectedScriptPath + " (No such file or directory)";
+        }
+        return expectedExceptionMessage;
     }
 
     private SQLiteConnection createSQLiteConnection() {
