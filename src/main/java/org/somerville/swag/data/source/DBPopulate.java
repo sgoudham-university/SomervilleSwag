@@ -17,35 +17,59 @@ import static org.somerville.swag.data.source.util.Constants.POPULATE_TABLES_SCR
 
 public class DBPopulate {
 
-    private SQLiteConnection sqLiteConnection;
+    private String populateProductTableScript = POPULATE_TABLES_SCRIPT;
+    private String createTablesScript = CREATE_TABLES_SCRIPT;
+
+    private DBConnection connection;
+
     private LoggingService loggingService = LoggingServiceImpl.getInstance();
 
-    public DBPopulate(SQLiteConnection sqLiteConnection) {
-        this.sqLiteConnection = sqLiteConnection;
+    public DBPopulate(DBConnection connection) {
+        this.connection = connection;
     }
 
     public void createTables() {
-        try (Connection connection = sqLiteConnection.connect()) {
-            runScript(CREATE_TABLES_SCRIPT, connection);
-            loggingService.logDatabaseCreateTablesSuccess(CREATE_TABLES_SCRIPT);
+        try (Connection conn = connection.connect()) {
+            runScript(createTablesScript, conn);
+            loggingService.logDatabaseCreateTablesSuccess(createTablesScript);
         } catch (FileNotFoundException | SQLConnectionException | SQLException err) {
-            loggingService.logDatabaseCreateTablesFailure(CREATE_TABLES_SCRIPT, err.getMessage());
+            loggingService.logDatabaseCreateTablesFailure(createTablesScript, err.getMessage());
         }
     }
 
     public void populateProductTable() {
-        try (Connection connection = sqLiteConnection.connect()) {
-            runScript(POPULATE_TABLES_SCRIPT, connection);
-            loggingService.logDatabasePopulateProductTableSuccess(POPULATE_TABLES_SCRIPT);
+        try (Connection conn = connection.connect()) {
+            runScript(populateProductTableScript, conn);
+            loggingService.logDatabasePopulateProductTableSuccess(populateProductTableScript);
         } catch (FileNotFoundException | SQLConnectionException | SQLException err) {
-            loggingService.logDatabasePopulateProductTableFailure(POPULATE_TABLES_SCRIPT, err.getMessage());
+            loggingService.logDatabasePopulateProductTableFailure(populateProductTableScript, err.getMessage());
         }
     }
 
-    private void runScript(String fileName, Connection connection) throws FileNotFoundException {
+    public void runScript(String fileName, Connection connection) throws FileNotFoundException {
         ScriptRunner scriptRunner = new ScriptRunner(connection);
         Reader reader = new BufferedReader(new FileReader(fileName));
         scriptRunner.setEscapeProcessing(false);
         scriptRunner.runScript(reader);
+    }
+
+    public void setCreateTablesScript(String createTablesScript) {
+        this.createTablesScript = createTablesScript;
+    }
+
+    public void setPopulateProductTableScript(String populateProductTableScript) {
+        this.populateProductTableScript = populateProductTableScript;
+    }
+
+    public void setConnection(DBConnection connection) {
+        this.connection = connection;
+    }
+
+    public void setLoggingService(LoggingService loggingService) {
+        this.loggingService = loggingService;
+    }
+
+    public DBConnection getConnection() {
+        return connection;
     }
 }
