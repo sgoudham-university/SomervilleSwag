@@ -48,7 +48,7 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 - **Data**
   - SQLite Database Used
 - **Engine**
-  - Design Patterns Used - Singleton, State, Adapter
+  - Design Patterns Used - Singleton, State, Adapter, Builder
 - **Display** 
   - JavaX.Swing (JFrames/JPanels)
   - Logging Information Exported to File
@@ -68,6 +68,8 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
      such as the LoggingService. 
      
      - States allow us to remove lots of conditional logic from the main engine and distribute through classes and methods.
+    
+     - Builder classes improve the readability of code through providing clear, easy to read methods when instantiating/building new objects.
      
      - Adapters are used here to stub out classes in order to achieve more test coverage and enforce the Single Responsibility principle, 
      in which functions should only perform one action.
@@ -76,7 +78,11 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
     
 - **Challenges**
   
-  1. Implementing State Design Patterns is quite difficult when dealing with asynchronous event listeners of the JFrames/JPanels
+  1. Implementing State Design Patterns is quite difficult when dealing with asynchronous event listeners of the JFrames/JPanels.
+    
+  2. Unit Testing of the UI is virtually impossible through only common libraries of JUnit5 and Mockito. To work around this, we are only unit testing the core business logic.
+
+  3. Displaying product images within the UI proves to be somewhat difficult 
 
 ### Class Diagrams
 
