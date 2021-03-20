@@ -12,4 +12,8 @@ public class ClockImpl implements Clock {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(pattern);
         return localDateTime.format(formatter);
     }
+
+    public String getPattern() {
+        return pattern;
+    }
 }

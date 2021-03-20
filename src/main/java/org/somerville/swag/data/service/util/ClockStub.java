@@ -6,4 +6,9 @@ public class ClockStub implements Clock {
     public String getCurrentTime() {
         return "2010-04-23 12:12:12";
     }
+
+    @Override
+    public String getPattern() {
+        return "yyyy-MM-dd HH:mm:ss";
+    }
 }
