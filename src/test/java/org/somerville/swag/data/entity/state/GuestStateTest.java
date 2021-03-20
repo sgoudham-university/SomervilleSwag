@@ -17,16 +17,21 @@ class GuestStateTest {
         String expectedEmail = "testEmail";
         String expectedPassword = "testPassword";
         Customer actualCustomer = new Customer(expectedEmail, expectedPassword, new Order());
-
         CustomerState expectedCustomerState = new LoggedIn(actualCustomer);
-        assertThat(actualCustomer.getCustomerState(), is(expectedCustomerState));
+
+        CustomerState actualCustomerState = actualCustomer.getCustomerState();
+
+        assertThat(actualCustomerState, is(expectedCustomerState));
     }
 
     @Test
     void customerShouldInstantiateWithGuestState() {
         Customer actualCustomer = new Customer();
         CustomerState expectedCustomerState = new Guest(actualCustomer);
-        assertThat(actualCustomer.getCustomerState(), is(expectedCustomerState));
+
+        CustomerState actualCustomerState = actualCustomer.getCustomerState();
+
+        assertThat(actualCustomerState, is(expectedCustomerState));
     }
 
     @Test

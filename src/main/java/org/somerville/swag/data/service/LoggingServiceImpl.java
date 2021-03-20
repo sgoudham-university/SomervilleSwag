@@ -31,6 +31,42 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
+    public void logDatabaseConnectSuccess(String successMessage) {
+        String logMessage = events.getDatabaseConnectSuccess() + ": " + successMessage;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseConnectFailure(String databaseUrl, String failureMessage) {
+        String logMessage  = events.getDatabaseConnectFailure() + ": " + failureMessage + " - Database: " + databaseUrl;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseCreateTablesSuccess(String fileName) {
+        String logMessage = events.getDatabaseCreateTablesSuccess() + ": " + fileName;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseCreateTablesFailure(String fileName, String failureMessage) {
+        String logMessage  = events.getDatabaseCreateTablesFailure() + ": " + failureMessage + " - Script Name: " + fileName;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabasePopulateProductTableSuccess(String fileName) {
+        String logMessage = events.getDatabasePopulateProductTableSuccess() + ": " + fileName;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabasePopulateProductTableFailure(String fileName, String failureMessage) {
+        String logMessage  = events.getDatabasePopulateProductTableFailure() + ": " + failureMessage + " - Script Name: " + fileName;
+        writeLog(logMessage);
+    }
+
+    @Override
     public void logDatabaseInsertSuccess(String insertStatement, int rowsUpdated) {
         String logMessage = events.getDatabaseWriteSuccess() + " - Rows Updated: " + rowsUpdated + " - " + insertStatement;
         writeLog(logMessage);
@@ -51,18 +87,6 @@ public class LoggingServiceImpl implements LoggingService {
     @Override
     public void logDatabaseSelectFailure(String selectQuery, String failureMessage) {
         String logMessage  = events.getDatabaseReadFailure() + ": " + failureMessage + " - Statement: " + selectQuery;
-        writeLog(logMessage);
-    }
-
-    @Override
-    public void logDatabaseConnectSuccess(String successMessage) {
-        String logMessage = events.getDatabaseConnectSuccess() + ": " + successMessage;
-        writeLog(logMessage);
-    }
-
-    @Override
-    public void logDatabaseConnectFailure(String databaseUrl, String failureMessage) {
-        String logMessage  = events.getDatabaseConnectFailure() + ": " + failureMessage + " - Database: " + databaseUrl;
         writeLog(logMessage);
     }
 
