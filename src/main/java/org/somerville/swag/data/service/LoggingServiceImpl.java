@@ -91,7 +91,7 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     public void writeLog(String logMessage) {
-        String actualLogMessage = clock.getCurrentTime() + " " + logMessage;
+        String actualLogMessage = "[" + clock.getCurrentTime() + "] " + logMessage;
         logger.info(actualLogMessage);
         try {
             textFileWriter.writeToFile(actualLogMessage, true);
