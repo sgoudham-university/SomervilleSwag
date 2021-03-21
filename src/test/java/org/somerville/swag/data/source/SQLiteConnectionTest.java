@@ -34,9 +34,8 @@ class SQLiteConnectionTest {
 
     @Test
     void successfullyConnectToDatabase() throws SQLConnectionException {
-        String expectedDatabasePath = "src/test/resources/database/";
         String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
-        String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
+        String expectedDatabaseUrl = getExpectedDatabaseUrl(expectedDatabaseName);
 
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setLoggingService(loggingService);
@@ -44,17 +43,16 @@ class SQLiteConnectionTest {
 
         sqLiteConnection.connect();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseName);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
         verifyNoMoreInteractions(loggingService);
     }
 
     @Test
     void successfullySwitchDatabaseConnection() throws SQLConnectionException {
-        String expectedDatabasePath = "src/test/resources/database/";
         String expectedFirstDatabaseName = "TestFirstSomervilleSwagDB.db";
         String expectedSecondDatabaseName = "TestSecondSomervilleSwagDB.db";
-        String expectedFirstDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedFirstDatabaseName;
-        String expectedSecondDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedSecondDatabaseName;
+        String expectedFirstDatabaseUrl = getExpectedDatabaseUrl(expectedFirstDatabaseName);
+        String expectedSecondDatabaseUrl = getExpectedDatabaseUrl(expectedSecondDatabaseName);
 
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setLoggingService(loggingService);
@@ -64,18 +62,17 @@ class SQLiteConnectionTest {
         sqLiteConnection.setDatabaseUrl(expectedSecondDatabaseUrl);
         sqLiteConnection.connect();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseName);
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseName);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseUrl);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseUrl);
         verifyNoMoreInteractions(loggingService);
     }
 
     @Test
     void successfullySwitchConnectionWithNewDatabaseUrl() throws SQLConnectionException {
-        String expectedDatabasePath = "src/test/resources/database/";
         String expectedFirstDatabaseName = "TestFirstSomervilleSwagDB.db";
         String expectedSecondDatabaseName = "TestSecondSomervilleSwagDB.db";
-        String expectedFirstDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedFirstDatabaseName;
-        String expectedSecondDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedSecondDatabaseName;
+        String expectedFirstDatabaseUrl = getExpectedDatabaseUrl(expectedFirstDatabaseName);
+        String expectedSecondDatabaseUrl = getExpectedDatabaseUrl(expectedSecondDatabaseName);
 
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setLoggingService(loggingService);
@@ -83,8 +80,8 @@ class SQLiteConnectionTest {
         sqLiteConnection.connect(expectedFirstDatabaseUrl);
         sqLiteConnection.setDatabaseUrlAndConnectTo(expectedSecondDatabaseUrl);
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseName);
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseName);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseUrl);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseUrl);
         verifyNoMoreInteractions(loggingService);
     }
 
@@ -104,6 +101,10 @@ class SQLiteConnectionTest {
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
         verify(loggingService, times(1)).logDatabaseConnectFailure(expectedDatabaseUrl, expectedExceptionMessage);
         verifyNoMoreInteractions(loggingService);
+    }
 
+    private String getExpectedDatabaseUrl(String expectedDatabaseName) {
+        String expectedDatabasePath = "src/test/resources/database/";
+        return "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
     }
 }
