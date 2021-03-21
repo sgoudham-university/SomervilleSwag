@@ -2,30 +2,37 @@ package org.somerville.swag.data.source;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Product;
-import org.somerville.swag.data.exception.FileWriterException;
 import org.somerville.swag.data.exception.SQLStatementException;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.somerville.swag.data.source.util.Constants.GET_CUSTOMER_QUERY;
 
 public class SQLiteSource implements DBSource {
 
-    private DBExecute sqLiteExecute;
+    private DBExecute dbExecute;
+    private DBMapper dbMapper;
 
     public SQLiteSource() {
-        sqLiteExecute = new SQLiteExecute(SQLiteConnection.getInstance());
+        dbExecute = new SQLiteExecute(SQLiteConnection.getInstance());
+        dbMapper = new DBMapper();
     }
 
     @Override
-    public Customer getCustomer(String email, String password) {
+    public Customer getCustomer(String email, String password, Customer customer) {
+        Customer newCustomer = null;
         String getCustomerQuery = GET_CUSTOMER_QUERY.replace("{email}", email).replace("{password}", password);
-        try {
-            sqLiteExecute.executeSelect(getCustomerQuery);
-        } catch (SQLStatementException e) {
-            e.printStackTrace();
+
+        try (ResultSet customerData = dbExecute.executeSelect(getCustomerQuery)) {
+            newCustomer = dbMapper.mapToCustomer(customerData, customer);
+            // Add log success
+        } catch (SQLStatementException | SQLException e) {
+            // add log failure
         }
-        return null;
+
+        return newCustomer;
     }
 
     @Override
@@ -38,7 +45,11 @@ public class SQLiteSource implements DBSource {
         return null;
     }
 
-    public void setSqLiteExecute(DBExecute sqLiteExecute) {
-        this.sqLiteExecute = sqLiteExecute;
+    public void setDbExecute(DBExecute dbExecute) {
+        this.dbExecute = dbExecute;
+    }
+
+    public void setDbMapper(DBMapper dbMapper) {
+        this.dbMapper = dbMapper;
     }
 }
