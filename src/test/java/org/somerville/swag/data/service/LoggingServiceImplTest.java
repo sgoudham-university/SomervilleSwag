@@ -25,11 +25,11 @@ class LoggingServiceImplTest {
     @Mock
     Logger logger;
 
-    LoggingServiceImpl loggingService = LoggingServiceImpl.getInstance();
+    private final LoggingServiceImpl loggingService = LoggingServiceImpl.getInstance();
 
     @BeforeEach
     void init_mocks() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -41,15 +41,14 @@ class LoggingServiceImplTest {
         loggingService.setTextFileWriter(myTextFileWriter);
 
         when(clock.getCurrentTime()).thenReturn(expectedCurrentTime);
-        doNothing().when(myTextFileWriter).writeToFile(expectedCurrentTime + " " + expectedLogMessage, true);
+        doNothing().when(myTextFileWriter).writeToFile("[" + expectedCurrentTime + "] " + expectedLogMessage, true);
 
         assertDoesNotThrow(() -> loggingService.writeLog(expectedLogMessage));
 
         verify(clock, times(1)).getCurrentTime();
-        verify(myTextFileWriter, times(1)).writeToFile(expectedCurrentTime + " " + expectedLogMessage, true);
+        verify(myTextFileWriter, times(1)).writeToFile("[" + expectedCurrentTime + "] " + expectedLogMessage, true);
         verifyNoMoreInteractions(clock);
         verifyNoMoreInteractions(myTextFileWriter);
-
     }
 
     @Test
@@ -65,11 +64,11 @@ class LoggingServiceImplTest {
         loggingService.setTextFileWriter(myTextFileWriter);
 
         when(clock.getCurrentTime()).thenReturn(expectedCurrentTime);
-        doThrow(expectedException).when(myTextFileWriter).writeToFile(expectedCurrentTime + " " + expectedLogMessage, true);
+        doThrow(expectedException).when(myTextFileWriter).writeToFile("[" + expectedCurrentTime + "] " + expectedLogMessage, true);
 
         loggingService.writeLog(expectedLogMessage);
 
-        verify(logger, times(1)).info(expectedCurrentTime + " " + expectedLogMessage);
+        verify(logger, times(1)).info("[" + expectedCurrentTime + "] " + expectedLogMessage);
         verify(logger, times(1)).info(expectedExceptionMessage);
         verifyNoMoreInteractions(logger);
     }

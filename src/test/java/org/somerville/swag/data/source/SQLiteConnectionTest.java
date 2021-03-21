@@ -21,7 +21,7 @@ class SQLiteConnectionTest {
 
     @BeforeEach
     void init_mocks() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test

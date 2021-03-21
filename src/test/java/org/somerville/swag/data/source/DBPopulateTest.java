@@ -18,7 +18,7 @@ class DBPopulateTest {
 
     @BeforeEach
     void setup() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         dbPopulate = spy(new DBPopulate(createSQLiteConnection()));
         dbPopulate.setLoggingService(loggingService);
     }

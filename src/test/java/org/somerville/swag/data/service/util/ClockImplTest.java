@@ -9,11 +9,14 @@ class ClockImplTest {
 
     @Test
     void successfullyGetCurrentTimeFromStub() {
+        String expectedPattern = "yyyy-MM-dd HH:mm:ss";
         String expectedCurrentTime = "2010-04-23 12:12:12";
 
         Clock actualClock = new ClockStub();
+        String actualPattern = actualClock.getPattern();
         String actualCurrentTime = actualClock.getCurrentTime();
 
+        assertThat(actualPattern, is(expectedPattern));
         assertThat(actualCurrentTime, is(expectedCurrentTime));
     }
 }
