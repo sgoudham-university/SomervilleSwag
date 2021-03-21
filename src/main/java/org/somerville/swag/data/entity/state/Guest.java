@@ -2,6 +2,8 @@ package org.somerville.swag.data.entity.state;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.CustomerState;
+import org.somerville.swag.data.source.DBSource;
+import org.somerville.swag.data.source.SQLiteSource;
 
 import java.util.Objects;
 
@@ -15,7 +17,18 @@ public class Guest implements CustomerState {
 
     @Override
     public void signUp() {
-        // Call DatabaseExecuteInsertStatement on Customer Fields
+        DBSource dbSource = new SQLiteSource();
+
+        // Check Customer doesn't already exist
+        Customer customer = dbSource.getCustomer("", "");
+        if (customer == null) {
+            // throw up error that account already exists
+        }
+
+        // Call DBExecuteInsertCustomer (Pass in Customer Object)
+        dbSource.insertCustomer(customer);
+
+        // Change state to LoggedIn
     }
 
     @Override
