@@ -101,7 +101,7 @@ class MyTextFileWriterTest {
     }
 
     @Test
-    void successfullyGetLogPathLogPathWithoutConstructorArgs() {
+    void successfullyGetLogPathWithoutConstructorArgs() {
         String expectedFilePath = "src/main/resources/logs.txt";
 
         MyFileWriter myFileWriter = new MyTextFileWriter();
@@ -111,7 +111,7 @@ class MyTextFileWriterTest {
     }
 
     @Test
-    void successfullyGetLogPathLogPathWithoutConstructorArgsFake() {
+    void successfullyGetLogPathWithoutConstructorArgsFake() {
         String expectedFilePath = "src/main/resources/logs.txt";
 
         MyFakeTextFileWriter actualFakeFileWriter = new MyFakeTextFileWriter();
