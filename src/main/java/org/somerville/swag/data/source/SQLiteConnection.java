@@ -8,7 +8,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import static org.somerville.swag.data.source.util.Constants.*;
+import static org.somerville.swag.data.source.util.Constants.DATABASE_URL;
+import static org.somerville.swag.data.source.util.Constants.JDBC_URL;
 
 public class SQLiteConnection implements DBConnection {
 
@@ -32,7 +33,7 @@ public class SQLiteConnection implements DBConnection {
     @Override
     public Connection connect(String databaseUrl) throws SQLConnectionException {
         Connection connection;
-        try{
+        try {
             connection = DriverManager.getConnection(databaseUrl);
             loggingService.logDatabaseConnectSuccess(databaseUrl);
         } catch (SQLException sqle) {
