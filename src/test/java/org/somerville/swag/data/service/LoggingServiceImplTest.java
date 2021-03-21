@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.slf4j.Logger;
 import org.somerville.swag.data.exception.FileWriterException;
 import org.somerville.swag.data.service.util.Clock;
@@ -25,11 +26,32 @@ class LoggingServiceImplTest {
     @Mock
     Logger logger;
 
-    private final LoggingServiceImpl loggingService = LoggingServiceImpl.getInstance();
+    @Spy
+    LoggingService loggingService = LoggingServiceImpl.getInstance();
 
     @BeforeEach
     void init_mocks() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void successfullyReturnSameInstance() {
+        LoggingService firstLoggingService = LoggingServiceImpl.getInstance();
+        LoggingService secondLoggingService = LoggingServiceImpl.getInstance();
+
+        assertSame(firstLoggingService, secondLoggingService);
+    }
+
+    @Test
+    void successfullyLogDatabaseConnectSuccess() {
+        String expectedDatabaseUrl = "jdbc:sqlite:src/test/resources/database/TestFirstSomervilleSwagDB.db";
+        String expectedLogMessage = "org.somerville.swag.database_connect_success: " + expectedDatabaseUrl;
+
+        doNothing().when(loggingService).writeLog(expectedLogMessage);
+
+        loggingService.logDatabaseConnectSuccess(expectedDatabaseUrl);
+
+        verify(loggingService, times(1)).writeLog(expectedLogMessage);
     }
 
     @Test
