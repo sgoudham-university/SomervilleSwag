@@ -18,17 +18,18 @@ public class Guest implements CustomerState {
     @Override
     public void signUp() {
         DBSource dbSource = new SQLiteSource();
-
         // Check Customer doesn't already exist
-        Customer customer = dbSource.getCustomer("", "");
-        if (customer == null) {
+        Customer customer = dbSource.getCustomer("sgoudham@gmail.com", "testPassword", this.customer);
+
+        if (!customer.getEmail().isEmpty()) {
+            // Call DBExecuteInsertCustomer (Pass in Customer Object)
+            dbSource.insertCustomer(customer);
+
+            // Change state to LoggedIn
+        } else {
             // throw up error that account already exists
+            // How do we determine if query failed? Or customer does not exist?
         }
-
-        // Call DBExecuteInsertCustomer (Pass in Customer Object)
-        dbSource.insertCustomer(customer);
-
-        // Change state to LoggedIn
     }
 
     @Override
