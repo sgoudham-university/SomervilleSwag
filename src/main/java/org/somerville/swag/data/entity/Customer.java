@@ -28,7 +28,6 @@ public class Customer {
         this.email = email;
         this.password = password;
         this.currentOrder = order;
-
     }
 
     public Customer(String email, String password, Order currentOrder, int customerId, String forename,
