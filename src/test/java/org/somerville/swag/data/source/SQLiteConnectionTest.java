@@ -25,7 +25,7 @@ class SQLiteConnectionTest {
     }
 
     @Test
-    void sqliteConnectionShouldReturnSameInstance() {
+    void successfullyReturnSameInstance() {
         DBConnection firstSqliteConnection = SQLiteConnection.getInstance();
         DBConnection secondSqliteConnection = SQLiteConnection.getInstance();
 
@@ -37,7 +37,6 @@ class SQLiteConnectionTest {
         String expectedDatabasePath = "src/test/resources/database/";
         String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
         String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
-        String expectedSuccessMessage = "Successful Connection to Database: " + expectedDatabaseUrl;
 
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setLoggingService(loggingService);
@@ -45,8 +44,8 @@ class SQLiteConnectionTest {
 
         sqLiteConnection.connect();
 
-        verify(sqLiteConnection.getLoggingService(), times(1)).logDatabaseConnectSuccess(expectedSuccessMessage);
-        verifyNoMoreInteractions(sqLiteConnection.getLoggingService());
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseName);
+        verifyNoMoreInteractions(loggingService);
     }
 
     @Test
@@ -56,8 +55,6 @@ class SQLiteConnectionTest {
         String expectedSecondDatabaseName = "TestSecondSomervilleSwagDB.db";
         String expectedFirstDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedFirstDatabaseName;
         String expectedSecondDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedSecondDatabaseName;
-        String expectedFirstSuccessMessage = "Successful Connection to Database: " + expectedFirstDatabaseUrl;
-        String expectedSecondSuccessMessage = "Successful Connection to Database: " + expectedSecondDatabaseUrl;
 
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setLoggingService(loggingService);
@@ -67,8 +64,8 @@ class SQLiteConnectionTest {
         sqLiteConnection.setDatabaseUrl(expectedSecondDatabaseUrl);
         sqLiteConnection.connect();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstSuccessMessage);
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondSuccessMessage);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseName);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseName);
         verifyNoMoreInteractions(loggingService);
     }
 
@@ -79,8 +76,6 @@ class SQLiteConnectionTest {
         String expectedSecondDatabaseName = "TestSecondSomervilleSwagDB.db";
         String expectedFirstDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedFirstDatabaseName;
         String expectedSecondDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedSecondDatabaseName;
-        String expectedFirstSuccessMessage = "Successful Connection to Database: " + expectedFirstDatabaseUrl;
-        String expectedSecondSuccessMessage = "Successful Connection to Database: " + expectedSecondDatabaseUrl;
 
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setLoggingService(loggingService);
@@ -88,8 +83,8 @@ class SQLiteConnectionTest {
         sqLiteConnection.connect(expectedFirstDatabaseUrl);
         sqLiteConnection.setDatabaseUrlAndConnectTo(expectedSecondDatabaseUrl);
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstSuccessMessage);
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondSuccessMessage);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseName);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseName);
         verifyNoMoreInteractions(loggingService);
     }
 
