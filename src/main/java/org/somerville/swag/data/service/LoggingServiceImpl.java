@@ -24,15 +24,12 @@ public class LoggingServiceImpl implements LoggingService {
     private LoggingServiceImpl() { BasicConfigurator.configure(); }
 
     public static LoggingServiceImpl getInstance() {
-        if (instance == null) {
-            instance = new LoggingServiceImpl();
-        }
-        return instance;
+        return instance == null ? instance = new LoggingServiceImpl() : instance;
     }
 
     @Override
-    public void logDatabaseConnectSuccess(String successMessage) {
-        String logMessage = events.getDatabaseConnectSuccess() + ": " + successMessage;
+    public void logDatabaseConnectSuccess(String databaseUrl) {
+        String logMessage = events.getDatabaseConnectSuccess() + ": " + databaseUrl;
         writeLog(logMessage);
     }
 
@@ -90,6 +87,7 @@ public class LoggingServiceImpl implements LoggingService {
         writeLog(logMessage);
     }
 
+    @Override
     public void writeLog(String logMessage) {
         String actualLogMessage = "[" + clock.getCurrentTime() + "] " + logMessage;
         logger.info(actualLogMessage);
@@ -100,15 +98,17 @@ public class LoggingServiceImpl implements LoggingService {
         }
     }
 
-    public void setTextFileWriter(MyFileWriter textFileWriter) {
-        this.textFileWriter = textFileWriter;
-    }
-
+    @Override
     public void setClock(Clock clock) {
         this.clock = clock;
     }
 
-    public void setLogger(Logger logger) {
-        this.logger = logger;
+    @Override
+    public void setLogger(Logger logger) { this.logger = logger; }
+
+    @Override
+    public void setTextFileWriter(MyFileWriter textFileWriter) {
+        this.textFileWriter = textFileWriter;
     }
+
 }

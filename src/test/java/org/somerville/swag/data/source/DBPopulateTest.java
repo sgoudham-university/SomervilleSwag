@@ -86,8 +86,7 @@ class DBPopulateTest {
     private String getExpectedLogDatabaseSuccessfulConnection() {
         String expectedDatabasePath = "src/test/resources/database/";
         String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
-        String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
-        return "Successful Connection to Database: " + expectedDatabaseUrl;
+        return "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
     }
 
     private String getExpectedSystemExceptionMessage(String expectedScriptPath) {
