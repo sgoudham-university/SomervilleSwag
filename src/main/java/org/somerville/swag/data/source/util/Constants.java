@@ -10,4 +10,6 @@ public class Constants {
     public static final String DATABASE_URL = RESOURCES_PATH + "database/SomervilleSwagDB.db";
     public static final String CREATE_TABLES_SCRIPT = RESOURCES_PATH + "database/CreateTables.sql";
     public static final String POPULATE_TABLES_SCRIPT = RESOURCES_PATH + "database/PopulateProductTable.sql";
+
+    public static final String GET_CUSTOMER_QUERY = "SELECT * FROM CUSTOMER WHERE Email = {email} AND Password = {password};";
 }
