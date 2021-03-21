@@ -6,7 +6,7 @@ import org.somerville.swag.data.entity.Product;
 import java.util.List;
 
 public interface DBSource {
-    Customer getCustomer(String email, String password);
+    Customer getCustomer(String email, String password, Customer customer);
     void insertCustomer(Customer guest);
     List<Product> getAllProducts();
 }
