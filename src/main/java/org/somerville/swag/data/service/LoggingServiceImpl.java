@@ -28,8 +28,8 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseConnectSuccess(String databaseName) {
-        String logMessage = events.getDatabaseConnectSuccess() + ": " + databaseName;
+    public void logDatabaseConnectSuccess(String databaseUrl) {
+        String logMessage = events.getDatabaseConnectSuccess() + ": " + databaseUrl;
         writeLog(logMessage);
     }
 

@@ -5,7 +5,7 @@ import org.somerville.swag.data.service.util.Clock;
 import org.somerville.swag.data.source.MyFileWriter;
 
 public interface LoggingService {
-    void logDatabaseConnectSuccess(String databaseName);
+    void logDatabaseConnectSuccess(String databaseUrl);
     void logDatabaseConnectFailure(String databaseUrl, String failureMessage);
     void logDatabaseCreateTablesSuccess(String fileName);
     void logDatabaseCreateTablesFailure(String fileName, String failureMessage);
