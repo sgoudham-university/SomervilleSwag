@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.somerville.swag.data.source.util.Constants.GET_CUSTOMER_QUERY;
+import static org.somerville.swag.data.source.util.Constants.INSERT_CUSTOMER_STATEMENT;
 
 public class SQLiteSource implements DBSource {
 
@@ -26,7 +27,9 @@ public class SQLiteSource implements DBSource {
 
     @Override
     public Customer getCustomer(String email, String password, Customer customer) {
-        String getCustomerQuery = GET_CUSTOMER_QUERY.replace("{email}", email).replace("{password}", password);
+        String getCustomerQuery = GET_CUSTOMER_QUERY
+                .replace("{email}", email)
+                .replace("{password}", password);
 
         try (ResultSet customerData = dbExecute.executeSelect(getCustomerQuery)) {
             dbMapper.mapToCustomer(customerData, customer);
@@ -40,7 +43,17 @@ public class SQLiteSource implements DBSource {
 
     @Override
     public void insertCustomer(List<String> guestData) {
-        String insertCustomerStatement = "";
+        String insertCustomerStatement = INSERT_CUSTOMER_STATEMENT
+                .replace("{forename}", guestData.get(0))
+                .replace("{surname}", guestData.get(1))
+                .replace("{email}", guestData.get(2))
+                .replace("{password}", guestData.get(3))
+                .replace("{addressline1}", guestData.get(4))
+                .replace("{addressline2}", guestData.get(5))
+                .replace("{city}", guestData.get(6))
+                .replace("{postcode}", guestData.get(7))
+                .replace("{phonenumber}", guestData.get(8));
+
         try {
             dbExecute.executeInsert(insertCustomerStatement);
             loggingService.logDatabaseInsertCustomerSuccess(insertCustomerStatement);
