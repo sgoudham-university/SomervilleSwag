@@ -26,22 +26,21 @@ public class SQLiteSource implements DBSource {
 
     @Override
     public Customer getCustomer(String email, String password, Customer customer) {
-        Customer newCustomer = null;
         String getCustomerQuery = GET_CUSTOMER_QUERY.replace("{email}", email).replace("{password}", password);
 
         try (ResultSet customerData = dbExecute.executeSelect(getCustomerQuery)) {
-            newCustomer = dbMapper.mapToCustomer(customerData, customer);
-            loggingService.logDatabaseGetCustomerSuccess(newCustomer.getCustomerId());
+            dbMapper.mapToCustomer(customerData, customer);
+            loggingService.logDatabaseGetCustomerSuccess(customer.getCustomerId());
         } catch (SQLStatementException | SQLException err) {
             loggingService.logDatabaseGetCustomerFailure(getCustomerQuery, err.getMessage());
         }
 
-        return newCustomer;
+        return customer;
     }
 
     @Override
     public void insertCustomer(List<String> guestData) {
-        String insertCustomerStatement = " ";
+        String insertCustomerStatement = "";
         try {
             dbExecute.executeInsert(insertCustomerStatement);
             loggingService.logDatabaseInsertCustomerSuccess(insertCustomerStatement);
@@ -62,5 +61,9 @@ public class SQLiteSource implements DBSource {
 
     public void setDbMapper(DBMapper dbMapper) {
         this.dbMapper = dbMapper;
+    }
+
+    public void setLoggingService(LoggingService loggingService) {
+        this.loggingService = loggingService;
     }
 }
