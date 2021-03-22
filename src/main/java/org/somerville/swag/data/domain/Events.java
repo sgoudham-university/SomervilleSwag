@@ -16,6 +16,14 @@ public class Events {
     private static final String DATABASE_GET_CUSTOMER_FAILURE_SUFFIX = ".database_get_customer_failure";
     private static final String DATABASE_INSERT_CUSTOMER_SUCCESS_SUFFIX = ".database_insert_customer_success";
     private static final String DATABASE_INSERT_CUSTOMER_FAILURE_SUFFIX = ".database_insert_customer_failure";
+    private static final String DATABASE_CUSTOMER_NOT_FOUND_SUFFIX = ".database_customer_not_found";
+    private static final String DATABASE_CUSTOMER_MAP_SUCCESS_SUFFIX = ".database_customer_map_success";
+    private static final String DATABASE_CUSTOMER_MAP_FAILURE_SUFFIX = ".database_customer_map_success";
+    private static final String DATABASE_GET_ALL_PRODUCTS_IN_STOCK_SUCCESS_SUFFIX = ".database_get_all_products_in_stock_success";
+    private static final String DATABASE_GET_ALL_PRODUCTS_IN_STOCK_FAILURE_SUFFIX = ".database_get_all_products_in_stock_failure";
+    private static final String DATABASE_NO_PRODUCTS_IN_STOCK_SUFFIX = ".database_no_products_in_stock";
+    private static final String DATABASE_ALL_PRODUCTS_MAP_SUCCESS_SUFFIX = ".database_all_products_map_success";
+    private static final String DATABASE_ALL_PRODUCTS_MAP_FAILURE_SUFFIX = ".database_all_products_map_failure";
 
     public String getProjectPrefix() { return "org.somerville.swag"; }
 
@@ -40,6 +48,16 @@ public class Events {
     public String getDatabaseInsertCustomerSuccess() { return getProjectPrefix() + DATABASE_INSERT_CUSTOMER_SUCCESS_SUFFIX; }
     public String getDatabaseInsertCustomerFailure() { return getProjectPrefix() + DATABASE_INSERT_CUSTOMER_FAILURE_SUFFIX; }
 
+    public String getDatabaseCustomerNotFound() { return getProjectPrefix() + DATABASE_CUSTOMER_NOT_FOUND_SUFFIX; }
 
+    public String getDatabaseCustomerMapSuccess() { return getProjectPrefix() + DATABASE_CUSTOMER_MAP_SUCCESS_SUFFIX; }
+    public String getDatabaseCustomerMapFailure() { return getProjectPrefix() + DATABASE_CUSTOMER_MAP_FAILURE_SUFFIX; }
 
+    public String getDatabaseGetAllProductsInStockSuccess() { return getProjectPrefix() + DATABASE_GET_ALL_PRODUCTS_IN_STOCK_SUCCESS_SUFFIX; }
+    public String getDatabaseGetAllProductsInStockFailure() { return getProjectPrefix() + DATABASE_GET_ALL_PRODUCTS_IN_STOCK_FAILURE_SUFFIX; }
+
+    public String getDatabaseNoProductsInStock() { return getProjectPrefix() + DATABASE_NO_PRODUCTS_IN_STOCK_SUFFIX; }
+
+    public String getDatabaseAllProductsMapSuccess() { return getProjectPrefix() + DATABASE_ALL_PRODUCTS_MAP_SUCCESS_SUFFIX; }
+    public String getDatabaseAllProductsMapFailure() { return getProjectPrefix() + DATABASE_ALL_PRODUCTS_MAP_FAILURE_SUFFIX; }
 }

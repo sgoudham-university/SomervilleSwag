@@ -1,9 +1,9 @@
 package org.somerville.swag.data.service;
 
 import org.apache.log4j.BasicConfigurator;
-import org.somerville.swag.data.domain.Events;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.somerville.swag.data.domain.Events;
 import org.somerville.swag.data.exception.FileWriterException;
 import org.somerville.swag.data.service.util.Clock;
 import org.somerville.swag.data.service.util.ClockImpl;
@@ -89,7 +89,7 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public void logDatabaseGetCustomerSuccess(int customerId) {
-        String logMessage = events.getDatabaseGetCustomerSuccess() + ": Customer ID - " + customerId;
+        String logMessage = events.getDatabaseGetCustomerSuccess() + ": CustomerID -> " + customerId;
         writeLog(logMessage);
     }
 
@@ -108,6 +108,51 @@ public class LoggingServiceImpl implements LoggingService {
     @Override
     public void logDatabaseInsertCustomerFailure(String insertStatement, String failureMessage) {
         String logMessage = events.getDatabaseInsertCustomerFailure() + ": " + failureMessage + " - Statement: " + insertStatement;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseCustomerNotFound() {
+        String logMessage = events.getDatabaseCustomerNotFound() + ": Customer Account Not Located";
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseCustomerMapSuccess(int customerId) {
+        String logMessage = events.getDatabaseCustomerMapSuccess() + ": CustomerID -> " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseCustomerMapFailure(String failureMessage) {
+        String logMessage = events.getDatabaseCustomerMapFailure() + ": " + failureMessage;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseGetAllProductsInStockSuccess() {
+        writeLog(events.getDatabaseGetAllProductsInStockSuccess());
+    }
+
+    @Override
+    public void logDatabaseGetAllProductsInStockFailure(String selectQuery, String failureMessage) {
+        String logMessage = events.getDatabaseGetAllProductsInStockFailure() + ": " + failureMessage + " - Statement: " + selectQuery;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseNoProductsInStock() {
+        writeLog(events.getDatabaseNoProductsInStock());
+    }
+
+    @Override
+    public void logDatabaseAllProductsMapSuccess() {
+        writeLog(events.getDatabaseAllProductsMapSuccess());
+    }
+
+    @Override
+    public void logDatabaseAllProductsMapFailure(String failureMessage) {
+        String logMessage = events.getDatabaseGetAllProductsInStockFailure() + ": " + failureMessage;
         writeLog(logMessage);
     }
 
