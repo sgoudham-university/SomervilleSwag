@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class LoggedIn implements CustomerState {
 
-    Customer customer;
+    private Customer customer;
 
     public LoggedIn(Customer customer) {
         this.customer = customer;
@@ -15,7 +15,7 @@ public class LoggedIn implements CustomerState {
 
     @Override
     public void signUp() {
-
+        
     }
 
     @Override

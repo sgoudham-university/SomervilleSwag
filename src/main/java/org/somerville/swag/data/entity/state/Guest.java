@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class Guest implements CustomerState {
 
-    Customer customer;
+    private Customer customer;
     private DBSource dbSource = new SQLiteSource();
 
     public Guest(Customer customer) {
@@ -19,24 +19,26 @@ public class Guest implements CustomerState {
     @Override
     public void signUp() {
         // Call DBExecuteInsertCustomer (Pass in Customer Object)
-        dbSource.insertCustomer(customer);
+        // dbSource.insertCustomer(customer);
 
     }
 
     @Override
     public void logIn() {
-        Customer newCustomer = dbSource.getCustomer("sgoud", "testPassword", customer);
+        dbSource.getCustomer("sgoudham@gmail.com", "testPassword", customer);
 
-        if (newCustomer.getEmail() != null) {
+        if (customer.getEmail() != null) {
             customer.changeCustomerState(new LoggedIn(customer));
+            // log customer logged in success
         } else {
-            // throw up error that account already exists
+            // throw up error that account not found
+            // log account not found
         }
     }
 
     @Override
     public void logOut() {
-
+        // TODO: Display error popup that you aren't logged in
     }
 
     @Override
@@ -56,7 +58,7 @@ public class Guest implements CustomerState {
 
     @Override
     public void purchaseItems() {
-
+        // TODO: Display error that you need to be logged in to checkout
     }
 
     @Override
