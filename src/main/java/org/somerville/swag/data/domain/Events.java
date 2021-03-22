@@ -12,6 +12,10 @@ public class Events {
     private static final String DATABASE_WRITE_FAILURE_SUFFIX = ".database_write_failure";
     private static final String DATABASE_READ_SUCCESS_SUFFIX = ".database_read_success";
     private static final String DATABASE_READ_FAILURE_SUFFIX = ".database_read_failure";
+    private static final String DATABASE_GET_CUSTOMER_SUCCESS_SUFFIX = ".database_get_customer_success";
+    private static final String DATABASE_GET_CUSTOMER_FAILURE_SUFFIX = ".database_get_customer_failure";
+    private static final String DATABASE_INSERT_CUSTOMER_SUCCESS_SUFFIX = ".database_insert_customer_success";
+    private static final String DATABASE_INSERT_CUSTOMER_FAILURE_SUFFIX = ".database_insert_customer_failure";
 
     public String getProjectPrefix() { return "org.somerville.swag"; }
 
@@ -29,6 +33,13 @@ public class Events {
 
     public String getDatabaseReadSuccess() { return getProjectPrefix() + DATABASE_READ_SUCCESS_SUFFIX; }
     public String getDatabaseReadFailure() { return getProjectPrefix() + DATABASE_READ_FAILURE_SUFFIX; }
+
+    public String getDatabaseGetCustomerSuccess() { return getProjectPrefix() + DATABASE_GET_CUSTOMER_SUCCESS_SUFFIX; }
+    public String getDatabaseGetCustomerFailure() { return getProjectPrefix() + DATABASE_GET_CUSTOMER_FAILURE_SUFFIX; }
+
+    public String getDatabaseInsertCustomerSuccess() { return getProjectPrefix() + DATABASE_INSERT_CUSTOMER_SUCCESS_SUFFIX; }
+    public String getDatabaseInsertCustomerFailure() { return getProjectPrefix() + DATABASE_INSERT_CUSTOMER_FAILURE_SUFFIX; }
+
 
 
 }
