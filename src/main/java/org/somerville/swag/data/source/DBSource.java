@@ -8,5 +8,5 @@ import java.util.List;
 public interface DBSource {
     Customer getCustomer(String email, String password, Customer customer);
     void insertCustomer(List<String> guestData);
-    List<Product> getAllProducts();
+    List<Product> getAllProductsInStock();
 }
