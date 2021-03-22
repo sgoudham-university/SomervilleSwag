@@ -12,4 +12,5 @@ public class Constants {
     public static final String POPULATE_TABLES_SCRIPT = RESOURCES_PATH + "database/PopulateProductTable.sql";
 
     public static final String GET_CUSTOMER_QUERY = "SELECT * FROM Customer WHERE Email = '{email}' AND Password = '{password}';";
+    public static final String INSERT_CUSTOMER_STATEMENT = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) VALUES('{forename}', '{surname}', '{email}', '{password}', '{addressline1}', '{addressline2}', '{city}', '{postcode}', '{phonenumber}');";
 }
