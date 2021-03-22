@@ -9,9 +9,11 @@ public class DBMapper {
 
     public DBMapper() { }
 
-    public Customer mapToCustomer(ResultSet customerData, Customer customer) {
+    public void mapToCustomer(ResultSet customerData, Customer customer) {
         try {
-            if (customerData.isBeforeFirst()) {
+            if (!customerData.isBeforeFirst()) {
+                // log customer not found
+            } else {
                 while (customerData.next()) {
                     customer.setCustomerId(customerData.getInt("CustomerId"));
                     customer.setForename(customerData.getString("Forename"));
@@ -25,9 +27,9 @@ public class DBMapper {
                     customer.setPhoneNumber(customerData.getString("PhoneNumber"));
                 }
             }
+            // log map success
         } catch (SQLException sqle) {
-            // Add logging service
+            // log map failure
         }
-        return customer;
     }
 }
