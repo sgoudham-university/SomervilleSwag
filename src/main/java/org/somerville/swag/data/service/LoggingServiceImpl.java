@@ -83,7 +83,31 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public void logDatabaseSelectFailure(String selectQuery, String failureMessage) {
-        String logMessage  = events.getDatabaseReadFailure() + ": " + failureMessage + " - Statement: " + selectQuery;
+        String logMessage = events.getDatabaseReadFailure() + ": " + failureMessage + " - Statement: " + selectQuery;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseGetCustomerSuccess(int customerId) {
+        String logMessage = events.getDatabaseGetCustomerSuccess() + ": Customer ID - " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseGetCustomerFailure(String selectQuery, String failureMessage) {
+        String logMessage = events.getDatabaseGetCustomerFailure() + ": " + failureMessage + " - Statement: " + selectQuery;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseInsertCustomerSuccess(String insertStatement) {
+        String logMessage = events.getDatabaseInsertCustomerSuccess() + ": " + insertStatement;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseInsertCustomerFailure(String insertStatement, String failureMessage) {
+        String logMessage = events.getDatabaseInsertCustomerFailure() + ": " + failureMessage + " - Statement: " + insertStatement;
         writeLog(logMessage);
     }
 

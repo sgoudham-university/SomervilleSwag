@@ -15,6 +15,10 @@ public interface LoggingService {
     void logDatabaseInsertFailure(String insertStatement, String failureMessage);
     void logDatabaseSelectSuccess(String selectQuery);
     void logDatabaseSelectFailure(String selectQuery, String failureMessage);
+    void logDatabaseGetCustomerSuccess (int customerId);
+    void logDatabaseGetCustomerFailure (String selectQuery, String failureMessage);
+    void logDatabaseInsertCustomerSuccess (String insertStatement);
+    void logDatabaseInsertCustomerFailure (String insertStatement, String failureMessage);
 
     void setClock(Clock clock);
     void setLogger(Logger logger);
