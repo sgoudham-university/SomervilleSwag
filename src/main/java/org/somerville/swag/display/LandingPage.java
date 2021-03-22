@@ -34,6 +34,7 @@ public class LandingPage {
         HashMap<Integer, Product> allProducts = getAllProducts();
         displayProductList(allProducts, new DefaultListModel<>());
 
+
         listOfProducts.addListSelectionListener(actionEvent -> {
             Product selectedProduct = listOfProducts.getSelectedValue();
 
@@ -64,6 +65,7 @@ public class LandingPage {
         viewBasketButton.addActionListener(actionEvent -> {
             new JFrameBuilder.Builder().buildDefaultJFrame(new Basket(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
+
         });
 
         addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket());
@@ -77,7 +79,7 @@ public class LandingPage {
 
             OrderLine orderLine = new OrderLine(selectedProduct, quantity);
             Order order = customer.getCurrentOrder();
-            order.addOrderLine(orderLine);
+            order.add(orderLine);
         }
     }
 

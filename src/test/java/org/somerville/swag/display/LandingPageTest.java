@@ -17,8 +17,8 @@ class LandingPageTest {
         Product expectedProduct = new Product(0, "Test Product", "TestDescription", BigDecimal.valueOf(10.99), 5, "TestPath");
         OrderLine actualOrderLine = new OrderLine(actualProduct, 1);
         Order expectedOrder = new Order();
-        expectedOrder.addOrderLine(actualOrderLine);
+        expectedOrder.add(actualOrderLine);
 
-        assertEquals(actualOrderLine, expectedOrder.getSingleOrderLine(expectedOrder.getOrderLinesList(),0));
+        assertEquals(actualOrderLine, expectedOrder.getSingleOrderLine(0));
     }
 }

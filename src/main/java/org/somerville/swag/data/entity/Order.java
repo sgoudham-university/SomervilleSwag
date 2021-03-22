@@ -1,18 +1,17 @@
 package org.somerville.swag.data.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private int orderId;
     private int customerId;
     private OrderLine orderLine;
-    private ArrayList<OrderLine> orderLinesList= new ArrayList<OrderLine>();
+    private List<OrderLine> orderLines = new ArrayList<OrderLine>();
 
-    public void Order(){
+    public Order() { }
 
-    }
-
-    public void Order(int orderId, int customerId){
+    public Order(int orderId, int customerId){
         setOrderId(orderId);
         setCustomerId(customerId);
     }
@@ -33,22 +32,21 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public ArrayList<OrderLine> getOrderLinesList() {
-        return orderLinesList;
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
     }
 
-    public void setOrderLinesList(ArrayList<OrderLine> orderLinesList) {
-        this.orderLinesList = orderLinesList;
+    public void setOrderLines(ArrayList<OrderLine> orderLines) {
+        this.orderLines = orderLines;
     }
 
 
     //change this shit to make use of class instances
-    public ArrayList<OrderLine> addOrderLine(OrderLine orderLine){
-        this.orderLinesList.add(orderLine);
-        return orderLinesList;
+    public void add(OrderLine orderLine){
+        orderLines.add(orderLine);
     }
 
-    public OrderLine getSingleOrderLine(ArrayList<OrderLine> orderLines, int index){
+    public OrderLine getSingleOrderLine(int index){
         return orderLines.get(index);
     }
 }
