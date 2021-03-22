@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Guest implements CustomerState {
 
     Customer customer;
+    private DBSource dbSource = new SQLiteSource();
 
     public Guest(Customer customer) {
         this.customer = customer;
@@ -17,24 +18,20 @@ public class Guest implements CustomerState {
 
     @Override
     public void signUp() {
-        DBSource dbSource = new SQLiteSource();
-        // Check Customer doesn't already exist
-        Customer customer = dbSource.getCustomer("sgoudham@gmail.com", "testPassword", this.customer);
+        // Call DBExecuteInsertCustomer (Pass in Customer Object)
+        dbSource.insertCustomer(customer);
 
-        if (!customer.getEmail().isEmpty()) {
-            // Call DBExecuteInsertCustomer (Pass in Customer Object)
-            dbSource.insertCustomer(customer);
-
-            // Change state to LoggedIn
-        } else {
-            // throw up error that account already exists
-            // How do we determine if query failed? Or customer does not exist?
-        }
     }
 
     @Override
     public void logIn() {
+        Customer newCustomer = dbSource.getCustomer("sgoud", "testPassword", customer);
 
+        if (newCustomer.getEmail() != null) {
+            customer.changeCustomerState(new LoggedIn(customer));
+        } else {
+            // throw up error that account already exists
+        }
     }
 
     @Override
