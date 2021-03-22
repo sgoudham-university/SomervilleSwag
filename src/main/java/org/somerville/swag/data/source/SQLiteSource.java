@@ -3,6 +3,8 @@ package org.somerville.swag.data.source;
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Product;
 import org.somerville.swag.data.exception.SQLStatementException;
+import org.somerville.swag.data.service.LoggingService;
+import org.somerville.swag.data.service.LoggingServiceImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +16,8 @@ public class SQLiteSource implements DBSource {
 
     private DBExecute dbExecute;
     private DBMapper dbMapper;
+
+    private LoggingService loggingService = LoggingServiceImpl.getInstance();
 
     public SQLiteSource() {
         dbExecute = new SQLiteExecute(SQLiteConnection.getInstance());
@@ -27,21 +31,28 @@ public class SQLiteSource implements DBSource {
 
         try (ResultSet customerData = dbExecute.executeSelect(getCustomerQuery)) {
             newCustomer = dbMapper.mapToCustomer(customerData, customer);
-            // Add log success
-        } catch (SQLStatementException | SQLException e) {
-            // add log failure
+            loggingService.logDatabaseGetCustomerSuccess(newCustomer.getCustomerId());
+        } catch (SQLStatementException | SQLException err) {
+            loggingService.logDatabaseGetCustomerFailure(getCustomerQuery, err.getMessage());
         }
 
         return newCustomer;
     }
 
     @Override
-    public void insertCustomer(Customer guest) {
-
+    public void insertCustomer(List<String> guestData) {
+        String insertCustomerStatement = " ";
+        try {
+            dbExecute.executeInsert(insertCustomerStatement);
+            loggingService.logDatabaseInsertCustomerSuccess(insertCustomerStatement);
+        } catch (SQLStatementException sse) {
+            loggingService.logDatabaseInsertCustomerFailure(insertCustomerStatement, sse.getMessage());
+        }
     }
 
     @Override
     public List<Product> getAllProducts() {
+
         return null;
     }
 
