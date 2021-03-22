@@ -11,9 +11,7 @@ public class DBMapper {
 
     public Customer mapToCustomer(ResultSet customerData, Customer customer) {
         try {
-            if (!customerData.isBeforeFirst()) {
-                System.out.println("hi");
-            } else {
+            if (customerData.isBeforeFirst()) {
                 while (customerData.next()) {
                     customer.setCustomerId(customerData.getInt("CustomerId"));
                     customer.setForename(customerData.getString("Forename"));
@@ -28,7 +26,7 @@ public class DBMapper {
                 }
             }
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            // Add logging service
         }
         return customer;
     }
