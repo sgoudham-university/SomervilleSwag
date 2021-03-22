@@ -8,10 +8,10 @@ import org.somerville.swag.data.service.LoggingServiceImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.somerville.swag.data.source.util.Constants.GET_CUSTOMER_QUERY;
-import static org.somerville.swag.data.source.util.Constants.INSERT_CUSTOMER_STATEMENT;
+import static org.somerville.swag.data.source.util.Constants.*;
 
 public class SQLiteSource implements DBSource {
 
@@ -63,9 +63,17 @@ public class SQLiteSource implements DBSource {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProductsInStock() {
+        List<Product> allProducts = new ArrayList<>();
 
-        return null;
+        try (ResultSet allProductsData = dbExecute.executeSelect(GET_ALL_PRODUCTS_IN_STOCK_QUERY)) {
+            dbMapper.mapToProducts(allProductsData, allProducts);
+            loggingService.logDatabaseGetAllProductsInStockSuccess();
+        } catch (SQLStatementException | SQLException err) {
+            loggingService.logDatabaseGetAllProductsInStockFailure(GET_ALL_PRODUCTS_IN_STOCK_QUERY, err.getMessage());
+        }
+
+        return allProducts;
     }
 
     public void setDbExecute(DBExecute dbExecute) {
