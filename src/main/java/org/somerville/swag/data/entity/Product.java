@@ -10,69 +10,34 @@ public class Product {
     private String description;
     private BigDecimal price;
     private int stockLevel;
-    private String imagepath;
+    private String imagePath;
 
-    public Product(int productId, String name, String description, BigDecimal price,
-                   int stockLevel, String imagepath) {
+    public Product() { }
+
+    public Product(int productId, String name, String description, BigDecimal price, int stockLevel, String imagePath) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stockLevel = stockLevel;
-        this.imagepath = imagepath;
+        this.imagePath = imagePath;
     }
 
     public String getFormattedPrice(){
         return "£" + this.price.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public int getProductId() {
-        return productId;
-    }
+    public void setProductId(int productId) { this.productId = productId; }
+    public void setName(String name) { this.name = name; }
+    public void setDescription(String description) { this.description = description; }
+    public void setPrice(BigDecimal price) { this.price = price; }
+    public void setStockLevel(int stockLevel) { this.stockLevel = stockLevel; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getStockLevel() {
-        return stockLevel;
-    }
-
-    public void setStockLevel(int stockLevel) {
-        this.stockLevel = stockLevel;
-    }
-
-    public String getImagepath() {
-        return imagepath;
-    }
-
-    public void setImagepath(String imagepath) {
-        this.imagepath = imagepath;
-    }
-
-
+    public int getProductId() { return productId; }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public BigDecimal getPrice() { return price; }
+    public int getStockLevel() { return stockLevel; }
+    public String getImagePath() { return imagePath; }
 }
