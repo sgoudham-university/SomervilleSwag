@@ -49,6 +49,7 @@ public class JFrameBuilder {
             jFrame.setContentPane(contentPane);
             jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             jFrame.pack();
+            jFrame.setMinimumSize(new Dimension(700, 600));
             jFrame.setLocationRelativeTo(null);
             jFrame.setVisible(isVisible);
             return jFrame;
