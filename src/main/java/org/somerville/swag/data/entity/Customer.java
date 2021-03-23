@@ -30,16 +30,16 @@ public class Customer {
         this.currentOrder = order;
     }
 
-    public Customer(String email, String password, Order currentOrder, int customerId, String forename,
-                    String surname, String addressLine1, String addressLine2, String city, String postcode,
-                    String phoneNumber) {
+    public Customer(Order currentOrder, int customerId, String forename, String surname,
+                    String email, String password, String addressLine1, String addressLine2,
+                    String city, String postcode, String phoneNumber) {
         this.customerState = new LoggedIn(this);
-        this.email = email;
-        this.password = password;
         this.currentOrder = currentOrder;
         this.customerId = customerId;
         this.forename = forename;
         this.surname = surname;
+        this.email = email;
+        this.password = password;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
