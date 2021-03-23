@@ -16,6 +16,7 @@ public class Basket {
     public JPanel root;
     private JButton buyNowButton;
     private JButton backButton;
+    private JLabel orderTotal;
 
     public Basket(JFrame oldFrame, Customer customer) {
 
@@ -57,6 +58,7 @@ public class Basket {
             Object[] newRow = { orderLine.getProductId(), orderLine.getQuantity(), orderLine.getProductId().getFormattedPrice()};
             model.addRow(newRow);
         }                           //we can set the order total in here also
+        orderTotal.setText(o.getFormattedTotal());
         tblBasket.setModel(model);
 
 
