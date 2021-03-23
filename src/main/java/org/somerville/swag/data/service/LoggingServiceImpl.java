@@ -158,13 +158,18 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public void writeLog(String logMessage) {
-        String actualLogMessage = "[" + clock.getCurrentTime() + "] " + logMessage;
+        String actualLogMessage = retrieveLogMessage(logMessage);
         logger.info(actualLogMessage);
         try {
             textFileWriter.writeToFile(actualLogMessage, true);
         } catch (FileWriterException fwe) {
             logger.info(fwe.getMessage());
         }
+    }
+
+    @Override
+    public String retrieveLogMessage(String logMessage) {
+        return "[" + clock.getCurrentTime() + "] " + logMessage;
     }
 
     @Override
