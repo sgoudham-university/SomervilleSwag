@@ -152,7 +152,7 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public void logDatabaseAllProductsMapFailure(String failureMessage) {
-        String logMessage = events.getDatabaseGetAllProductsInStockFailure() + ": " + failureMessage;
+        String logMessage = events.getDatabaseAllProductsMapFailure() + ": " + failureMessage;
         writeLog(logMessage);
     }
 
