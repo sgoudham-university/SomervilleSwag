@@ -90,7 +90,7 @@ PlaceHolder
 
 ### Retrospective
 
-We held our retrospective on [MetroRetro]() using the Sailboat method. As a direct result of this, actions were taken to improve
+We held our retrospective on [MetroRetro](https://metroretro.io/board/LBWNBAXK6Q48) using the Sailboat method. As a direct result of this, actions were taken to improve
 our teams workflow and processes. 
 
 ![MetroRetro Board](https://i.imgur.com/unU1tyc.png)
