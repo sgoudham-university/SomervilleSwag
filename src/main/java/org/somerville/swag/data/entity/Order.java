@@ -2,6 +2,7 @@ package org.somerville.swag.data.entity;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,13 +53,12 @@ public class Order {
     }
 
     public BigDecimal getTotal() {
-        BigDecimal total = new BigDecimal(BigInteger.valueOf(0));
-        int i;
+        BigDecimal total = BigDecimal.ZERO;
         for(OrderLine order : orderLines){
-           // i = i + (order.getQuantity() * order.getProductId().getPrice());
+            total = total.add(order.getProductId().getPrice().multiply(new BigDecimal(order.getQuantity())));
         }
-        //for(item in orderLines){
-        // total = total + (item.getQuantity * item.getPrice)}
-        return  null;
+        return  total;
     }
+
+    public String getFormattedTotal(){return "£" + getTotal().setScale(2, RoundingMode.HALF_UP);}
 }
