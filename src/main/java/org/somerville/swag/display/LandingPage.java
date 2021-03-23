@@ -30,10 +30,10 @@ public class LandingPage {
 
         initialiseFrame();
 
-        quantitySpinner.setBackground(new Color(9, 45, 71));
-        imagePanel.setBackground(new Color(9, 45, 71));
-        productPanel.setBackground(new Color(9, 45, 71));
-        listOfProducts.setBackground(new Color(9, 45, 71));
+//        quantitySpinner.setBackground(new Color(9, 45, 71));
+//        imagePanel.setBackground(new Color(9, 45, 71));
+//        productPanel.setBackground(new Color(9, 45, 71));
+//        listOfProducts.setBackground(new Color(9, 45, 71));
         HashMap<Integer, Product> allProducts = getAllProducts();
         displayProductList(allProducts, new DefaultListModel<>());
 
@@ -78,17 +78,17 @@ public class LandingPage {
         });
 
         signUpButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame(new SignUp(oldFrame, customer).root,true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("Sign Up", new SignUp(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         logInButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame(new LogIn(oldFrame, customer).root,true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("Log In", new LogIn(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         viewBasketButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame(new Basket(oldFrame, customer).root,true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("Your Basket", new Basket(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
 
         });
@@ -152,6 +152,6 @@ public class LandingPage {
 
     public static void main(String[] args) {
         Customer customer = new Customer();
-        new JFrameBuilder.Builder().buildDefaultJFrame(new LandingPage(new JFrame(), customer).root, true);
+        new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(new JFrame(), customer).root, true);
     }
 }

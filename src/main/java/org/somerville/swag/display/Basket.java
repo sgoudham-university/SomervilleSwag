@@ -66,12 +66,12 @@ public class Basket {
         //---------------------END TABLE LAYOUT-------------------------------------------------------------------------
 
         backButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame(new LandingPage(oldFrame, customer).root, true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
         buyNowButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame(new Purchase(oldFrame, customer).root, true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("Checkout", new Purchase(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
     }

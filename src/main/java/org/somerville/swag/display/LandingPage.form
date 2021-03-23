@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="708" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-16175801"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="cae2a" binding="productPanel" layout-manager="GridLayoutManager" row-count="12" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -13,7 +15,9 @@
         <constraints>
           <grid row="0" column="1" row-span="4" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-16175801"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="fab6b" binding="imagePanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -21,7 +25,9 @@
             <constraints>
               <grid row="5" column="1" row-span="5" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-16175801"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="25334" class="javax.swing.JLabel" binding="imageDisplay">
@@ -69,6 +75,7 @@
               <component id="e638e" class="javax.swing.JList" binding="listOfProducts">
                 <constraints/>
                 <properties>
+                  <background color="-16175801"/>
                   <font name="Berlin Sans FB Demi" size="18" style="1"/>
                   <foreground color="-1"/>
                   <minimumSize width="0" height="0"/>
