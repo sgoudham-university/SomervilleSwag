@@ -7,16 +7,17 @@ import org.somerville.swag.data.exception.FileWriterException;
 import java.io.IOException;
 import java.util.List;
 
-import static org.hamcrest.Matchers.empty;
-import static org.junit.jupiter.api.Assertions.*;
-
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.spy;
 
 class MyTextFileWriterTest {
 
-    private MyFileWriter myFileWriter;
+    MyFileWriter myFileWriter;
 
     @BeforeEach
     void setup() {
