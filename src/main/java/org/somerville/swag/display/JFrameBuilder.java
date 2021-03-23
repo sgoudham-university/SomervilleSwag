@@ -48,8 +48,9 @@ public class JFrameBuilder {
             jFrame.setTitle("Somerville Swag");
             jFrame.setContentPane(contentPane);
             jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            jFrame.getContentPane().setBackground(new Color(9, 45, 71));
             jFrame.pack();
-            jFrame.setMinimumSize(new Dimension(700, 600));
+            jFrame.setMinimumSize(new Dimension(750, 650));
             jFrame.setLocationRelativeTo(null);
             jFrame.setVisible(isVisible);
             return jFrame;
