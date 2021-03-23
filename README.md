@@ -88,7 +88,23 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 
 PlaceHolder
 
-### Retrospective Actions
+### Retrospective
 
-PlaceHolder
+We held our retrospective on [MetroRetro]() using the Sailboat method. As a direct result of this, actions were taken to improve
+our teams workflow and processes. 
 
+![MetroRetro Board](https://i.imgur.com/unU1tyc.png)
+
+#### Actions Taken 
+
+1. Project has gotten larger and increased in complexity with group members working on different aspects of the program, 
+  in order for all group members to reacquaint themselves with the whole project. A meeting will be scheduled to walk through
+  the project in its entirety, focusing on all classes and the dataflow. - **Owned By Goudham Suresh**
+2. All group members have time constraints, whether it be real life, work commitments or other University coursework / reports. 
+   To boost productivity and promote more collaboration between group members, regular meetings will be scheduled at times agreed upon
+   by everyone. Attendance will be optional but allows for group members to collaborate at specific times and provide more structure for working
+   on the group project. - **Owned By Robert Ranson**
+3. All skill levels are present in our group, varying from beginner/intermediate to experienced/advanced. Pair programming sessions are incredibly
+   valuable as they provide the lesser experienced person with more knowledge while also reinforcing concepts/knowledge for the more experienced programmer.
+   More pair programming sessions will be scheduled and advocated for within the group. A Microsoft Teams call should always be up if someone is 
+   working on the project, encouraging other group members to join in and pick up new concepts. - **Owned By Alan Robinson**
