@@ -30,6 +30,7 @@ public interface LoggingService {
     void logDatabaseAllProductsMapSuccess();
     void logDatabaseAllProductsMapFailure(String failureMessage);
 
+    String retrieveLogMessage(String logMessage);
     void setClock(Clock clock);
     void setLogger(Logger logger);
     void setTextFileWriter(MyFileWriter textFileWriter);
