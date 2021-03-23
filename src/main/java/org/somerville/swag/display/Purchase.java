@@ -8,12 +8,12 @@ import java.time.Month;
 import java.util.Date;
 
 public class Purchase {
-    private JTextField textField1;
+    private JTextField txtCardNo;
     private JComboBox comMonth;
     private JComboBox comYear;
     private JButton confirmButton;
     private JButton backButton;
-    private JTextField textField2;
+    private JTextField txtCvv2;
     public JPanel root;
 
     public Purchase(JFrame oldFrame, Customer customer) {
@@ -33,6 +33,13 @@ public class Purchase {
 
         confirmButton.addActionListener(actionEvent -> {
             customer.purchaseItems();
+
+            if (txtCardNo.getText().length() != 16 || txtCardNo.getText().contains("[a-zA-Z]+") || txtCvv2.getText().length() != 3 || txtCardNo.getText().contains("[a-zA-Z]+")){
+                JOptionPane.showMessageDialog(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
+                        "Card Number Error", JOptionPane.ERROR_MESSAGE);
+            } else{
+                JOptionPane.showMessageDialog(root, "Your Swag will be with you as soon as possible :)","Swag Success", JOptionPane.INFORMATION_MESSAGE);
+            }
         });
     }
 }
