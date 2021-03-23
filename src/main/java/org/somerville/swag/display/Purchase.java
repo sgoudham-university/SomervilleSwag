@@ -34,10 +34,10 @@ public class Purchase {
         confirmButton.addActionListener(actionEvent -> {
             customer.purchaseItems();
 
-            if (txtCardNo.getText().length() != 16 || txtCardNo.getText().contains("[a-zA-Z]+") || txtCvv2.getText().length() != 3 || txtCardNo.getText().contains("[a-zA-Z]+")){
+             if (!txtCardNo.getText().strip().matches("[0-9]{16}") || !txtCvv2.getText().strip().matches("[0-9]{3}")){
                 JOptionPane.showMessageDialog(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
                         "Card Number Error", JOptionPane.ERROR_MESSAGE);
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(root, "Your Swag will be with you as soon as possible :)","Swag Success", JOptionPane.INFORMATION_MESSAGE);
             }
         });
