@@ -8,17 +8,18 @@ import org.mockito.Spy;
 import org.slf4j.Logger;
 import org.somerville.swag.data.exception.FileWriterException;
 import org.somerville.swag.data.service.util.Clock;
+import org.somerville.swag.data.service.util.ClockStub;
 import org.somerville.swag.data.source.MyTextFileWriter;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 class LoggingServiceImplTest {
-
-    @Mock
-    Clock clock;
 
     @Mock
     MyTextFileWriter myTextFileWriter;
@@ -56,42 +57,58 @@ class LoggingServiceImplTest {
 
     @Test
     void successfullyWriteToLog() throws FileWriterException {
-        String expectedCurrentTime = "2010-04-23 12:12:12";
+        String expectedCurrentTime = "2010-04-23 12:12:12.111111";
         String expectedLogMessage = "testLogMessage";
+        String expectedFullLogMessage = "[" + expectedCurrentTime + "] " + expectedLogMessage;
+        Clock clockStub = new ClockStub();
 
-        loggingService.setClock(clock);
+        loggingService.setClock(clockStub);
         loggingService.setTextFileWriter(myTextFileWriter);
 
-        when(clock.getCurrentTime()).thenReturn(expectedCurrentTime);
-        doNothing().when(myTextFileWriter).writeToFile("[" + expectedCurrentTime + "] " + expectedLogMessage, true);
+        doNothing().when(myTextFileWriter).writeToFile(expectedFullLogMessage, true);
 
         assertDoesNotThrow(() -> loggingService.writeLog(expectedLogMessage));
 
-        verify(clock, times(1)).getCurrentTime();
-        verify(myTextFileWriter, times(1)).writeToFile("[" + expectedCurrentTime + "] " + expectedLogMessage, true);
-        verifyNoMoreInteractions(clock);
+        verify(loggingService, times(1)).retrieveLogMessage(expectedLogMessage);
+        verify(myTextFileWriter, times(1)).writeToFile(expectedFullLogMessage, true);
         verifyNoMoreInteractions(myTextFileWriter);
     }
 
     @Test
     void failToWriteToLog() throws FileWriterException {
-        String expectedCurrentTime = "2010-04-23 12:12:12";
+        String expectedCurrentTime = "2010-04-23 12:12:12.111111";
         String expectedLogMessage = "testLogMessage";
+        String expectedFullLogMessage = "[" + expectedCurrentTime + "] " + expectedLogMessage;
+        Clock clockStub = new ClockStub();
 
-        String expectedExceptionMessage = "fail to write";
+        String expectedExceptionMessage = "Failure!";
         FileWriterException expectedException = new FileWriterException(expectedExceptionMessage, new IOException());
 
         loggingService.setLogger(logger);
-        loggingService.setClock(clock);
+        loggingService.setClock(clockStub);
         loggingService.setTextFileWriter(myTextFileWriter);
 
-        when(clock.getCurrentTime()).thenReturn(expectedCurrentTime);
-        doThrow(expectedException).when(myTextFileWriter).writeToFile("[" + expectedCurrentTime + "] " + expectedLogMessage, true);
+        doThrow(expectedException).when(myTextFileWriter).writeToFile(expectedFullLogMessage, true);
 
         loggingService.writeLog(expectedLogMessage);
 
-        verify(logger, times(1)).info("[" + expectedCurrentTime + "] " + expectedLogMessage);
+        verify(logger, times(1)).info(expectedFullLogMessage);
         verify(logger, times(1)).info(expectedExceptionMessage);
         verifyNoMoreInteractions(logger);
     }
+
+    @Test
+    void successfullyRetrieveLogMessage() {
+        String expectedCurrentTime = "2010-04-23 12:12:12.111111";
+        String expectedLogMessage = "testLogMessage";
+        String expectedFullLogMessage = "[" + expectedCurrentTime + "] " + expectedLogMessage;
+        Clock clockStub = new ClockStub();
+
+        loggingService.setClock(clockStub);
+
+        String actualFullLogMessage = loggingService.retrieveLogMessage(expectedLogMessage);
+
+        assertThat(actualFullLogMessage, is(expectedFullLogMessage));
+    }
+
 }
