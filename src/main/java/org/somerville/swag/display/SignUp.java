@@ -7,18 +7,18 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class SignUp {
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField7;
-    private JPasswordField passwordField1;
-    private JPasswordField passwordField2;
+    private JTextField txtLastName;
+    private JTextField txtPhoneNo;
+    private JTextField txtEmail;
+    private JTextField txtAddress1;
+    private JTextField txtAddress2;
+    private JTextField txtFirstName;
+    private JPasswordField txtPassword;
+    private JPasswordField txtPasswordConfirm;
 
     private JButton confirmButton;
     private JButton backButton;
     public JPanel root;
-    private JTextField textField5;
     private JLabel lblAddressLineTwo;
     private JLabel lblPhoneNumber;
     private JLabel lblAddressLineOne;
@@ -35,8 +35,25 @@ public class SignUp {
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
-        confirmButton.addActionListener(actionEvent -> customer.signUp());
-
+        confirmButton.addActionListener(actionEvent -> {
+            if(!txtFirstName.getText().strip().matches("[a-zA-Z]{1,15}") ||
+                    !txtLastName.getText().strip().matches("[a-zA-Z]{1,15}") ||
+                    !txtEmail.getText().strip().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") ||
+                    !String.valueOf(txtPassword.getPassword()).matches("(^?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8}$") ||
+                    !String.valueOf(txtPasswordConfirm.getPassword()).matches("(^?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8}$") ||
+                    !txtAddress1.getText().matches("^[a-zA-Z0-9_ ]*$") ||
+                    !txtPhoneNo.getText().strip().matches("[0-9]{11}") &&
+                    !String.valueOf(txtPassword.getPassword()).equals(String.valueOf(txtPasswordConfirm.getPassword()))
+            )
+            {
+                JOptionPane.showMessageDialog(root, "Something went wrong and the code is so bad I dont know what",
+                        "Sign In error", JOptionPane.ERROR_MESSAGE);
+                //regex expression for all txtFields
+                //include J option Panes as error messages
+                //database call once all validation is completed
+            }
+            customer.signUp();
+        });
 
     }
 }
