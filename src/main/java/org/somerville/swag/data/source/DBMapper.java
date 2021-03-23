@@ -32,8 +32,8 @@ public class DBMapper {
                     customer.setPostcode(customerData.getString("Postcode"));
                     customer.setPhoneNumber(customerData.getString("PhoneNumber"));
                 }
+                loggingService.logDatabaseCustomerMapSuccess(customer.getCustomerId());
             }
-            loggingService.logDatabaseCustomerMapSuccess(customer.getCustomerId());
         } catch (SQLException sqle) {
             loggingService.logDatabaseCustomerMapFailure(sqle.getMessage());
         }
@@ -54,8 +54,8 @@ public class DBMapper {
                             allProductsData.getString("ImagePath")
                     ));
                 }
+                loggingService.logDatabaseAllProductsMapSuccess();
             }
-            loggingService.logDatabaseAllProductsMapSuccess();
         } catch (SQLException sqle) {
             loggingService.logDatabaseAllProductsMapFailure(sqle.getMessage());
         }
