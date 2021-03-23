@@ -9,8 +9,8 @@ import java.util.Objects;
 
 public class Guest implements CustomerState {
 
-    private Customer customer;
-    private DBSource dbSource = new SQLiteSource();
+    private final Customer customer;
+    private final DBSource dbSource = new SQLiteSource();
 
     public Guest(Customer customer) {
         this.customer = customer;
@@ -18,7 +18,12 @@ public class Guest implements CustomerState {
 
     @Override
     public void signUp() {
-        // Call DBExecuteInsertCustomer (Pass in Customer Object)
+
+        // TODO: Check if customer already has an account (check email)
+
+        // TODO: Throw JOptionPane Error if they already have an account
+
+        // TODO: Call DBExecuteInsertCustomer (Pass in Customer Object)
         // dbSource.insertCustomer(customer);
 
     }
@@ -29,10 +34,10 @@ public class Guest implements CustomerState {
 
         if (customer.getEmail() != null) {
             customer.changeCustomerState(new LoggedIn(customer));
-            // log customer logged in success
+            // TODO: Log customer logged in success
         } else {
-            // throw up error that account not found
-            // log account not found
+            // TODO: Throw up error that account not found
+            // TODO: Log account not found
         }
     }
 
