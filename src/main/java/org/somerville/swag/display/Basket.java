@@ -23,6 +23,7 @@ public class Basket {
          * Load and display pretend order at page construction
          */
 
+        //STUB
         Product productA = new Product(0,"Product A","Description A", BigDecimal.valueOf(19.99), 5, "Path");
         Product productB = new Product(1,"Product B","Description B", BigDecimal.valueOf(29.99), 10, "Path");
         Product productC = new Product(2,"Product C","Description C", BigDecimal.valueOf(29.99), 10, "Path");
@@ -37,11 +38,14 @@ public class Basket {
         for(int i = 0; i<70;i++){
             o.add(lineC);
         }
-        List<OrderLine> lines = o.getOrderLines();
+        //End STUB
+
+
+        List<OrderLine> lines = o.getOrderLines(); //replace o.getOrderLines() with customer.getOrder().getOrderLinesAsList()
 
         //---------------------TABLE LAYOUT-----------------------------------------------------------------------------
 
-        String[] columNames = {"Product" , "Quantity"};
+        String[] columNames = {"Product" , "Quantity", "Price"};
         DefaultTableModel model = new DefaultTableModel(columNames,0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -50,9 +54,9 @@ public class Basket {
         };
 
         for (OrderLine orderLine : lines) {
-            Object[] newRow = { orderLine.getProductId(), orderLine.getQuantity() };
+            Object[] newRow = { orderLine.getProductId(), orderLine.getQuantity(), orderLine.getProductId().getFormattedPrice()};
             model.addRow(newRow);
-        }
+        }                           //we can set the order total in here also
         tblBasket.setModel(model);
 
 

@@ -1,5 +1,7 @@
 package org.somerville.swag.data.entity;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +11,10 @@ public class Order {
     private OrderLine orderLine;
     private List<OrderLine> orderLines = new ArrayList<OrderLine>();
 
-    public Order() { }
+    public Order() {
+    }
 
-    public Order(int orderId, int customerId){
+    public Order(int orderId, int customerId) {
         setOrderId(orderId);
         setCustomerId(customerId);
     }
@@ -40,13 +43,22 @@ public class Order {
         this.orderLines = orderLines;
     }
 
-
-    //change this shit to make use of class instances
-    public void add(OrderLine orderLine){
+    public void add(OrderLine orderLine) {
         orderLines.add(orderLine);
     }
 
-    public OrderLine getSingleOrderLine(int index){
+    public OrderLine getSingleOrderLine(int index) {
         return orderLines.get(index);
+    }
+
+    public BigDecimal getTotal() {
+        BigDecimal total = new BigDecimal(BigInteger.valueOf(0));
+        int i;
+        for(OrderLine order : orderLines){
+           // i = i + (order.getQuantity() * order.getProductId().getPrice());
+        }
+        //for(item in orderLines){
+        // total = total + (item.getQuantity * item.getPrice)}
+        return  null;
     }
 }
