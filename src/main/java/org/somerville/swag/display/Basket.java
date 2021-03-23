@@ -34,10 +34,9 @@ public class Basket {
         Order o = c.getCurrentOrder();
         o.add(lineA);
         o.add(lineB);
-        o.add(lineC);
-
-
-
+        for(int i = 0; i<70;i++){
+            o.add(lineC);
+        }
         List<OrderLine> lines = o.getOrderLines();
 
         //---------------------TABLE LAYOUT-----------------------------------------------------------------------------
