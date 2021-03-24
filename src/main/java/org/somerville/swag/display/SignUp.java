@@ -1,10 +1,9 @@
 package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
-import org.somerville.swag.data.source.SQLiteExecute;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class SignUp {
     private JTextField txtLastName;
@@ -38,17 +37,18 @@ public class SignUp {
         });
 
         confirmButton.addActionListener(actionEvent -> {
-            customer.signUp(root,
-                    txtFirstName.getText(),
-                    txtLastName.getText(),
-                    txtEmail.getText(),
-                    String.valueOf(txtPassword.getPassword()),
-                    String.valueOf(txtPasswordConfirm.getPassword()),
-                    txtAddress1.getText(),
-                    txtAddress2.getText(),
-                    txtCity.getText(),
-                    txtPostcode.getText(),
-                    txtPhoneNo.getText());
+            customer.signUp(root, new ArrayList<>() {{
+                add(txtFirstName.getText());
+                add(txtLastName.getText());
+                add(txtEmail.getText());
+                add(String.valueOf(txtPassword.getPassword()));
+                add(String.valueOf(txtPasswordConfirm.getPassword()));
+                add(txtAddress1.getText());
+                add(txtAddress2.getText());
+                add(txtCity.getText());
+                add(txtPostcode.getText());
+                add(txtPhoneNo.getText());
+            }});
 
             new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
