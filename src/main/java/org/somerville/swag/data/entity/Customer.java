@@ -4,6 +4,7 @@ import org.somerville.swag.data.entity.state.Guest;
 import org.somerville.swag.data.entity.state.LoggedIn;
 
 import javax.swing.*;
+import java.util.List;
 
 public class Customer {
     private CustomerState customerState;
@@ -53,7 +54,7 @@ public class Customer {
         this.customerState = customerState;
     }
 
-    public void signUp(JPanel root, String... guestData) {
+    public void signUp(JPanel root, List<String> guestData) {
         customerState.signUp(root, guestData);
     }
 
@@ -69,16 +70,16 @@ public class Customer {
         customerState.viewBasket();
     }
 
-    public void addProductToBasket() {
-        customerState.addProductToBasket();
+    public void addProductToBasket(Product product, int quantity) {
+        customerState.addProductToBasket(product, quantity);
     }
 
-    public void removeProductFromBasket() {
-        customerState.removeProductFromBasket();
+    public void removeProductFromBasket(OrderLine orderLine) {
+        customerState.removeProductFromBasket(orderLine);
     }
 
-    public void purchaseItems() {
-        customerState.purchaseItems();
+    public void purchaseItems(JPanel root) {
+        customerState.purchaseItems(root);
     }
 
     public void setCustomerId(int customerId) { this.customerId = customerId; }
