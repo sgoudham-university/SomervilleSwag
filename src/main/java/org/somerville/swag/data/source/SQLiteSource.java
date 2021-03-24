@@ -55,7 +55,7 @@ public class SQLiteSource implements DBSource {
                 .replace("{phonenumber}", guestData.get(8));
 
         try {
-            dbExecute.executeInsert(insertCustomerStatement);
+            dbExecute.executeUpdate(insertCustomerStatement);
             loggingService.logDatabaseInsertCustomerSuccess(insertCustomerStatement);
         } catch (SQLStatementException sse) {
             loggingService.logDatabaseInsertCustomerFailure(insertCustomerStatement, sse.getMessage());
