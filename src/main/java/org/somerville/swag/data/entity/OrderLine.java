@@ -7,7 +7,7 @@ public class OrderLine {
     private Product product;
     private int quantity;
 
-    public OrderLine(){ }
+    public OrderLine() { }
 
     public OrderLine(Product product, int quantity) {
         this.product = product;
