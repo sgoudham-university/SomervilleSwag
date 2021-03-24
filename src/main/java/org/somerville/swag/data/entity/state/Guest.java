@@ -2,13 +2,15 @@ package org.somerville.swag.data.entity.state;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.CustomerState;
+import org.somerville.swag.data.entity.OrderLine;
+import org.somerville.swag.data.entity.Product;
 import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
 import org.somerville.swag.data.source.DBSource;
 import org.somerville.swag.data.source.SQLiteSource;
 
 import javax.swing.*;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Guest implements CustomerState {
@@ -23,45 +25,34 @@ public class Guest implements CustomerState {
     }
 
     @Override
-    public void signUp(JPanel root, String[] guestData) {
-        String forename = guestData[0];
-        String surname = guestData[1];
-        String email = guestData[2];
-        String password = guestData[3];
-        String passwordConfirm = guestData[4];
-        String addressLineOne = guestData[5];
-        String addressLineTwo = guestData[6];
-        String city = guestData[7];
-        String postcode = guestData[8];
-        String phoneNo = guestData[9];
+    public void signUp(JPanel root, List<String> guestData) {
+        String forename = guestData.get(0);
+        String surname = guestData.get(1);
+        String email = guestData.get(2);
+        String password = guestData.get(3);
+        String passwordConfirm = guestData.get(4);
+        String addressLine1 = guestData.get(5);
+        String addressLine2 = guestData.get(6);
+        String city = guestData.get(7);
+        String postcode = guestData.get(8);
+        String phoneNumber = guestData.get(9);
 
-        if(!forename.strip().matches("[a-zA-Z]{1,15}") //|| //only characters, min length 1 - max length 15
-//                !surName.strip().matches("[a-zA-Z]{1,15}") || //only characters, min length 1 - max length 15
-//                !email.strip().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") || //Simple email expression. Doesn't allow numbers in the domain name and doesn't allow for top level domains that are less than 2 or more than 3 letters (which is fine until they allow more). Doesn't handle multiple &quot;.&quot; in the domain (joe@abc.co.uk).
-//                !password.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be use
-//                !passwordConfirm.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be used
-//                !addressLineOne.matches("^[a-zA-Z0-9_ ]*$") || //no special characters, whisepace premitted
-//                !city.matches("^[a-zA-Z_ ]*$") || //Only characters, whitespace permitted, will accept empty string
-//                !postcode.matches("^[a-zA-Z0-9_ ]{6,7}$") || //characters and numbers, 6-7 characters, whitespace permitted
-//                !phoneNo.matches("[0-9]{11}") || //only numbers,, 11 characters
-//                !password.equals(passwordConfirm) //both password fields must match
-        )
-        {
+        if(validateInformation(forename, surname, email, password, passwordConfirm, addressLine1, city, postcode, phoneNumber)) {
             JOptionPane.showMessageDialog(root, "Something went wrong and the code is so bad I dont know what",
-                    "Sign In error", JOptionPane.ERROR_MESSAGE);
+                    "Sign In Error", JOptionPane.ERROR_MESSAGE);
 
+            // TODO: Getting User Details wrong results in getting booted back to Landing Page
         } else {
-            if (dbSource.ifCustomerExists(forename, surname)) {
-                // TODO: Log Customer Already Exists
+            if (dbSource.ifCustomerExists(email, password)) {
+                loggingService.logDatabaseCustomerAlreadyExists();
                 JOptionPane.showMessageDialog(root, "Uh Oh! Customer Already Exists With Email: " + email,
                         "Sign Up Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                // TODO: Log Customer Sign Up
-                dbSource.insertCustomer(Arrays.asList(guestData));
-                JOptionPane.showMessageDialog(root, "Congrats! You've created a Swag Account",
+                dbSource.insertCustomer(guestData);
+                JOptionPane.showMessageDialog(root, "Congrats! You've Created A Swag Account",
                         "Sign Up Swagsess", JOptionPane.INFORMATION_MESSAGE);
+                loggingService.logCustomerSignedUp(email);
             }
-
         }
     }
 
@@ -71,22 +62,20 @@ public class Guest implements CustomerState {
 
         if (customer.getEmail() != null) {
             customer.changeCustomerState(new LoggedIn(customer));
-            // TODO: Log customer logged in success
             JOptionPane.showMessageDialog(root, "You've logged into your Swag Account",
                     "Log In Swagsess", JOptionPane.INFORMATION_MESSAGE);
+            loggingService.logCustomerLoggedIn(customer.getCustomerId());
         } else {
-            // TODO: Throw up error that account not found
-            // TODO: Log account not found
+            JOptionPane.showMessageDialog(root, "Uh Oh! No Swag Customer Account Found!",
+                    "Log In Error", JOptionPane.ERROR_MESSAGE);
+            loggingService.logDatabaseCustomerNotFound(email);
         }
     }
 
     @Override
     public void logOut(JPanel root) {
-        // TODO: Display error popup that you aren't logged in
-        // customer = null
-        //implement customer refresh method
-        JOptionPane.showMessageDialog(root, "Cant Log out if you aint swagged in",
-                "Log Out Swag-no", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(root, "Can't Log Out If You Ain't Swagged In!",
+                "Log Out SwagNo", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -95,18 +84,42 @@ public class Guest implements CustomerState {
     }
 
     @Override
-    public void addProductToBasket() {
+    public void addProductToBasket(Product product, int quantity) {
+        customer.getCurrentOrder().add(new OrderLine(product, quantity));
 
+        // TODO: Implement Logic To Reduce Duplicate Items In Basket
+
+        // TODO: Decrease Product Quantity When Added To Basket
     }
 
     @Override
-    public void removeProductFromBasket() {
-
+    public void removeProductFromBasket(OrderLine orderLine) {
+        customer.getCurrentOrder().getOrderLines().remove(orderLine);
     }
 
     @Override
-    public void purchaseItems() {
-        // TODO: Display error that you need to be logged in to checkout
+    public void purchaseItems(JPanel root) {
+        JOptionPane.showMessageDialog(root, "Can't Checkout If You Ain't Swagged In!",
+                "Check Out SwagNo", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private boolean validateInformation(String forename, String surname, String email, String password,
+                                        String passwordConfirm, String addressLineOne, String city, String postcode,
+                                        String phoneNumber) {
+        return !forename.strip().matches("[a-zA-Z]{1,15}") || //only characters, min length 1 - max length 15
+                !surname.strip().matches("[a-zA-Z]{1,15}") || //only characters, min length 1 - max length 15
+                !email.strip().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") || //Simple email expression. Doesn't allow numbers in the domain name and doesn't allow for top level domains that are less than 2 or more than 3 letters (which is fine until they allow more). Doesn't handle multiple &quot;.&quot; in the domain (joe@abc.co.uk).
+                !password.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be use
+                !passwordConfirm.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be used
+                !addressLineOne.matches("^[a-zA-Z0-9_ ]*$") || //no special characters, whisepace premitted
+                !city.matches("^[a-zA-Z_ ]*$") || //Only characters, whitespace permitted, will accept empty string
+                !postcode.matches("^[a-zA-Z0-9_ ]{6,7}$") || //characters and numbers, 6-7 characters, whitespace permitted
+                !phoneNumber.matches("[0-9]{11}") || //only numbers,, 11 characters
+                !password.equals(passwordConfirm); //both password fields must match
+    }
+
+    public void setLoggingService(LoggingService loggingService) {
+        this.loggingService = loggingService;
     }
 
     @Override
