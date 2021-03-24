@@ -2,6 +2,7 @@ package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Product;
+import org.somerville.swag.data.entity.state.LoggedIn;
 import org.somerville.swag.data.source.DBPopulate;
 import org.somerville.swag.data.source.SQLiteConnection;
 import org.somerville.swag.data.source.SQLiteSource;
@@ -39,8 +40,13 @@ public class LandingPage {
         });
 
         signUpButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Sign Up", new SignUp(oldFrame, customer).root,true);
-            SwingUtilities.getWindowAncestor(root).dispose();
+            if (customer.getCustomerState() instanceof LoggedIn) {
+                JOptionPane.showMessageDialog(root, "Uh Oh! Can't Sign Up When Logged In!",
+                        "Sign Up Swag-no", JOptionPane.ERROR_MESSAGE);
+            } else {
+                new JFrameBuilder.Builder().buildDefaultJFrame("Sign Up", new SignUp(oldFrame, customer).root,true);
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
         });
 
         logInButton.addActionListener(actionEvent -> {
@@ -59,16 +65,20 @@ public class LandingPage {
 
         });
 
-        addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket(listOfProducts.getSelectedValue(), (int) quantitySpinner.getValue()));
+        addToBasketButton.addActionListener(actionEvent -> {
+            Product selectedProduct = listOfProducts.getSelectedValue();
+            customer.addProductToBasket(selectedProduct, (int) quantitySpinner.getValue());
+            showFrameWithProduct(selectedProduct);
+        });
     }
 
     private List<Product> getAllProducts() {
-        SQLiteSource sqlSoure = new SQLiteSource();
-        return sqlSoure.getAllProductsInStock();
+        SQLiteSource sqLiteSource = new SQLiteSource();
+        return sqLiteSource.getAllProductsInStock();
     }
 
     private void showFrameWithProduct(Product product) {
-        SpinnerModel model = new SpinnerNumberModel(1, 1, product.getStockLevel(), 1);
+        SpinnerModel model = new SpinnerNumberModel(0, 0, product.getStockLevel(), 1);
         JSpinner spinner = new JSpinner();
         JFormattedTextField spin = ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
         spin.setEditable(false);
