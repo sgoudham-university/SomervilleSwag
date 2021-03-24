@@ -1,7 +1,6 @@
 package org.somerville.swag.data.entity;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +9,9 @@ public class Order {
     private int orderId;
     private int customerId;
     private OrderLine orderLine;
-    private List<OrderLine> orderLines = new ArrayList<OrderLine>();
+    private List<OrderLine> orderLines = new ArrayList<>();
 
-    public Order() {
-    }
+    public Order() { }
 
     public Order(int orderId, int customerId) {
         setOrderId(orderId);
@@ -55,7 +53,7 @@ public class Order {
     public BigDecimal getTotal() {
         BigDecimal total = BigDecimal.ZERO;
         for(OrderLine order : orderLines){
-            total = total.add(order.getProductId().getPrice().multiply(new BigDecimal(order.getQuantity())));
+            total = total.add(order.getProduct().getPrice().multiply(new BigDecimal(order.getQuantity())));
         }
         return  total;
     }
