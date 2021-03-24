@@ -44,6 +44,7 @@ public class SQLiteExecute implements DBExecute {
         }
     }
 
+    @Override
     public void setLoggingService(LoggingService loggingService) {
         this.loggingService = loggingService;
     }
