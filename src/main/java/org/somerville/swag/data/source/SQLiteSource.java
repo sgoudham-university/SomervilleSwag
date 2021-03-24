@@ -76,6 +76,22 @@ public class SQLiteSource implements DBSource {
         return allProducts;
     }
 
+    @Override
+    public boolean ifCustomerExists(String email, String password) {
+        boolean ifCustomerExists = false;
+        String getCustomerQuery = GET_CUSTOMER_QUERY
+                .replace("{email}", email)
+                .replace("{password}", password);
+
+        try (ResultSet customerData = dbExecute.executeSelect(getCustomerQuery)) {
+            ifCustomerExists = customerData.isBeforeFirst();
+        } catch (SQLStatementException | SQLException err) {
+            loggingService.logDatabaseGetCustomerFailure(getCustomerQuery, err.getMessage());
+        }
+
+        return ifCustomerExists;
+    }
+
     public void setDbExecute(DBExecute dbExecute) {
         this.dbExecute = dbExecute;
     }
