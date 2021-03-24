@@ -6,5 +6,5 @@ import java.sql.ResultSet;
 
 public interface DBExecute {
     ResultSet executeSelect(String selectQuery) throws SQLStatementException;
-    int executeInsert(String insertStatement) throws SQLStatementException;
+    void executeInsert(String insertStatement) throws SQLStatementException;
 }
