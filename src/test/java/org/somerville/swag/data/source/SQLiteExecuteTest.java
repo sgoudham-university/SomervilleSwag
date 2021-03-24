@@ -47,7 +47,7 @@ class SQLiteExecuteTest {
                 "VALUES ('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1','testAddressLine2','testCity','testPostcode','testPhoneNumber');";
         int expectedRowsUpdated = 1;
 
-        sqLiteExecute.executeInsert(expectedStatement);
+        sqLiteExecute.executeUpdate(expectedStatement);
 
         verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
         verify(loggingService, times(1)).logDatabaseInsertSuccess(expectedStatement, expectedRowsUpdated);
@@ -80,7 +80,7 @@ class SQLiteExecuteTest {
 
         String expectedStatement = "INSERT INTO Customer;";
 
-        SQLStatementException thrownException = assertThrows(SQLStatementException.class, () -> sqLiteExecute.executeInsert(expectedStatement));
+        SQLStatementException thrownException = assertThrows(SQLStatementException.class, () -> sqLiteExecute.executeUpdate(expectedStatement));
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
         verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);

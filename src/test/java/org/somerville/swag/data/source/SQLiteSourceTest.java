@@ -99,7 +99,7 @@ class SQLiteSourceTest {
         String expectedInsertCustomerStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
                 "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
 
-        doNothing().when(sqLiteExecute).executeInsert(expectedInsertCustomerStatement);
+        doNothing().when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
 
         sqLiteSource.insertCustomer(guestData);
 
@@ -128,7 +128,7 @@ class SQLiteSourceTest {
         String expectedExceptionMessage = "Failure!";
         SQLStatementException expectedException = new SQLStatementException(expectedExceptionMessage, new SQLException());
 
-        doThrow(expectedException).when(sqLiteExecute).executeInsert(expectedInsertCustomerStatement);
+        doThrow(expectedException).when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
 
         sqLiteSource.insertCustomer(guestData);
 
