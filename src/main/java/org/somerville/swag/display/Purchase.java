@@ -4,13 +4,11 @@ import org.somerville.swag.data.entity.Customer;
 
 import javax.swing.*;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Date;
 
 public class Purchase {
     private JTextField txtCardNo;
-    private JComboBox comMonth;
-    private JComboBox comYear;
+    private JComboBox<Integer> comMonth;
+    private JComboBox<Integer> comYear;
     private JButton confirmButton;
     private JButton backButton;
     private JTextField txtCvv2;
@@ -32,7 +30,7 @@ public class Purchase {
         });
 
         confirmButton.addActionListener(actionEvent -> {
-            customer.purchaseItems();
+            customer.purchaseItems(root);
 
              if (!txtCardNo.getText().strip().matches("[0-9]{16}") || !txtCvv2.getText().strip().matches("[0-9]{3}")){
                 JOptionPane.showMessageDialog(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
