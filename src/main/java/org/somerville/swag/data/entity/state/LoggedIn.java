@@ -72,6 +72,8 @@ public class LoggedIn implements CustomerState {
         // TODO: Validate payment information
 
         // TODO: Show Popup of Order Confirmation
+
+        // TODO: Clear customer basket in memory
     }
 
     public void setLoggingService(LoggingService loggingService) {
