@@ -39,6 +39,7 @@ class SQLiteSourceTest {
         MockitoAnnotations.openMocks(this);
         sqLiteSource = new SQLiteSource();
         sqLiteExecute = spy(new SQLiteExecute(createSQLiteConnection()));
+        sqLiteExecute.setLoggingService(loggingService);
         sqLiteSource.setLoggingService(loggingService);
         sqLiteSource.setDbExecute(sqLiteExecute);
         sqLiteSource.setDbMapper(sqLiteMapper);
@@ -46,8 +47,10 @@ class SQLiteSourceTest {
 
     @Test
     void successfullyGetCustomerFromDatabase() {
+        String expectedDatabaseUrl = getExpectedDatabaseUrl();
         String expectedTestEmail = "testEmail";
         String expectedTestPassword = "testPassword";
+        String expectedGetCustomerQuery = "SELECT * FROM Customer WHERE Email = '" + expectedTestEmail + "' AND Password = '" + expectedTestPassword + "';";
         Customer expectedCustomer = new Customer();
 
         doNothing().when(sqLiteMapper).mapToCustomer(resultSetMock, expectedCustomer);
@@ -55,6 +58,8 @@ class SQLiteSourceTest {
         Customer actualCustomer = sqLiteSource.getCustomer(expectedTestEmail, expectedTestPassword, expectedCustomer);
 
         assertSame(actualCustomer, expectedCustomer);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingService, times(1)).logDatabaseSelectSuccess(expectedGetCustomerQuery);
         verify(loggingService, times(1)).logDatabaseGetCustomerSuccess(expectedCustomer.getCustomerId());
         verifyNoMoreInteractions(loggingService);
     }
@@ -134,6 +139,8 @@ class SQLiteSourceTest {
 
     @Test
     void successfullyRetrieveAllProducts() {
+        String expectedGetAllProductsQuery = "SELECT * FROM Product WHERE StockLevel >= 1;";
+        String expectedDatabaseUrl = getExpectedDatabaseUrl();
         List<Product> expectedAllProducts = getAllExpectedProducts();
         DBMapper sqLiteMapper = new DBMapper();
         sqLiteMapper.setLoggingService(loggingService);
@@ -142,6 +149,8 @@ class SQLiteSourceTest {
         List<Product> actualAllProducts = sqLiteSource.getAllProductsInStock();
 
         assertArrayEquals(actualAllProducts.toArray(), expectedAllProducts.toArray());
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingService, times(1)).logDatabaseSelectSuccess(expectedGetAllProductsQuery);
         verify(loggingService, times(1)).logDatabaseAllProductsMapSuccess();
         verify(loggingService, times(1)).logDatabaseGetAllProductsInStockSuccess();
         verifyNoMoreInteractions(loggingService);
@@ -163,10 +172,17 @@ class SQLiteSourceTest {
     }
 
     private SQLiteConnection createSQLiteConnection() {
-        String testDatabaseUrl = "jdbc:sqlite:src/test/resources/database/TestSecondSomervilleSwagDB.db";
+        String testDatabaseUrl = getExpectedDatabaseUrl();
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
+        sqLiteConnection.setLoggingService(loggingService);
         sqLiteConnection.setDatabaseUrl(testDatabaseUrl);
         return sqLiteConnection;
+    }
+
+    private String getExpectedDatabaseUrl() {
+        String expectedDatabasePath = "src/test/resources/database/";
+        String expectedDatabaseName = "TestSecondSomervilleSwagDB.db";
+        return "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
     }
 
     private List<Product> getAllExpectedProducts() {
