@@ -22,7 +22,7 @@ public class LoggedIn implements CustomerState {
     }
 
     @Override
-    public void signUp(JPanel root, List<String> guestData) {
+    public void signUp(JFrame oldFrame, JPanel root, List<String> guestData) {
         JOptionPane.showMessageDialog(root, "Uh Oh! Can't Sign Up When Logged In!",
                 "Sign Up Swag-no", JOptionPane.ERROR_MESSAGE);
     }
@@ -51,17 +51,27 @@ public class LoggedIn implements CustomerState {
 
     @Override
     public void addProductToBasket(Product product, int quantity) {
+        customer.getCurrentOrder().add(new OrderLine(product, quantity));
+        product.setStockLevel(product.getStockLevel() - quantity);
 
+        // TODO: Write New Product Stock Level To Database
     }
 
     @Override
     public void removeProductFromBasket(OrderLine orderLine) {
+        customer.getCurrentOrder().getOrderLines().remove(orderLine);
+        Product selectedProduct = orderLine.getProduct();
+        int quantity = orderLine.getQuantity();
+        selectedProduct.setStockLevel(selectedProduct.getStockLevel() - quantity);
 
+        // TODO: Write New Product Stock Level to Database
     }
 
     @Override
     public void purchaseItems(JPanel root) {
+        // TODO: Validate payment information
 
+        // TODO: Show Popup of Order Confirmation
     }
 
     public void setLoggingService(LoggingService loggingService) {
