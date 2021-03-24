@@ -17,23 +17,19 @@ public class DBMapper {
 
     public void mapToCustomer(ResultSet customerData, Customer customer) {
         try {
-            if (!customerData.isBeforeFirst()) {
-                loggingService.logDatabaseCustomerNotFound();
-            } else {
-                while (customerData.next()) {
-                    customer.setCustomerId(customerData.getInt("CustomerId"));
-                    customer.setForename(customerData.getString("Forename"));
-                    customer.setSurname(customerData.getString("Surname"));
-                    customer.setEmail(customerData.getString("Email"));
-                    customer.setPassword(customerData.getString("Password"));
-                    customer.setAddressLine1(customerData.getString("AddressLine1"));
-                    customer.setAddressLine2(customerData.getString("AddressLine2"));
-                    customer.setCity(customerData.getString("City"));
-                    customer.setPostcode(customerData.getString("Postcode"));
-                    customer.setPhoneNumber(customerData.getString("PhoneNumber"));
-                }
-                loggingService.logDatabaseCustomerMapSuccess(customer.getCustomerId());
+            while (customerData.next()) {
+                customer.setCustomerId(customerData.getInt("CustomerId"));
+                customer.setForename(customerData.getString("Forename"));
+                customer.setSurname(customerData.getString("Surname"));
+                customer.setEmail(customerData.getString("Email"));
+                customer.setPassword(customerData.getString("Password"));
+                customer.setAddressLine1(customerData.getString("AddressLine1"));
+                customer.setAddressLine2(customerData.getString("AddressLine2"));
+                customer.setCity(customerData.getString("City"));
+                customer.setPostcode(customerData.getString("Postcode"));
+                customer.setPhoneNumber(customerData.getString("PhoneNumber"));
             }
+            loggingService.logDatabaseCustomerMapSuccess(customer.getCustomerId());
         } catch (SQLException sqle) {
             loggingService.logDatabaseCustomerMapFailure(sqle.getMessage());
         }
