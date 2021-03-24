@@ -112,8 +112,44 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseCustomerNotFound() {
-        String logMessage = events.getDatabaseCustomerNotFound() + ": Customer Account Not Located";
+    public void logDatabaseCustomerNotFound(String email) {
+        String logMessage = events.getDatabaseCustomerNotFound() + ": Email -> " + email;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseCustomerAlreadyExists() {
+        String logMessage = events.getDatabaseCustomerAlreadyExists() + ": Customer Account Already Exists";
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerSignedUp(int customerId) {
+        String logMessage = events.getCustomerSignedUp() + ": CustomerID -> " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerLoggedIn(int customerId) {
+        String logMessage = events.getCustomerLoggedIn() + ": CustomerID -> " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerLoggedOut(int customerId) {
+        String logMessage = events.getCustomerLoggedOut() + ": CustomerID -> " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerAddItemToBasket(int customerId, int productId) {
+        String logMessage = events.getCustomerAddItemToBasket() + ": CustomerID -> " + customerId+ ": ProductId -> " + productId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerCheckout(int customerId, int orderId) {
+        String logMessage = events.getCustomerCheckout() + ": CustomerID -> " + customerId+ ": OrderId -> " + orderId;
         writeLog(logMessage);
     }
 
