@@ -1,18 +1,21 @@
 package org.somerville.swag.data.entity;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private int orderId;
     private int customerId;
     private OrderLine orderLine;
-    private ArrayList<OrderLine> orderLinesList= new ArrayList<OrderLine>();
+    private List<OrderLine> orderLines = new ArrayList<OrderLine>();
 
-    public void Order(){
-
+    public Order() {
     }
 
-    public void Order(int orderId, int customerId){
+    public Order(int orderId, int customerId) {
         setOrderId(orderId);
         setCustomerId(customerId);
     }
@@ -33,11 +36,29 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public ArrayList<OrderLine> getOrderLinesList() {
-        return orderLinesList;
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
     }
 
-    public void setOrderLinesList(ArrayList<OrderLine> orderLinesList) {
-        this.orderLinesList = orderLinesList;
+    public void setOrderLines(ArrayList<OrderLine> orderLines) {
+        this.orderLines = orderLines;
     }
+
+    public void add(OrderLine orderLine) {
+        orderLines.add(orderLine);
+    }
+
+    public OrderLine getSingleOrderLine(int index) {
+        return orderLines.get(index);
+    }
+
+    public BigDecimal getTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+        for(OrderLine order : orderLines){
+            total = total.add(order.getProductId().getPrice().multiply(new BigDecimal(order.getQuantity())));
+        }
+        return  total;
+    }
+
+    public String getFormattedTotal(){return "£" + getTotal().setScale(2, RoundingMode.HALF_UP);}
 }
