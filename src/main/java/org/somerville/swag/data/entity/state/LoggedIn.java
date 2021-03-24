@@ -1,21 +1,21 @@
-package org.somerville.swag.data.state;
+package org.somerville.swag.data.entity.state;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.CustomerState;
 
 import java.util.Objects;
 
-public class Guest implements CustomerState {
+public class LoggedIn implements CustomerState {
 
-    Customer customer;
+    private Customer customer;
 
-    public Guest(Customer customer) {
+    public LoggedIn(Customer customer) {
         this.customer = customer;
     }
 
     @Override
     public void signUp() {
-        // Call DatabaseExecuteInsertStatement on Customer Fields
+        
     }
 
     @Override
@@ -52,8 +52,8 @@ public class Guest implements CustomerState {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Guest guest = (Guest) o;
-        return Objects.equals(customer, guest.customer);
+        LoggedIn loggedIn = (LoggedIn) o;
+        return Objects.equals(customer, loggedIn.customer);
     }
 
     @Override
