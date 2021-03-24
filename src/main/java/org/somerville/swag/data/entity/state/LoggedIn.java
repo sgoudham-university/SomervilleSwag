@@ -36,8 +36,7 @@ public class LoggedIn implements CustomerState {
     @Override
     public void logOut(JPanel root) {
         customer.changeCustomerState(new Guest(customer));
-
-        // TODO implement refresh method
+        customer.refresh();
 
         JOptionPane.showMessageDialog(root, "Logged out Success. D-money will miss you",
                 "Logged out", JOptionPane.INFORMATION_MESSAGE);

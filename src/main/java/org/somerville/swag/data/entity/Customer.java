@@ -82,6 +82,20 @@ public class Customer {
         customerState.purchaseItems(root);
     }
 
+    public void refresh() {
+        this.currentOrder = new Order();
+        this.customerId = 0;
+        this.forename = null;
+        this.surname = null;
+        this.email = null;
+        this.password = null;
+        this.addressLine1 = null;
+        this.addressLine2 = null;
+        this.city = null;
+        this.postcode = null;
+        this.phoneNumber = null;
+    }
+
     public void setCustomerId(int customerId) { this.customerId = customerId; }
     public void setForename(String forename) { this.forename = forename; }
     public void setCurrentOrder(Order order) { this.currentOrder = order; }
