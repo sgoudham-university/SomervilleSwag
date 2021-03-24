@@ -76,18 +76,6 @@ class DBMapperTest {
     }
 
     @Test
-    void failToFindCustomerAccountInDatabase() throws SQLException {
-        Customer actualCustomer = new Customer();
-
-        when(resultSetMock.isBeforeFirst()).thenReturn(false);
-
-        dbMapper.mapToCustomer(resultSetMock, actualCustomer);
-
-        verify(loggingService, times(1)).logDatabaseCustomerNotFound();
-        verifyNoMoreInteractions(loggingService);
-    }
-
-    @Test
     void failToMapResultSetToCustomer() throws SQLException {
         String expectedExceptionMessage = "Failure!";
         Exception expectedException = new SQLException(expectedExceptionMessage);
