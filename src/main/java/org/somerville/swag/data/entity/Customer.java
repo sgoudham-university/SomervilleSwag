@@ -3,6 +3,8 @@ package org.somerville.swag.data.entity;
 import org.somerville.swag.data.entity.state.Guest;
 import org.somerville.swag.data.entity.state.LoggedIn;
 
+import javax.swing.*;
+
 public class Customer {
     private CustomerState customerState;
     private Order currentOrder;
@@ -51,8 +53,8 @@ public class Customer {
         this.customerState = customerState;
     }
 
-    public void signUp() {
-        customerState.signUp();
+    public void signUp(JPanel root, String... guestData) {
+        customerState.signUp(root, guestData);
     }
 
     public void logIn() {

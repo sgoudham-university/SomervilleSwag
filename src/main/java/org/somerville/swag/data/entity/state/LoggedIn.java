@@ -3,6 +3,7 @@ package org.somerville.swag.data.entity.state;
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.CustomerState;
 
+import javax.swing.*;
 import java.util.Objects;
 
 public class LoggedIn implements CustomerState {
@@ -14,8 +15,8 @@ public class LoggedIn implements CustomerState {
     }
 
     @Override
-    public void signUp() {
-        
+    public void signUp(JPanel root, String... guestData) {
+        //TODO throw error mesage
     }
 
     @Override
