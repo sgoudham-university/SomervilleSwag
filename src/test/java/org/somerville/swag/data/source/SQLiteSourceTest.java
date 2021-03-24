@@ -163,7 +163,7 @@ class SQLiteSourceTest {
     }
 
     private SQLiteConnection createSQLiteConnection() {
-        String testDatabaseUrl = "jdbc:sqlite:src/test/resources/database/TestFirstSomervilleSwagDB.db";
+        String testDatabaseUrl = "jdbc:sqlite:src/test/resources/database/TestSecondSomervilleSwagDB.db";
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setDatabaseUrl(testDatabaseUrl);
         return sqLiteConnection;
