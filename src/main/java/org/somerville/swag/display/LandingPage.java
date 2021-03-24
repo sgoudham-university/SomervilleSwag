@@ -1,19 +1,17 @@
 package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
-import org.somerville.swag.data.entity.Order;
-import org.somerville.swag.data.entity.OrderLine;
 import org.somerville.swag.data.entity.Product;
 
 import javax.swing.*;
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.Map;
 
 public class LandingPage {
     private JButton signUpButton;
     private JButton logInButton;
+    private JButton logOutButton;
     private JButton viewBasketButton;
     private JButton addToBasketButton;
     public JPanel root;
@@ -25,57 +23,17 @@ public class LandingPage {
     private JLabel lblTitle;
     private JPanel productPanel;
     private JLabel lblProductTitle;
-    private JButton logOutButton;
 
     public LandingPage(JFrame oldFrame, Customer customer) {
 
-        initialiseFrame();
-
-//        quantitySpinner.setBackground(new Color(9, 45, 71));
-//        imagePanel.setBackground(new Color(9, 45, 71));
-//        productPanel.setBackground(new Color(9, 45, 71));
-//        listOfProducts.setBackground(new Color(9, 45, 71));
         HashMap<Integer, Product> allProducts = getAllProducts();
+        showFrameWithProduct(allProducts.get(0));
         displayProductList(allProducts, new DefaultListModel<>());
-
         listOfProducts.setSelectedValue(allProducts.get(0), true);
-        lblProductTitle.setText(allProducts.get(0).getName());
-
-        SpinnerModel model1 = new SpinnerNumberModel(1, 1, allProducts.get(0).getStockLevel(), 1);
-        JSpinner spinner1 = new JSpinner();
-        JFormattedTextField spin1 = ((JSpinner.DefaultEditor) spinner1.getEditor()).getTextField();
-        spin1.setEditable(false);
-        quantitySpinner.setModel(model1);
-
-        lblDesc.setText(allProducts.get(0).getDescription());
-
-        ImageIcon productImageIcon1 = new ImageIcon(allProducts.get(0).getImagepath());
-        Image scaledProductImage1 = productImageIcon1.getImage().getScaledInstance(400, 350, Image.SCALE_SMOOTH);
-        imageDisplay.setIcon(new ImageIcon(scaledProductImage1));
-
-        /**
-         * Constructors, list and basic logic need moved
-         * Only here for inital logic and UI checks
-         * Remove ASAP
-         * Do not leave comment once removed
-         */
 
         listOfProducts.addListSelectionListener(actionEvent -> {
             Product selectedProduct = listOfProducts.getSelectedValue();
-
-            SpinnerModel model = new SpinnerNumberModel(1, 1, selectedProduct.getStockLevel(), 1);
-            JSpinner spinner = new JSpinner();
-            JFormattedTextField spin = ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
-            spin.setEditable(false);
-            quantitySpinner.setModel(model);
-
-            lblDesc.setText(selectedProduct.getDescription());
-            lblProductTitle.setText(selectedProduct.getName());
-
-            ImageIcon productImageIcon = new ImageIcon(selectedProduct.getImagepath());
-            Image scaledProductImage = productImageIcon.getImage().getScaledInstance(400, 350, Image.SCALE_SMOOTH);
-            imageDisplay.setIcon(new ImageIcon(scaledProductImage));
-
+            showFrameWithProduct(selectedProduct);
         });
 
         signUpButton.addActionListener(actionEvent -> {
@@ -97,18 +55,6 @@ public class LandingPage {
         });
 
         addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket());
-
-        if(listOfProducts.getSelectedIndex() == -1){
-            System.out.println("No product selected");
-        } else {
-            int quantity = (int) quantitySpinner.getValue();
-
-            Product selectedProduct = listOfProducts.getSelectedValue();
-
-            OrderLine orderLine = new OrderLine(selectedProduct, quantity);
-            Order order = customer.getCurrentOrder();
-            order.add(orderLine);
-        }
     }
 
     private HashMap<Integer, Product> getAllProducts() {
@@ -123,34 +69,24 @@ public class LandingPage {
         return productMap;
     }
 
-    private void displayProductList(HashMap<Integer, Product> productMap, DefaultListModel<Product> listModel) {
-        for (Map.Entry<Integer, Product> productEntry : productMap.entrySet()) {
-            Product product = productEntry.getValue();
-            if (product.getStockLevel() > 0 ){
-                listModel.addElement(product);
-            }
-        }
-        listOfProducts.setModel(listModel);
-    }
+    private void showFrameWithProduct(Product product) {
+        SpinnerModel model = new SpinnerNumberModel(1, 1, product.getStockLevel(), 1);
+        JSpinner spinner = new JSpinner();
+        JFormattedTextField spin = ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
+        spin.setEditable(false);
+        quantitySpinner.setModel(model);
 
-    private void initialiseFrame() {
-        HashMap<Integer, Product> allProducts = getAllProducts();
-        displayProductList(allProducts, new DefaultListModel<>());
+        lblDesc.setText(product.getDescription());
+        lblProductTitle.setText(product.getName());
 
-        listOfProducts.setSelectedValue(allProducts.get(0), true);
-        lblProductTitle.setText(allProducts.get(0).getName());
-
-        SpinnerModel model1 = new SpinnerNumberModel(1, 1, allProducts.get(0).getStockLevel(), 1);
-        JSpinner spinner1 = new JSpinner();
-        JFormattedTextField spin1 = ((JSpinner.DefaultEditor) spinner1.getEditor()).getTextField();
-        spin1.setEditable(false);
-        quantitySpinner.setModel(model1);
-
-        lblDesc.setText(allProducts.get(0).getDescription());
-
-        ImageIcon productImageIcon1 = new ImageIcon(allProducts.get(0).getImagepath());
+        ImageIcon productImageIcon1 = new ImageIcon(product.getImagepath());
         Image scaledProductImage1 = productImageIcon1.getImage().getScaledInstance(400, 350, Image.SCALE_SMOOTH);
         imageDisplay.setIcon(new ImageIcon(scaledProductImage1));
+    }
+
+    private void displayProductList(HashMap<Integer, Product> productMap, DefaultListModel<Product> listModel) {
+        productMap.forEach((id, product) -> listModel.addElement(product));
+        listOfProducts.setModel(listModel);
     }
 
     public static void main(String[] args) {

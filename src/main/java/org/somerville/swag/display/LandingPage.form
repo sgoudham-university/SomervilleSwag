@@ -59,6 +59,8 @@
                   </grid>
                 </constraints>
                 <properties>
+                  <doubleBuffered value="false"/>
+                  <focusCycleRoot value="false"/>
                   <foreground color="-16175781"/>
                   <opaque value="true"/>
                 </properties>
