@@ -2,6 +2,8 @@ package org.somerville.swag.data.entity.state;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.CustomerState;
+import org.somerville.swag.data.service.LoggingService;
+import org.somerville.swag.data.service.LoggingServiceImpl;
 import org.somerville.swag.data.source.DBSource;
 import org.somerville.swag.data.source.SQLiteSource;
 
@@ -14,15 +16,16 @@ public class Guest implements CustomerState {
     private final Customer customer;
     private final DBSource dbSource = new SQLiteSource();
 
+    private LoggingService loggingService = LoggingServiceImpl.getInstance();
+
     public Guest(Customer customer) {
         this.customer = customer;
     }
 
     @Override
     public void signUp(JPanel root, String[] guestData) {
-
-        String foreName = guestData[0];
-        String surName = guestData[1];
+        String forename = guestData[0];
+        String surname = guestData[1];
         String email = guestData[2];
         String password = guestData[3];
         String passwordConfirm = guestData[4];
@@ -32,7 +35,7 @@ public class Guest implements CustomerState {
         String postcode = guestData[8];
         String phoneNo = guestData[9];
 
-        if(!foreName.strip().matches("[a-zA-Z]{1,15}") //|| //only characters, min length 1 - max length 15
+        if(!forename.strip().matches("[a-zA-Z]{1,15}") //|| //only characters, min length 1 - max length 15
 //                !surName.strip().matches("[a-zA-Z]{1,15}") || //only characters, min length 1 - max length 15
 //                !email.strip().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") || //Simple email expression. Doesn't allow numbers in the domain name and doesn't allow for top level domains that are less than 2 or more than 3 letters (which is fine until they allow more). Doesn't handle multiple &quot;.&quot; in the domain (joe@abc.co.uk).
 //                !password.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be use
@@ -48,16 +51,18 @@ public class Guest implements CustomerState {
                     "Sign In error", JOptionPane.ERROR_MESSAGE);
 
         } else {
-            dbSource.getCustomer(email, password, customer);
-            dbSource.insertCustomer(Arrays.asList(guestData));
+            if (dbSource.ifCustomerExists(forename, surname)) {
+                // TODO: Log Customer Already Exists
+                JOptionPane.showMessageDialog(root, "Uh Oh! Customer Already Exists With Email: " + email,
+                        "Sign Up Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                // TODO: Log Customer Sign Up
+                dbSource.insertCustomer(Arrays.asList(guestData));
+                JOptionPane.showMessageDialog(root, "Congrats! You've created a Swag Account",
+                        "Sign Up Swagsess", JOptionPane.INFORMATION_MESSAGE);
+            }
 
-            JOptionPane.showMessageDialog(root, "You've created a Swag Account",
-                    "Sign Up Swagsess", JOptionPane.INFORMATION_MESSAGE);
         }
-        // TODO: Check if customer already has an account (check email)
-
-        // TODO: Throw JOptionPane Error if they already have an account
-
     }
 
     @Override
