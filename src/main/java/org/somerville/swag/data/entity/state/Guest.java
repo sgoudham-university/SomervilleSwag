@@ -42,6 +42,7 @@ public class Guest implements CustomerState {
                     "Sign In Error", JOptionPane.ERROR_MESSAGE);
 
             // TODO: Getting User Details wrong results in getting booted back to Landing Page
+
         } else {
             if (dbSource.ifCustomerExists(email, password)) {
                 loggingService.logDatabaseCustomerAlreadyExists();
