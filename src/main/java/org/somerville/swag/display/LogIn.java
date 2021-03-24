@@ -18,7 +18,7 @@ public class LogIn {
     public LogIn(JFrame oldFrame, Customer customer) {
 
         backButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame(new LandingPage(oldFrame, customer).root, true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
