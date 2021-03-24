@@ -44,7 +44,7 @@ public class SignUp {
                     !txtAddress1.getText().matches("^[a-zA-Z0-9_ ]*$") ||
                     !txtPhoneNo.getText().strip().matches("[0-9]{11}") &&
                     !String.valueOf(txtPassword.getPassword()).equals(String.valueOf(txtPasswordConfirm.getPassword()))
-            )
+            )   //order of pressidence/logic for and and or inside the same ifs???
             {
                 JOptionPane.showMessageDialog(root, "Something went wrong and the code is so bad I dont know what",
                         "Sign In error", JOptionPane.ERROR_MESSAGE);
