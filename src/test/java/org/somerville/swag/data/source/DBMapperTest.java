@@ -99,6 +99,7 @@ class DBMapperTest {
         dbMapper.mapToCustomer(resultSetMock, actualCustomer);
 
         verify(loggingService, times(1)).logDatabaseCustomerMapFailure(expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingService);
     }
 
     @Test
@@ -180,6 +181,7 @@ class DBMapperTest {
         dbMapper.mapToProducts(resultSetMock, actualAllProducts);
 
         verify(loggingService, times(1)).logDatabaseAllProductsMapFailure(expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingService);
     }
 
     private Customer createExpectedCustomer() {
