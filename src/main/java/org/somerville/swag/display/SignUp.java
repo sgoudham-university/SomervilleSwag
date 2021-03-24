@@ -36,23 +36,18 @@ public class SignUp {
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
-        confirmButton.addActionListener(actionEvent -> {
-            customer.signUp(root, new ArrayList<>() {{
-                add(txtFirstName.getText());
-                add(txtLastName.getText());
-                add(txtEmail.getText());
-                add(String.valueOf(txtPassword.getPassword()));
-                add(String.valueOf(txtPasswordConfirm.getPassword()));
-                add(txtAddress1.getText());
-                add(txtAddress2.getText());
-                add(txtCity.getText());
-                add(txtPostcode.getText());
-                add(txtPhoneNo.getText());
-            }});
-
-            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
-            SwingUtilities.getWindowAncestor(root).dispose();
-        });
+        confirmButton.addActionListener(actionEvent -> customer.signUp(oldFrame, root, new ArrayList<>() {{
+            add(txtFirstName.getText());
+            add(txtLastName.getText());
+            add(txtEmail.getText());
+            add(String.valueOf(txtPassword.getPassword()));
+            add(String.valueOf(txtPasswordConfirm.getPassword()));
+            add(txtAddress1.getText());
+            add(txtAddress2.getText());
+            add(txtCity.getText());
+            add(txtPostcode.getText());
+            add(txtPhoneNo.getText());
+        }}));
 
     }
 }
