@@ -59,7 +59,7 @@ public class LandingPage {
 
         });
 
-        addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket());
+        addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket(listOfProducts.getSelectedValue(), (int) quantitySpinner.getValue()));
     }
 
     private List<Product> getAllProducts() {
@@ -83,7 +83,7 @@ public class LandingPage {
     }
 
     private void displayProductList(List< Product> productMap, DefaultListModel<Product> listModel) {
-        productMap.forEach(product -> listModel.addElement(product));
+        productMap.forEach(listModel::addElement);
         listOfProducts.setModel(listModel);
     }
 
