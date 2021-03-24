@@ -22,10 +22,10 @@ public interface LoggingService {
     void logDatabaseInsertCustomerFailure(String insertStatement, String failureMessage);
     void logDatabaseCustomerNotFound(String email);
     void logDatabaseCustomerAlreadyExists();
-    void logCustomerSignedUp(int customerId);
+    void logCustomerSignedUp(String email);
     void logCustomerLoggedIn(int customerId);
     void logCustomerLoggedOut(int customerId);
-    void logCustomerAddItemToBasket(int customerId, int productId);
+    void logCustomerAddProductToBasket(int customerId, int productId);
     void logCustomerCheckout(int customerId, int orderId);
     void logDatabaseCustomerMapSuccess(int customerId);
     void logDatabaseCustomerMapFailure(String failureMessage);

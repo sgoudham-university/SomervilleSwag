@@ -28,7 +28,7 @@ public class Events {
     private static final String CUSTOMER_SIGNED_UP_SUFFIX = ".customer_signed_up";
     private static final String CUSTOMER_LOGGED_IN_SUFFIX = ".customer_logged_in";
     private static final String CUSTOMER_LOGGED_OUT_SUFFIX = ".customer_logged_out";
-    private static final String CUSTOMER_ADD_ITEM_TO_BASKET_SUFFIX = ".customer_add_item_to_basket";
+    private static final String CUSTOMER_ADD_PRODUCT_TO_BASKET_SUFFIX = ".customer_add_item_to_basket";
     private static final String CUSTOMER_REMOVE_ITEM_FROM_BASKET_SUFFIX = ".customer_remove_item_from_basket";
     private static final String CUSTOMER_CHECKOUT_SUFFIX = ".customer_checkout";
 
@@ -76,7 +76,7 @@ public class Events {
     public String getCustomerLoggedIn(){ return  getProjectPrefix() + CUSTOMER_LOGGED_IN_SUFFIX; }
     public String getCustomerLoggedOut() { return getProjectPrefix() + CUSTOMER_LOGGED_OUT_SUFFIX; }
 
-    public String getCustomerAddItemToBasket() { return getProjectPrefix() + CUSTOMER_ADD_ITEM_TO_BASKET_SUFFIX; }
+    public String getCustomerAddProductToBasket() { return getProjectPrefix() + CUSTOMER_ADD_PRODUCT_TO_BASKET_SUFFIX; }
     public String getCustomerRemoveItemFromBasket() {return getProjectPrefix() + CUSTOMER_REMOVE_ITEM_FROM_BASKET_SUFFIX; }
 
     public String getCustomerCheckout() { return  getProjectPrefix() + CUSTOMER_CHECKOUT_SUFFIX; }

@@ -124,8 +124,8 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logCustomerSignedUp(int customerId) {
-        String logMessage = events.getCustomerSignedUp() + ": CustomerID -> " + customerId;
+    public void logCustomerSignedUp(String customerEmail) {
+        String logMessage = events.getCustomerSignedUp() + ": Email -> " + customerEmail;
         writeLog(logMessage);
     }
 
@@ -142,8 +142,8 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logCustomerAddItemToBasket(int customerId, int productId) {
-        String logMessage = events.getCustomerAddItemToBasket() + ": CustomerID -> " + customerId+ ": ProductId -> " + productId;
+    public void logCustomerAddProductToBasket(int customerId, int productId) {
+        String logMessage = events.getCustomerAddProductToBasket() + ": CustomerID -> " + customerId + ": ProductId -> " + productId;
         writeLog(logMessage);
     }
 
