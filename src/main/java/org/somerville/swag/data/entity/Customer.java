@@ -54,8 +54,8 @@ public class Customer {
         this.customerState = customerState;
     }
 
-    public void signUp(JPanel root, List<String> guestData) {
-        customerState.signUp(root, guestData);
+    public void signUp(JFrame oldFrame, JPanel root, List<String> guestData) {
+        customerState.signUp(oldFrame, root, guestData);
     }
 
     public void logIn(JPanel root, String email, String password) {

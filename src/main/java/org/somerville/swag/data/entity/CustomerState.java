@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.util.List;
 
 public interface CustomerState {
-    void signUp(JPanel root, List<String> guestData);
+    void signUp(JFrame oldFrame, JPanel root, List<String> guestData);
     void logIn(JPanel root, String email, String password);
     void logOut(JPanel root);
     void viewBasket();
