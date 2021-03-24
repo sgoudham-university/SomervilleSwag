@@ -47,14 +47,6 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public Order getCurrentOrder() {
-        return currentOrder;
-    }
-
-    public void setCurrentOrder(Order currentOrder){
-        this.currentOrder = currentOrder;
-    }
-
     public void changeCustomerState(CustomerState customerState) {
         this.customerState = customerState;
     }

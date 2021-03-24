@@ -79,7 +79,7 @@ public class LandingPage {
         lblDesc.setText(product.getDescription());
         lblProductTitle.setText(product.getName());
 
-        ImageIcon productImageIcon1 = new ImageIcon(product.getImagepath());
+        ImageIcon productImageIcon1 = new ImageIcon(product.getImagePath());
         Image scaledProductImage1 = productImageIcon1.getImage().getScaledInstance(400, 350, Image.SCALE_SMOOTH);
         imageDisplay.setIcon(new ImageIcon(scaledProductImage1));
     }
