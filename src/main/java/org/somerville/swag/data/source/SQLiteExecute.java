@@ -22,7 +22,8 @@ public class SQLiteExecute implements DBExecute {
     @Override
     public ResultSet executeSelect(String selectQuery) throws SQLStatementException {
         ResultSet resultSet;
-        try (Statement statement = connection.connect().createStatement()) {
+        try {
+            Statement statement = connection.connect().createStatement();
             resultSet = statement.executeQuery(selectQuery);
             loggingService.logDatabaseSelectSuccess(selectQuery);
         } catch (SQLConnectionException | SQLException err) {
@@ -43,6 +44,7 @@ public class SQLiteExecute implements DBExecute {
         }
     }
 
+    @Override
     public void setLoggingService(LoggingService loggingService) {
         this.loggingService = loggingService;
     }

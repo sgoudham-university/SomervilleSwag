@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ClockImpl implements Clock {
 
-    private final String pattern = "yyyy-MM-dd HH:mm:ss";
+    private final String pattern = "yyyy-MM-dd HH:mm:ss.SSSSSS";
 
     public String getCurrentTime() {
         LocalDateTime localDateTime = LocalDateTime.now();

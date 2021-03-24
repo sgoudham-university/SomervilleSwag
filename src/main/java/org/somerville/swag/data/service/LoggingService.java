@@ -16,6 +16,21 @@ public interface LoggingService {
     void logDatabaseSelectSuccess(String selectQuery);
     void logDatabaseSelectFailure(String selectQuery, String failureMessage);
 
+    void logDatabaseGetCustomerSuccess (int customerId);
+    void logDatabaseGetCustomerFailure (String selectQuery, String failureMessage);
+    void logDatabaseInsertCustomerSuccess (String insertStatement);
+    void logDatabaseInsertCustomerFailure (String insertStatement, String failureMessage);
+    void logDatabaseCustomerNotFound();
+    void logDatabaseCustomerMapSuccess(int customerId);
+    void logDatabaseCustomerMapFailure(String failureMessage);
+
+    void logDatabaseGetAllProductsInStockSuccess();
+    void logDatabaseGetAllProductsInStockFailure(String getAllProductsQuery, String failureMessage);
+    void logDatabaseNoProductsInStock();
+    void logDatabaseAllProductsMapSuccess();
+    void logDatabaseAllProductsMapFailure(String failureMessage);
+
+    String retrieveLogMessage(String logMessage);
     void setClock(Clock clock);
     void setLogger(Logger logger);
     void setTextFileWriter(MyFileWriter textFileWriter);

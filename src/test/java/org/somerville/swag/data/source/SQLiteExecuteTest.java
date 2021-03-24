@@ -9,10 +9,10 @@ import org.somerville.swag.data.service.LoggingService;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class SQLiteExecuteTest {
 
@@ -44,7 +44,7 @@ class SQLiteExecuteTest {
     void successfullyWriteToDatabase() throws SQLStatementException {
         String expectedDatabaseUrl = getExpectedDatabaseUrl();
         String expectedStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
-                "VALUES ('testForename', 'testSurname', 'testEmail@email.com', 'testPassword', 'testAddressLine1','testAddressLine2','testCity','testPostcode','testPhoneNumber');";
+                "VALUES ('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1','testAddressLine2','testCity','testPostcode','testPhoneNumber');";
         int expectedRowsUpdated = 1;
 
         sqLiteExecute.executeInsert(expectedStatement);

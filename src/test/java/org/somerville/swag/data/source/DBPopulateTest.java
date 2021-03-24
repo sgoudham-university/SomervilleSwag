@@ -7,11 +7,10 @@ import org.mockito.MockitoAnnotations;
 import org.somerville.swag.data.service.LoggingService;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 class DBPopulateTest {
 
-    private DBPopulate dbPopulate;
+    DBPopulate dbPopulate;
 
     @Mock
     LoggingService loggingService;
