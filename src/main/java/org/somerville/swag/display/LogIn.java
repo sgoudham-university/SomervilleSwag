@@ -10,8 +10,8 @@ import javax.swing.SwingUtilities;
 
 public class LogIn {
     public JPanel root;
-    private JTextField textField2;
-    private JTextField textField1;
+    private JTextField txtPassword;
+    private JTextField txtEmail;
     private JButton confirmButton;
     private JButton backButton;
 
@@ -22,6 +22,11 @@ public class LogIn {
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
-        confirmButton.addActionListener(actionEvent -> customer.logIn());
+        confirmButton.addActionListener(actionEvent -> {
+            customer.logIn(root, txtEmail.getText(), txtPassword.getText());
+
+            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
+            SwingUtilities.getWindowAncestor(root).dispose();
+        });
     }
 }

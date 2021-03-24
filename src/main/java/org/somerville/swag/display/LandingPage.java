@@ -44,11 +44,14 @@ public class LandingPage {
         });
 
         logInButton.addActionListener(actionEvent -> {
+
             new JFrameBuilder.Builder().buildDefaultJFrame("Log In", new LogIn(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
-        logOutButton.addActionListener(e -> customer.logOut());
+        logOutButton.addActionListener(e -> {
+            customer.logOut(root);
+        });
 
         viewBasketButton.addActionListener(actionEvent -> {
             new JFrameBuilder.Builder().buildDefaultJFrame("Your Basket", new Basket(oldFrame, customer).root,true);

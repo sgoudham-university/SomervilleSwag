@@ -57,12 +57,12 @@ public class Customer {
         customerState.signUp(root, guestData);
     }
 
-    public void logIn() {
-        customerState.logIn();
+    public void logIn(JPanel root, String email, String password) {
+        customerState.logIn(root, email, password);
     }
 
-    public void logOut() {
-        customerState.logOut();
+    public void logOut(JPanel root) {
+        customerState.logOut(root);
     }
 
     public void viewBasket() {

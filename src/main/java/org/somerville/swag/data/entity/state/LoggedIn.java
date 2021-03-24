@@ -20,13 +20,18 @@ public class LoggedIn implements CustomerState {
     }
 
     @Override
-    public void logIn() {
-
+    public void logIn(JPanel root, String email, String password) {
+        JOptionPane.showMessageDialog(root, "Cant Log in when you're already logged in",
+                "Log In Swag-no", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
-    public void logOut() {
-
+    public void logOut(JPanel root) {
+        //customer = null
+        // TODO implement refresh method && change state.
+        customer.changeCustomerState(new Guest(customer));
+        JOptionPane.showMessageDialog(root, "Logged out Success. D-money will miss you",
+                "Logged out", JOptionPane.INFORMATION_MESSAGE);
     }
 
     @Override

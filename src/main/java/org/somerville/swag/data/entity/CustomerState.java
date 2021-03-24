@@ -4,8 +4,8 @@ import javax.swing.*;
 
 public interface CustomerState {
     void signUp(JPanel root, String[] guestData);
-    void logIn();
-    void logOut();
+    void logIn(JPanel root, String email, String password);
+    void logOut(JPanel root);
     void viewBasket();
     void addProductToBasket();
     void removeProductFromBasket();
