@@ -8,6 +8,8 @@ import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
 import org.somerville.swag.data.source.DBSource;
 import org.somerville.swag.data.source.SQLiteSource;
+import org.somerville.swag.display.JFrameBuilder;
+import org.somerville.swag.display.LandingPage;
 
 import javax.swing.*;
 import java.util.List;
@@ -25,7 +27,7 @@ public class Guest implements CustomerState {
     }
 
     @Override
-    public void signUp(JPanel root, List<String> guestData) {
+    public void signUp(JFrame oldFrame, JPanel root, List<String> guestData) {
         String forename = guestData.get(0);
         String surname = guestData.get(1);
         String email = guestData.get(2);
@@ -40,9 +42,6 @@ public class Guest implements CustomerState {
         if(validateInformation(forename, surname, email, password, passwordConfirm, addressLine1, city, postcode, phoneNumber)) {
             JOptionPane.showMessageDialog(root, "Something went wrong and the code is so bad I dont know what",
                     "Sign In Error", JOptionPane.ERROR_MESSAGE);
-
-            // TODO: Getting User Details wrong results in getting booted back to Landing Page
-
         } else {
             if (dbSource.ifCustomerExists(email, password)) {
                 loggingService.logDatabaseCustomerAlreadyExists();
@@ -53,6 +52,9 @@ public class Guest implements CustomerState {
                 JOptionPane.showMessageDialog(root, "Congrats! You've Created A Swag Account",
                         "Sign Up Swagsess", JOptionPane.INFORMATION_MESSAGE);
                 loggingService.logCustomerSignedUp(email);
+
+                new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
+                SwingUtilities.getWindowAncestor(root).dispose();
             }
         }
     }
@@ -87,15 +89,19 @@ public class Guest implements CustomerState {
     @Override
     public void addProductToBasket(Product product, int quantity) {
         customer.getCurrentOrder().add(new OrderLine(product, quantity));
+        product.setStockLevel(product.getStockLevel() - quantity);
 
-        // TODO: Implement Logic To Reduce Duplicate Items In Basket
-
-        // TODO: Decrease Product Quantity When Added To Basket
+        // TODO: Write new Product Stock Level To Database
     }
 
     @Override
     public void removeProductFromBasket(OrderLine orderLine) {
         customer.getCurrentOrder().getOrderLines().remove(orderLine);
+        Product selectedProduct = orderLine.getProduct();
+        int quantity = orderLine.getQuantity();
+        selectedProduct.setStockLevel(selectedProduct.getStockLevel() - quantity);
+
+        // TODO: Write New Product Stock Level to Database
     }
 
     @Override
