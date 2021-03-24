@@ -2,11 +2,13 @@ package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Product;
+import org.somerville.swag.data.source.DBPopulate;
+import org.somerville.swag.data.source.SQLiteConnection;
+import org.somerville.swag.data.source.SQLiteSource;
 
 import javax.swing.*;
 import java.awt.*;
-import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.List;
 
 public class LandingPage {
     private JButton signUpButton;
@@ -26,7 +28,7 @@ public class LandingPage {
 
     public LandingPage(JFrame oldFrame, Customer customer) {
 
-        HashMap<Integer, Product> allProducts = getAllProducts();
+        List<Product> allProducts = getAllProducts();
         showFrameWithProduct(allProducts.get(0));
         displayProductList(allProducts, new DefaultListModel<>());
         listOfProducts.setSelectedValue(allProducts.get(0), true);
@@ -57,16 +59,9 @@ public class LandingPage {
         addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket());
     }
 
-    private HashMap<Integer, Product> getAllProducts() {
-        Product productA = new Product(0,"Product A","Description C", BigDecimal.valueOf(19.99), 5, "src/main/resources/product.images/derek_crocs.png");
-        Product productB = new Product(0,"Product B","Description B", BigDecimal.valueOf(29.99), 10, "src/main/resources/product.images/derek_snowglobe.png");
-        Product productC = new Product(0,"Product C","Description B", BigDecimal.valueOf(29.99), 10, "src/main/resources/product.images/derek_snowglobe.png");
-
-        HashMap<Integer, Product> productMap = new HashMap<>(); //set this to the DB read function
-        productMap.put(0, productA);
-        productMap.put(1, productB);
-        productMap.put(2, productC);
-        return productMap;
+    private List<Product> getAllProducts() {
+        SQLiteSource sqlSoure = new SQLiteSource();
+        return sqlSoure.getAllProductsInStock();
     }
 
     private void showFrameWithProduct(Product product) {
@@ -84,12 +79,16 @@ public class LandingPage {
         imageDisplay.setIcon(new ImageIcon(scaledProductImage1));
     }
 
-    private void displayProductList(HashMap<Integer, Product> productMap, DefaultListModel<Product> listModel) {
-        productMap.forEach((id, product) -> listModel.addElement(product));
+    private void displayProductList(List< Product> productMap, DefaultListModel<Product> listModel) {
+        productMap.forEach(product -> listModel.addElement(product));
         listOfProducts.setModel(listModel);
     }
 
     public static void main(String[] args) {
+        DBPopulate dbPopulate = new DBPopulate(SQLiteConnection.getInstance());
+        dbPopulate.createTables();
+        dbPopulate.populateProductTable();
+
         Customer customer = new Customer();
         new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(new JFrame(), customer).root, true);
     }

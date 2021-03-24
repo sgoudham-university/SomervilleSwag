@@ -79,9 +79,9 @@ public class Customer {
         customerState.purchaseItems();
     }
 
-    public void setCurrentOrder(Order currentOrder) { this.currentOrder = currentOrder; }
     public void setCustomerId(int customerId) { this.customerId = customerId; }
     public void setForename(String forename) { this.forename = forename; }
+    public void setCurrentOrder(Order order) { this.currentOrder = order; }
     public void setSurname(String surname) { this.surname = surname; }
     public void setEmail(String email) { this.email = email; }
     public void setPassword(String password) { this.password = password; }
@@ -92,7 +92,7 @@ public class Customer {
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     public CustomerState getCustomerState() { return customerState; }
-    public Order getCurrentOrder() { return currentOrder; }
+    public Order getCurrentOrder() {return currentOrder; }
     public int getCustomerId() { return customerId; }
     public String getForename() { return forename; }
     public String getSurname() { return surname; }

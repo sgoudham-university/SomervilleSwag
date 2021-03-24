@@ -40,14 +40,12 @@ public class Basket {
             o.add(lineC);
         }
         //End STUB
-
-
+        
         List<OrderLine> lines = o.getOrderLines(); //replace o.getOrderLines() with customer.getOrder().getOrderLinesAsList()
 
         //---------------------TABLE LAYOUT-----------------------------------------------------------------------------
-
-        String[] columNames = {"Product" , "Quantity", "Price"};
-        DefaultTableModel model = new DefaultTableModel(columNames,0) {
+        String[] columnNames = {"Product" , "Quantity", "Price"};
+        DefaultTableModel model = new DefaultTableModel(columnNames,0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -57,12 +55,9 @@ public class Basket {
         for (OrderLine orderLine : lines) {
             Object[] newRow = { orderLine.getProductId(), orderLine.getQuantity(), orderLine.getProductId().getFormattedPrice()};
             model.addRow(newRow);
-        }                           //we can set the order total in here also
+        }
         orderTotal.setText(o.getFormattedTotal());
         tblBasket.setModel(model);
-
-
-
         //---------------------END TABLE LAYOUT-------------------------------------------------------------------------
 
         backButton.addActionListener(actionEvent -> {
