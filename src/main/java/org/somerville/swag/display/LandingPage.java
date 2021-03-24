@@ -25,6 +25,7 @@ public class LandingPage {
     private JLabel lblTitle;
     private JPanel productPanel;
     private JLabel lblProductTitle;
+    private JButton logOutButton;
 
     public LandingPage(JFrame oldFrame, Customer customer) {
 
@@ -86,6 +87,8 @@ public class LandingPage {
             new JFrameBuilder.Builder().buildDefaultJFrame("Log In", new LogIn(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
+
+        logOutButton.addActionListener(e -> customer.logOut());
 
         viewBasketButton.addActionListener(actionEvent -> {
             new JFrameBuilder.Builder().buildDefaultJFrame("Your Basket", new Basket(oldFrame, customer).root,true);
