@@ -15,8 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class SQLiteSourceTest {
@@ -169,6 +168,26 @@ class SQLiteSourceTest {
 
         verify(loggingService, times(1)).logDatabaseGetAllProductsInStockFailure(expectedGetAllProductsQuery, expectedExceptionMessage);
         verifyNoMoreInteractions(loggingService);
+    }
+
+    @Test
+    void successfullyFindCustomerInDatabase() {
+        String expectedTestEmail = "testEmail";
+        String expectedTestPassword = "testPassword";
+
+        boolean actualIfCustomerExists = sqLiteSource.ifCustomerExists(expectedTestEmail, expectedTestPassword);
+
+        assertTrue(actualIfCustomerExists);
+    }
+
+    @Test
+    void failToFindCustomerInDatabase() {
+        String expectedTestEmail = "testInvalidEmail";
+        String expectedTestPassword = "testInvalidPassword";
+
+        boolean actualIfCustomerExists = sqLiteSource.ifCustomerExists(expectedTestEmail, expectedTestPassword);
+
+        assertFalse(actualIfCustomerExists);
     }
 
     private SQLiteConnection createSQLiteConnection() {
