@@ -26,8 +26,11 @@ public class LandingPage {
     private JLabel lblTitle;
     private JPanel productPanel;
     private JLabel lblProductTitle;
+    private JLabel lblStatus;
 
     public LandingPage(JFrame oldFrame, Customer customer) {
+
+        refreshState(customer);
 
         List<Product> allProducts = getAllProducts();
         showFrameWithProduct(allProducts.get(0));
@@ -57,6 +60,7 @@ public class LandingPage {
 
         logOutButton.addActionListener(e -> {
             customer.logOut(root);
+            refreshState(customer);
         });
 
         viewBasketButton.addActionListener(actionEvent -> {
@@ -78,7 +82,7 @@ public class LandingPage {
     }
 
     private void showFrameWithProduct(Product product) {
-        SpinnerModel model = new SpinnerNumberModel(0, 0, product.getStockLevel(), 1);
+        SpinnerModel model = new SpinnerNumberModel(1, 1, product.getStockLevel(), 1);
         JSpinner spinner = new JSpinner();
         JFormattedTextField spin = ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
         spin.setEditable(false);
@@ -95,6 +99,14 @@ public class LandingPage {
     private void displayProductList(List< Product> productMap, DefaultListModel<Product> listModel) {
         productMap.forEach(listModel::addElement);
         listOfProducts.setModel(listModel);
+    }
+
+    private void refreshState(Customer customer) {
+        if (customer.getCustomerState() instanceof LoggedIn) {
+            lblStatus.setText("Swagged In " + customer.getForename() + "!");
+        } else {
+            lblStatus.setText("Status: Not Swag");
+        }
     }
 
     public static void main(String[] args) {
