@@ -15,6 +15,8 @@
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-12992481"/>
+          <foreground color="-1"/>
           <horizontalTextPosition value="0"/>
           <text value="Confirm"/>
         </properties>
@@ -24,6 +26,8 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-1630687"/>
+          <foreground color="-1"/>
           <text value="Back"/>
         </properties>
       </component>
@@ -58,7 +62,7 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font size="18"/>
+          <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
           <text value="Username"/>
         </properties>
@@ -68,7 +72,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font size="18"/>
+          <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
           <text value="Password"/>
         </properties>

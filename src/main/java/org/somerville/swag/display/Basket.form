@@ -12,25 +12,36 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <font/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="113d5" class="javax.swing.JTable" binding="tblBasket">
             <constraints/>
             <properties>
               <autoCreateRowSorter value="true"/>
+              <background color="-16175801"/>
               <editingColumn value="-1"/>
               <editingRow value="-1"/>
               <fillsViewportHeight value="true"/>
+              <font name="Berlin Sans FB Demi" size="20" style="0"/>
+              <foreground color="-1"/>
+              <gridColor color="-16175801"/>
+              <selectionBackground color="-17688"/>
+              <selectionForeground color="-16777216"/>
+              <showHorizontalLines value="true"/>
+              <showVerticalLines value="true"/>
             </properties>
           </component>
         </children>
       </scrollpane>
       <component id="3db4d" class="javax.swing.JLabel">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="2" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Berlin Sans FB Demi" size="20" style="1"/>
           <foreground color="-1"/>
           <text value="Total Price: "/>
         </properties>
@@ -42,6 +53,7 @@
           </grid>
         </constraints>
         <properties>
+          <font name="Berlin Sans FB Demi" size="20" style="1"/>
           <foreground color="-1"/>
           <text value="Total"/>
         </properties>
@@ -51,6 +63,8 @@
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-39424"/>
+          <foreground color="-1"/>
           <text value="Remove Product"/>
         </properties>
       </component>
@@ -59,6 +73,8 @@
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-12992481"/>
+          <foreground color="-1"/>
           <text value="Buy Now"/>
         </properties>
       </component>
@@ -67,6 +83,8 @@
           <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-1630687"/>
+          <foreground color="-1"/>
           <text value="Back"/>
         </properties>
       </component>
