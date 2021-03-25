@@ -54,6 +54,8 @@ public class LoggedIn implements CustomerState {
         product.setStockLevel(product.getStockLevel() - quantity);
 
         // TODO: Write New Product Stock Level To Database
+
+        loggingService.logCustomerAddProductToBasket(customer.getCustomerId(), product.getProductId());
     }
 
     @Override
