@@ -91,9 +91,9 @@ public class LandingPage {
         lblDesc.setText(product.getDescription());
         lblProductTitle.setText(product.getName());
 
-        ImageIcon productImageIcon1 = new ImageIcon(product.getImagePath());
-        Image scaledProductImage1 = productImageIcon1.getImage().getScaledInstance(400, 350, Image.SCALE_SMOOTH);
-        imageDisplay.setIcon(new ImageIcon(scaledProductImage1));
+        ImageIcon productImageIcon = new ImageIcon(product.getImagePath());
+        Image scaledProductImage = productImageIcon.getImage().getScaledInstance(470, 390, Image.SCALE_SMOOTH);
+        imageDisplay.setIcon(new ImageIcon(scaledProductImage));
     }
 
     private void displayProductList(List< Product> productMap, DefaultListModel<Product> listModel) {
