@@ -88,6 +88,7 @@ public class Guest implements CustomerState {
 
     @Override
     public void addProductToBasket(Product product, int quantity) {
+        customer.getCurrentOrder().getOrderLines().removeIf(orderLine -> orderLine.getProduct().getProductId() == product.getProductId());
         customer.getCurrentOrder().add(new OrderLine(product, quantity));
         product.setStockLevel(product.getStockLevel() - quantity);
 
