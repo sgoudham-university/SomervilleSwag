@@ -5,6 +5,7 @@ import org.somerville.swag.data.entity.state.LoggedIn;
 
 import javax.swing.*;
 import java.util.List;
+import java.util.Objects;
 
 public class Customer {
     private CustomerState customerState;
@@ -120,5 +121,18 @@ public class Customer {
     public String getCity() { return city; }
     public String getPostcode() { return postcode; }
     public String getPhoneNumber() { return phoneNumber; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return customerId == customer.customerId && Objects.equals(currentOrder, customer.currentOrder) && Objects.equals(forename, customer.forename) && Objects.equals(surname, customer.surname) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password) && Objects.equals(addressLine1, customer.addressLine1) && Objects.equals(addressLine2, customer.addressLine2) && Objects.equals(city, customer.city) && Objects.equals(postcode, customer.postcode) && Objects.equals(phoneNumber, customer.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentOrder, customerId, forename, surname, email, password, addressLine1, addressLine2, city, postcode, phoneNumber);
+    }
 }
 
