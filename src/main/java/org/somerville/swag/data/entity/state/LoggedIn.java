@@ -22,15 +22,13 @@ public class LoggedIn implements CustomerState {
     }
 
     @Override
-    public void signUp(JFrame oldFrame, JPanel root, List<String> guestData) {
-        JOptionPane.showMessageDialog(root, "Uh Oh! Can't Sign Up When Logged In!",
-                "Sign Up Swag-no", JOptionPane.ERROR_MESSAGE);
+    public void signUp(JPanel root, JFrame oldFrame, List<String> guestData) {
+        showMessage(root, "Uh Oh! Can't SwagUp When SwaggedIn!", JOptionPane.ERROR_MESSAGE, "SwagUp Swag-No");
     }
 
     @Override
     public void logIn(JPanel root, String email, String password) {
-        JOptionPane.showMessageDialog(root, "Uh Oh! Can't Log In When Logged In!",
-                "Log In Swag-no", JOptionPane.ERROR_MESSAGE);
+        showMessage(root, "Uh Oh! Can't SwagIn When SwaggedIn!", JOptionPane.ERROR_MESSAGE, "SwagIn Swag-No");
     }
 
     @Override
@@ -38,8 +36,7 @@ public class LoggedIn implements CustomerState {
         customer.changeCustomerState(new Guest(customer));
         customer.refresh();
 
-        JOptionPane.showMessageDialog(root, "Logged out Success. D-money will miss you",
-                "Logged out", JOptionPane.INFORMATION_MESSAGE);
+        showMessage(root, "SwaggedOut Success. D-money will miss you", JOptionPane.INFORMATION_MESSAGE, "Swagcess");
         loggingService.logCustomerLoggedOut(customer.getCustomerId());
     }
 
@@ -69,12 +66,24 @@ public class LoggedIn implements CustomerState {
     }
 
     @Override
-    public void purchaseItems(JPanel root) {
+    public void purchaseItems(JPanel root, String txtCardNo, String txtCvv) {
+
+        if (!txtCardNo.strip().matches("[0-9]{16}") || !txtCvv.strip().matches("[0-9]{3}")) {
+            showMessage(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123", JOptionPane.ERROR_MESSAGE, "Card Number Error");
+        } else {
+            showMessage(root, "Your Swag will be with you as soon as possible :)", JOptionPane.INFORMATION_MESSAGE, "Swag Success");
+        }
+
         // TODO: Validate payment information
 
         // TODO: Show Popup of Order Confirmation
 
         // TODO: Clear customer basket in memory
+    }
+
+    private void showMessage(JPanel root, String message, int type, String title) {
+        JOptionPane.showMessageDialog(root, message,
+                title, type);
     }
 
     public void setLoggingService(LoggingService loggingService) {

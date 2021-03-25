@@ -36,7 +36,7 @@ public class SignUp {
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
-        confirmButton.addActionListener(actionEvent -> customer.signUp(oldFrame, root, new ArrayList<>() {{
+        confirmButton.addActionListener(actionEvent -> customer.signUp(root, oldFrame, new ArrayList<>() {{
             add(txtFirstName.getText());
             add(txtLastName.getText());
             add(txtEmail.getText());

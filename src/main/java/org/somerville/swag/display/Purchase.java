@@ -24,14 +24,9 @@ public class Purchase {
         });
 
         confirmButton.addActionListener(actionEvent -> {
-            customer.purchaseItems(root);
-
-             if (!txtCardNo.getText().strip().matches("[0-9]{16}") || !txtCvv.getText().strip().matches("[0-9]{3}")) { //implement a chack for customer state == guest
-                 JOptionPane.showMessageDialog(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
-                         "Card Number Error", JOptionPane.ERROR_MESSAGE);
-             } else {
-                JOptionPane.showMessageDialog(root, "Your Swag will be with you as soon as possible :)","Swag Success", JOptionPane.INFORMATION_MESSAGE);
-            }
+            customer.purchaseItems(root, txtCardNo.getText(), txtCvv.getText());
+            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
+            SwingUtilities.getWindowAncestor(root).dispose();
         });
     }
 

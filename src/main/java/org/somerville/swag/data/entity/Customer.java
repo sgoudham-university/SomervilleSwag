@@ -55,8 +55,8 @@ public class Customer {
         this.customerState = customerState;
     }
 
-    public void signUp(JFrame oldFrame, JPanel root, List<String> guestData) {
-        customerState.signUp(oldFrame, root, guestData);
+    public void signUp(JPanel root, JFrame oldFrame, List<String> guestData) {
+        customerState.signUp(root, oldFrame, guestData);
     }
 
     public void logIn(JPanel root, String email, String password) {
@@ -79,8 +79,8 @@ public class Customer {
         customerState.removeProductFromBasket(orderLine);
     }
 
-    public void purchaseItems(JPanel root) {
-        customerState.purchaseItems(root);
+    public void purchaseItems(JPanel root, String txtCardNo, String txtCvv) {
+        customerState.purchaseItems(root, txtCardNo, txtCvv);
     }
 
     public void refresh() {
