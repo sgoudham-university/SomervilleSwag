@@ -91,6 +91,13 @@ public class Guest implements CustomerState {
     public void addProductToBasket(Product product, int quantity) {
         customer.getCurrentOrder().getOrderLines().removeIf(orderLine -> orderLine.getProduct().getProductId() == product.getProductId());
         customer.getCurrentOrder().add(new OrderLine(product, quantity));
+
+        for(int i = 0; i < customer.getCurrentOrder().getOrderLines().size(); i++) {
+            if (customer.getCurrentOrder().getSingleOrderLine(i).getProduct().equals(product)) {
+                product.setStockLevel(customer.getCurrentOrder().getSingleOrderLine(i).getQuantity() + product.getStockLevel());
+            }
+        }
+
         product.setStockLevel(product.getStockLevel() - quantity);
 
         dbSource.updateProductStockLevel(product.getProductId(), product.getStockLevel() - quantity);
