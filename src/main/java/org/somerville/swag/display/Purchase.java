@@ -11,8 +11,8 @@ public class Purchase {
     private JComboBox<Integer> comYear;
     private JButton confirmButton;
     private JButton backButton;
-    private JTextField txtCvv2;
     public JPanel root;
+    private JTextField txtCvv;
 
     public Purchase(JFrame oldFrame, Customer customer) {
 
@@ -32,7 +32,7 @@ public class Purchase {
         confirmButton.addActionListener(actionEvent -> {
             customer.purchaseItems(root);
 
-             if (!txtCardNo.getText().strip().matches("[0-9]{16}") || !txtCvv2.getText().strip().matches("[0-9]{3}")){
+             if (!txtCardNo.getText().strip().matches("[0-9]{16}") || !txtCvv.getText().strip().matches("[0-9]{3}")){
                 JOptionPane.showMessageDialog(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
                         "Card Number Error", JOptionPane.ERROR_MESSAGE);
             } else {
