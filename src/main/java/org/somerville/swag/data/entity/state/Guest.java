@@ -79,29 +79,34 @@ public class Guest implements CustomerState {
     }
 
     @Override
-    public void addProductToBasket(Product product, int quantity) {
-        Order customerOrder = customer.getCurrentOrder();
-        Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
-        int productPreviousStockLevel = product.getStockLevel();
+    public void addProductToBasket(JPanel root, Product product, int quantity) {
+        if (quantity == 0) {
+            showMessage(root, "No Swag", "Your Quantity Of Swag Is Below The Minimum Swag Value",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            Order customerOrder = customer.getCurrentOrder();
+            Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
+            int productPreviousStockLevel = product.getStockLevel();
 
-        while (customerOrderIterator.hasNext()) {
-            OrderLine orderLine = customerOrderIterator.next();
-            Product productInBasket = orderLine.getProduct();
-            if (productInBasket.equals(product)) {
-                productPreviousStockLevel += orderLine.getQuantity();
-                quantity += orderLine.getQuantity();
-                customerOrderIterator.remove();
+            while (customerOrderIterator.hasNext()) {
+                OrderLine orderLine = customerOrderIterator.next();
+                Product productInBasket = orderLine.getProduct();
+                if (productInBasket.equals(product)) {
+                    productPreviousStockLevel += orderLine.getQuantity();
+                    quantity += orderLine.getQuantity();
+                    customerOrderIterator.remove();
+                }
             }
-        }
-        int productNewStockLevel = productPreviousStockLevel - quantity;
+            int productNewStockLevel = productPreviousStockLevel - quantity;
+            product.setStockLevel(productNewStockLevel);
 
-        customer.getCurrentOrder().add(new OrderLine(product, quantity));
-        product.setStockLevel(productNewStockLevel);
-        dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
+            customer.getCurrentOrder().add(new OrderLine(product, quantity));
+            dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
+        }
     }
 
     @Override
-    public void removeProductFromBasket(OrderLine orderLine) {
+    public void removeProductFromBasket(JPanel root, OrderLine orderLine) {
         Product selectedProduct = orderLine.getProduct();
         int selectedProductQuantity = orderLine.getQuantity();
         Order customerOrder = customer.getCurrentOrder();
@@ -114,7 +119,7 @@ public class Guest implements CustomerState {
     }
 
     @Override
-    public void purchaseProducts(JPanel root, String txtCardNo, String txtCvv) {
+    public void purchaseProducts(JFrame oldFrame, JPanel root, String txtCardNo, String txtCvv) {
         JOptionPane.showMessageDialog(root, "Can't Checkout If You Ain't Swagged In!",
                 "Check Out SwagNo", JOptionPane.ERROR_MESSAGE);
     }
@@ -122,16 +127,16 @@ public class Guest implements CustomerState {
     private boolean invalidInformation(String forename, String surname, String email, String password,
                                        String passwordConfirm, String addressLineOne, String city, String postcode,
                                        String phoneNumber) {
-        return !forename.strip().matches("[a-zA-Z]{1,15}"); //|| //only characters, min length 1 - max length 15
-//                !surname.strip().matches("[a-zA-Z]{1,15}") || //only characters, min length 1 - max length 15
-//                !email.strip().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") || //Simple email expression. Doesn't allow numbers in the domain name and doesn't allow for top level domains that are less than 2 or more than 3 letters (which is fine until they allow more). Doesn't handle multiple &quot;.&quot; in the domain (joe@abc.co.uk).
-//                !password.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be use
-//                !passwordConfirm.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be used
-//                !addressLineOne.matches("^[a-zA-Z0-9_ ]*$") || //no special characters, whisepace premitted
-//                !city.matches("^[a-zA-Z_ ]*$") || //Only characters, whitespace permitted, will accept empty string
-//                !postcode.matches("^[a-zA-Z0-9_ ]{6,7}$") || //characters and numbers, 6-7 characters, whitespace permitted
-//                !phoneNumber.matches("[0-9]{11}") || //only numbers,, 11 characters
-//                !password.equals(passwordConfirm); //both password fields must match
+        return !forename.strip().matches("[a-zA-Z]{1,15}") || //only characters, min length 1 - max length 15
+                !surname.strip().matches("[a-zA-Z]{1,15}") || //only characters, min length 1 - max length 15
+                !email.strip().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") || //Simple email expression. Doesn't allow numbers in the domain name and doesn't allow for top level domains that are less than 2 or more than 3 letters (which is fine until they allow more). Doesn't handle multiple &quot;.&quot; in the domain (joe@abc.co.uk).
+                !password.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be use
+                !passwordConfirm.matches("^[a-zA-Z]\\w{3,14}$") || //The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscore may be used
+                !addressLineOne.matches("^[a-zA-Z0-9_ ]*$") || //no special characters, whisepace premitted
+                !city.matches("^[a-zA-Z_ ]*$") || //Only characters, whitespace permitted, will accept empty string
+                !postcode.matches("^[a-zA-Z0-9_ ]{6,7}$") || //characters and numbers, 6-7 characters, whitespace permitted
+                !phoneNumber.matches("[0-9]{11}") || //only numbers,, 11 characters
+                !password.equals(passwordConfirm); //both password fields must match
     }
 
     public void setLoggingService(LoggingService loggingService) {
