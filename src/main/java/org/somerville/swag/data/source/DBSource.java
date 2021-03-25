@@ -10,4 +10,5 @@ public interface DBSource {
     void insertCustomer(List<String> guestData);
     List<Product> getAllProductsInStock();
     boolean ifCustomerExists(String email, String password);
+    void updateProductStockLevel(int productId, int stockLevel);
 }

@@ -93,7 +93,7 @@ public class Guest implements CustomerState {
         customer.getCurrentOrder().add(new OrderLine(product, quantity));
         product.setStockLevel(product.getStockLevel() - quantity);
 
-        // TODO: Write new Product Stock Level To Database
+        dbSource.updateProductStockLevel(product.getProductId(), product.getStockLevel() - quantity);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Guest implements CustomerState {
         int quantity = orderLine.getQuantity();
         selectedProduct.setStockLevel(selectedProduct.getStockLevel() - quantity);
 
-        // TODO: Write New Product Stock Level to Database
+        dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel() - quantity);
     }
 
     @Override
