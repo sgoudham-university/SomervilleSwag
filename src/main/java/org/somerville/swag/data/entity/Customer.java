@@ -67,16 +67,16 @@ public class Customer {
         customerState.logOut(root);
     }
 
-    public void addProductToBasket(Product product, int quantity) {
-        customerState.addProductToBasket(product, quantity);
+    public void addProductToBasket(JPanel root, Product product, int quantity) {
+        customerState.addProductToBasket(root, product, quantity);
     }
 
-    public void removeProductFromBasket(OrderLine orderLine) {
-        customerState.removeProductFromBasket(orderLine);
+    public void removeProductFromBasket(JPanel root, OrderLine orderLine) {
+        customerState.removeProductFromBasket(root, orderLine);
     }
 
-    public void purchaseItems(JPanel root, String txtCardNo, String txtCvv) {
-        customerState.purchaseProducts(root, txtCardNo, txtCvv);
+    public void purchaseItems(JFrame oldFrame, JPanel root, String txtCardNo, String txtCvv) {
+        customerState.purchaseProducts(oldFrame, root, txtCardNo, txtCvv);
     }
 
     public void refresh() {

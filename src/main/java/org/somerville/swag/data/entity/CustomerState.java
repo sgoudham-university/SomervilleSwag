@@ -7,7 +7,7 @@ public interface CustomerState {
     void signUp(JPanel root, JFrame oldFrame, List<String> guestData);
     void logIn(JPanel root, String email, String password);
     void logOut(JPanel root);
-    void addProductToBasket(Product product, int quantity);
-    void removeProductFromBasket(OrderLine orderLine);
-    void purchaseProducts(JPanel root, String txtCardNo, String txtCvv);
+    void addProductToBasket(JPanel root, Product product, int quantity);
+    void removeProductFromBasket(JPanel root, OrderLine orderLine);
+    void purchaseProducts(JFrame oldFrame, JPanel root, String txtCardNo, String txtCvv);
 }
