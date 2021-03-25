@@ -112,13 +112,4 @@ public class LandingPage {
             lblStatus.setText("Status: Not Swag");
         }
     }
-
-    public static void main(String[] args) {
-        DBPopulate dbPopulate = new DBPopulate(SQLiteConnection.getInstance());
-        dbPopulate.createTables();
-        dbPopulate.populateProductTable();
-
-        Customer customer = new Customer();
-        new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(new JFrame(), customer).root, true);
-    }
 }
