@@ -1,9 +1,6 @@
 package org.somerville.swag.data.entity.state;
 
-import org.somerville.swag.data.entity.Customer;
-import org.somerville.swag.data.entity.CustomerState;
-import org.somerville.swag.data.entity.OrderLine;
-import org.somerville.swag.data.entity.Product;
+import org.somerville.swag.data.entity.*;
 import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
 import org.somerville.swag.data.source.DBSource;
@@ -12,6 +9,7 @@ import org.somerville.swag.display.JFrameBuilder;
 import org.somerville.swag.display.LandingPage;
 
 import javax.swing.*;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -89,28 +87,38 @@ public class Guest implements CustomerState {
 
     @Override
     public void addProductToBasket(Product product, int quantity) {
-        customer.getCurrentOrder().getOrderLines().removeIf(orderLine -> orderLine.getProduct().getProductId() == product.getProductId());
-        customer.getCurrentOrder().add(new OrderLine(product, quantity));
+        Order customerOrder = customer.getCurrentOrder();
+        Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
+        int productPreviousStockLevel = product.getStockLevel();
 
-        for(int i = 0; i < customer.getCurrentOrder().getOrderLines().size(); i++) {
-            if (customer.getCurrentOrder().getSingleOrderLine(i).getProduct().equals(product)) {
-                product.setStockLevel(customer.getCurrentOrder().getSingleOrderLine(i).getQuantity() + product.getStockLevel());
+        while (customerOrderIterator.hasNext()) {
+            OrderLine orderLine = customerOrderIterator.next();
+            Product productInBasket = orderLine.getProduct();
+            if (productInBasket.equals(product)) {
+                productPreviousStockLevel += orderLine.getQuantity();
+                quantity += orderLine.getQuantity();
+                customerOrderIterator.remove();
             }
         }
+        int productNewStockLevel = productPreviousStockLevel - quantity;
 
-        product.setStockLevel(product.getStockLevel() - quantity);
-
-        dbSource.updateProductStockLevel(product.getProductId(), product.getStockLevel() - quantity);
+        customer.getCurrentOrder().add(new OrderLine(product, quantity));
+        product.setStockLevel(productNewStockLevel);
+        dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
     }
 
     @Override
     public void removeProductFromBasket(OrderLine orderLine) {
-        customer.getCurrentOrder().getOrderLines().remove(orderLine);
-        Product selectedProduct = orderLine.getProduct();
-        int quantity = orderLine.getQuantity();
-        selectedProduct.setStockLevel(selectedProduct.getStockLevel() - quantity);
+        Order customerOrder = customer.getCurrentOrder();
+        List<OrderLine> customerOrderLines = customerOrder.getOrderLines();
 
-        dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel() - quantity);
+        int selectedProductQuantity = orderLine.getQuantity();
+        customerOrderLines.remove(orderLine);
+
+        Product selectedProduct = orderLine.getProduct();
+        selectedProduct.setStockLevel(selectedProduct.getStockLevel() + selectedProductQuantity);
+
+        dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel());
     }
 
     @Override
