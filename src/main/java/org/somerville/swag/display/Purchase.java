@@ -1,8 +1,6 @@
 package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
-import org.somerville.swag.data.entity.CustomerState;
-import org.somerville.swag.data.entity.state.Guest;
 
 import javax.swing.*;
 import java.time.LocalDateTime;
@@ -18,13 +16,7 @@ public class Purchase {
 
     public Purchase(JFrame oldFrame, Customer customer) {
 
-        int year = LocalDateTime.now().getYear();
-        for( int i = 0; i < 6; i++){
-            comYear.addItem(year + i);
-        }
-        for(int j = 1; j <= 12; j++){
-            comMonth.addItem( j );
-        }
+        initialiseCheckout();
 
         backButton.addActionListener(actionEvent -> {
             new JFrameBuilder.Builder().buildDefaultJFrame("Your Basket", new Basket(oldFrame, customer).root, true);
@@ -32,22 +24,24 @@ public class Purchase {
         });
 
         confirmButton.addActionListener(actionEvent -> {
-            //customer.purchaseItems(root);
+            customer.purchaseItems(root);
 
              if (!txtCardNo.getText().strip().matches("[0-9]{16}") || !txtCvv.getText().strip().matches("[0-9]{3}")) { //implement a chack for customer state == guest
                  JOptionPane.showMessageDialog(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
                          "Card Number Error", JOptionPane.ERROR_MESSAGE);
-             }
-             else if (customer.equals(customer)){
-                    customer.purchaseItems(root);
-                 }
-             else if (customer.getCurrentOrder().getOrderLines().size() == 0){
-                 JOptionPane.showMessageDialog(root, "No items in basket",
-                         "Order Error", JOptionPane.ERROR_MESSAGE);
-             }
-             else {
+             } else {
                 JOptionPane.showMessageDialog(root, "Your Swag will be with you as soon as possible :)","Swag Success", JOptionPane.INFORMATION_MESSAGE);
             }
         });
+    }
+
+    private void initialiseCheckout() {
+        int year = LocalDateTime.now().getYear();
+        for( int i = 0; i < 6; i++){
+            comYear.addItem(year + i);
+        }
+        for(int j = 1; j <= 12; j++){
+            comMonth.addItem( j );
+        }
     }
 }
