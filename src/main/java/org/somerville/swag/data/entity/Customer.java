@@ -67,10 +67,6 @@ public class Customer {
         customerState.logOut(root);
     }
 
-    public void viewBasket() {
-        customerState.viewBasket();
-    }
-
     public void addProductToBasket(Product product, int quantity) {
         customerState.addProductToBasket(product, quantity);
     }
@@ -95,6 +91,10 @@ public class Customer {
         this.city = null;
         this.postcode = null;
         this.phoneNumber = null;
+    }
+
+    public void clearBasket() {
+        this.setCurrentOrder(new Order());
     }
 
     public void setCustomerId(int customerId) { this.customerId = customerId; }
