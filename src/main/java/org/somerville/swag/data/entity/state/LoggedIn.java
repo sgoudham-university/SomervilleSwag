@@ -1,19 +1,20 @@
 package org.somerville.swag.data.entity.state;
 
-import org.somerville.swag.data.entity.Customer;
-import org.somerville.swag.data.entity.CustomerState;
-import org.somerville.swag.data.entity.OrderLine;
-import org.somerville.swag.data.entity.Product;
+import org.somerville.swag.data.entity.*;
 import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
+import org.somerville.swag.data.source.DBSource;
+import org.somerville.swag.data.source.SQLiteSource;
 
 import javax.swing.*;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
 public class LoggedIn implements CustomerState {
 
     private final Customer customer;
+    private final DBSource dbSource = new SQLiteSource();
 
     private LoggingService loggingService = LoggingServiceImpl.getInstance();
 
@@ -23,12 +24,12 @@ public class LoggedIn implements CustomerState {
 
     @Override
     public void signUp(JPanel root, JFrame oldFrame, List<String> guestData) {
-        showMessage(root, "Uh Oh! Can't SwagUp When SwaggedIn!", JOptionPane.ERROR_MESSAGE, "SwagUp Swag-No");
+        showMessage(root, "Uh Oh! Can't SwagUp When SwaggedIn!", "SwagUp Swag-No", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
     public void logIn(JPanel root, String email, String password) {
-        showMessage(root, "Uh Oh! Can't SwagIn When SwaggedIn!", JOptionPane.ERROR_MESSAGE, "SwagIn Swag-No");
+        showMessage(root, "Uh Oh! Can't SwagIn When SwaggedIn!", "SwagIn Swag-No", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -36,58 +37,72 @@ public class LoggedIn implements CustomerState {
         customer.changeCustomerState(new Guest(customer));
         customer.refresh();
 
-        showMessage(root, "SwaggedOut Success. D-money will miss you", JOptionPane.INFORMATION_MESSAGE, "Swagcess");
+        showMessage(root, "SwaggedOut Success. D-money will miss you","Swagcess", JOptionPane.INFORMATION_MESSAGE);
         loggingService.logCustomerLoggedOut(customer.getCustomerId());
     }
 
     @Override
-    public void viewBasket() {
-
-    }
-
-    @Override
     public void addProductToBasket(Product product, int quantity) {
-        customer.getCurrentOrder().add(new OrderLine(product, quantity));
-        product.setStockLevel(product.getStockLevel() - quantity);
+        Order customerOrder = customer.getCurrentOrder();
+        Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
+        int productPreviousStockLevel = product.getStockLevel();
 
-        // TODO: Write New Product Stock Level To Database
+        while (customerOrderIterator.hasNext()) {
+            OrderLine orderLine = customerOrderIterator.next();
+            Product productInBasket = orderLine.getProduct();
+            if (productInBasket.equals(product)) {
+                productPreviousStockLevel += orderLine.getQuantity();
+                quantity += orderLine.getQuantity();
+                customerOrderIterator.remove();
+            }
+        }
+        int productNewStockLevel = productPreviousStockLevel - quantity;
+
+        customer.getCurrentOrder().add(new OrderLine(product, quantity));
+        product.setStockLevel(productNewStockLevel);
+        dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
 
         loggingService.logCustomerAddProductToBasket(customer.getCustomerId(), product.getProductId());
     }
 
     @Override
     public void removeProductFromBasket(OrderLine orderLine) {
-        customer.getCurrentOrder().getOrderLines().remove(orderLine);
         Product selectedProduct = orderLine.getProduct();
-        int quantity = orderLine.getQuantity();
-        selectedProduct.setStockLevel(selectedProduct.getStockLevel() - quantity);
+        int selectedProductQuantity = orderLine.getQuantity();
+        Order customerOrder = customer.getCurrentOrder();
+        List<OrderLine> customerOrderLines = customerOrder.getOrderLines();
 
-        // TODO: Write New Product Stock Level to Database
+        customerOrderLines.remove(orderLine);
+        selectedProduct.setStockLevel(selectedProduct.getStockLevel() + selectedProductQuantity);
+
+        dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel());
+        loggingService.logCustomerRemoveProductFromBasket(customer.getCustomerId(), orderLine.getProduct().getProductId());
     }
 
     @Override
-    public void purchaseItems(JPanel root, String txtCardNo, String txtCvv) {
-
-        if (!txtCardNo.strip().matches("[0-9]{16}") || !txtCvv.strip().matches("[0-9]{3}")) {
-            showMessage(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123", JOptionPane.ERROR_MESSAGE, "Card Number Error");
+    public void purchaseProducts(JPanel root, String txtCardNo, String txtCvv) {
+        if (cardInvalid(txtCardNo, txtCvv)) {
+            showMessage(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
+                    "Card Number Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            showMessage(root, "Your Swag will be with you as soon as possible :)", JOptionPane.INFORMATION_MESSAGE, "Swag Success");
+            showMessage(root, "Your Swag will be with you as soon as possible :)",
+                    "Swag Success", JOptionPane.INFORMATION_MESSAGE);
         }
 
-        // TODO: Validate payment information
-
-        // TODO: Show Popup of Order Confirmation
-
-        // TODO: Clear customer basket in memory
+        customer.clearBasket();
+        loggingService.logCustomerCheckout(customer.getCustomerId(), customer.getCurrentOrder().getOrderId());
     }
 
-    private void showMessage(JPanel root, String message, int type, String title) {
-        JOptionPane.showMessageDialog(root, message,
-                title, type);
+    private void showMessage(JPanel root, String message, String title, int type) {
+        JOptionPane.showMessageDialog(root, message, title, type);
     }
 
     public void setLoggingService(LoggingService loggingService) {
         this.loggingService = loggingService;
+    }
+
+    private boolean cardInvalid(String txtCardNo, String txtCvv) {
+        return !txtCardNo.strip().matches("[0-9]{16}") || !txtCvv.strip().matches("[0-9]{3}");
     }
 
     @Override

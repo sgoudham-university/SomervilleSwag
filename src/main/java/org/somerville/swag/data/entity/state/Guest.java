@@ -32,20 +32,18 @@ public class Guest implements CustomerState {
         String password = guestData.get(3);
         String passwordConfirm = guestData.get(4);
         String addressLine1 = guestData.get(5);
-        String addressLine2 = guestData.get(6);
         String city = guestData.get(7);
         String postcode = guestData.get(8);
         String phoneNumber = guestData.get(9);
 
         if (invalidInformation(forename, surname, email, password, passwordConfirm, addressLine1, city, postcode, phoneNumber)) {
-            showMessage(root, "SwagIn Error", "Uh Oh! Details Are Not Swag! Please Ensure The Following: \n" +
-                    "Name: First and Last name must be 1-15 swags long with no numbers\n" +
-                    "Email: You should know what an email looks like\n" +
-                    "Password: The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscores\n" +
-                    "Address: No special characters, whisepace premitted\n" +
-                    "Postcode: characters and numbers, 6-7 characters, whitespace permitted\n" +
-                    "Phone Number: Only 11 numbers \n"
-                    , JOptionPane.ERROR_MESSAGE);
+            showMessage(root, "SwagIn Error", "Uh Oh! Details Are Not Swag! Please Ensure The Following:\n" +
+                    "Name: Forename & Surname must be 1-15 Swags Wide With No Numbers\n" +
+                    "Email: You Should Know What an Email Looks Like :D\n" +
+                    "Password: [4-15] Characters Please, No Special Characters Except Underscores\n" +
+                    "Address: No Special Characters, Whitespace is Permitted\n" +
+                    "Postcode: [6-7] Characters & Numbers Allowed, Whitespace Permitted\n" +
+                    "Phone Number: 11 Numbers Only\n" ,JOptionPane.ERROR_MESSAGE);
         } else {
             if (dbSource.ifCustomerExists(email, password)) {
                 showMessage(root, "SwagIn Error", "Uh Oh! Customer Already Exists With Email: " + email, JOptionPane.ERROR_MESSAGE);
@@ -67,17 +65,17 @@ public class Guest implements CustomerState {
 
         if (customer.getEmail() != null) {
             customer.changeCustomerState(new LoggedIn(customer));
-            showMessage(root, "Log In Swagsess", "You've logged into your Swag Account", JOptionPane.INFORMATION_MESSAGE);
+            showMessage(root, "SwagIn Swagsess", "You've Swagged into your Swag Account", JOptionPane.INFORMATION_MESSAGE);
             loggingService.logCustomerLoggedIn(customer.getCustomerId());
         } else {
-            showMessage(root, "Log In Error", "Uh Oh! No Swag Customer Account Found!", JOptionPane.ERROR_MESSAGE);
+            showMessage(root, "SwagIn Error", "Uh Oh! No Swag Customer Account Found!", JOptionPane.ERROR_MESSAGE);
             loggingService.logDatabaseCustomerNotFound(email);
         }
     }
 
     @Override
     public void logOut(JPanel root) {
-        showMessage(root, "Log Out SwagNo", "Can't Log Out If You Ain't Swagged In!", JOptionPane.ERROR_MESSAGE);
+        showMessage(root, "SwagOut Swag-No", "Can't SwagOut If You Ain't Swagged In!", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -104,21 +102,19 @@ public class Guest implements CustomerState {
 
     @Override
     public void removeProductFromBasket(OrderLine orderLine) {
+        Product selectedProduct = orderLine.getProduct();
+        int selectedProductQuantity = orderLine.getQuantity();
         Order customerOrder = customer.getCurrentOrder();
         List<OrderLine> customerOrderLines = customerOrder.getOrderLines();
 
-        int selectedProductQuantity = orderLine.getQuantity();
         customerOrderLines.remove(orderLine);
-
-        Product selectedProduct = orderLine.getProduct();
         selectedProduct.setStockLevel(selectedProduct.getStockLevel() + selectedProductQuantity);
 
         dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel());
-
     }
 
     @Override
-    public void purchaseItems(JPanel root, String txtCardNo, String txtCvv) {
+    public void purchaseProducts(JPanel root, String txtCardNo, String txtCvv) {
         JOptionPane.showMessageDialog(root, "Can't Checkout If You Ain't Swagged In!",
                 "Check Out SwagNo", JOptionPane.ERROR_MESSAGE);
     }

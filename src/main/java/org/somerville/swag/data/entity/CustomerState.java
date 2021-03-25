@@ -9,5 +9,5 @@ public interface CustomerState {
     void logOut(JPanel root);
     void addProductToBasket(Product product, int quantity);
     void removeProductFromBasket(OrderLine orderLine);
-    void purchaseItems(JPanel root, String txtCardNo, String txtCvv);
+    void purchaseProducts(JPanel root, String txtCardNo, String txtCvv);
 }

@@ -26,6 +26,7 @@ public interface LoggingService {
     void logCustomerLoggedIn(int customerId);
     void logCustomerLoggedOut(int customerId);
     void logCustomerAddProductToBasket(int customerId, int productId);
+    void logCustomerRemoveProductFromBasket(int customerId, int productId);
     void logCustomerCheckout(int customerId, int orderId);
     void logDatabaseCustomerMapSuccess(int customerId);
     void logDatabaseCustomerMapFailure(String failureMessage);

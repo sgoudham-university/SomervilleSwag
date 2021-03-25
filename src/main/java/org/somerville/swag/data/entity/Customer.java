@@ -76,7 +76,7 @@ public class Customer {
     }
 
     public void purchaseItems(JPanel root, String txtCardNo, String txtCvv) {
-        customerState.purchaseItems(root, txtCardNo, txtCvv);
+        customerState.purchaseProducts(root, txtCardNo, txtCvv);
     }
 
     public void refresh() {
