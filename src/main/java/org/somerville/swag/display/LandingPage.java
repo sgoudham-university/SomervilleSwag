@@ -45,7 +45,7 @@ public class LandingPage {
         signUpButton.addActionListener(actionEvent -> {
             if (customer.getCustomerState() instanceof LoggedIn) {
                 JOptionPane.showMessageDialog(root, "Uh Oh! Can't Sign Up When Logged In!",
-                        "Sign Up Swag-no", JOptionPane.ERROR_MESSAGE);
+                        "SwagUp Swag-no", JOptionPane.ERROR_MESSAGE);
             } else {
                 new JFrameBuilder.Builder().buildDefaultJFrame("Sign Up", new SignUp(oldFrame, customer).root,true);
                 SwingUtilities.getWindowAncestor(root).dispose();
@@ -53,9 +53,13 @@ public class LandingPage {
         });
 
         logInButton.addActionListener(actionEvent -> {
-
-            new JFrameBuilder.Builder().buildDefaultJFrame("Log In", new LogIn(oldFrame, customer).root,true);
-            SwingUtilities.getWindowAncestor(root).dispose();
+            if (customer.getCustomerState() instanceof LoggedIn) {
+                JOptionPane.showMessageDialog(root, "D-money appreciates your effort to SwagIn Twice",
+                        "SwagIn Swag-No", JOptionPane.ERROR_MESSAGE);
+            } else {
+                new JFrameBuilder.Builder().buildDefaultJFrame("Log In", new LogIn(oldFrame, customer).root, true);
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
         });
 
         logOutButton.addActionListener(e -> {
@@ -82,7 +86,7 @@ public class LandingPage {
     }
 
     private void showFrameWithProduct(Product product) {
-        SpinnerModel model = new SpinnerNumberModel(1, 1, product.getStockLevel(), 1);
+        SpinnerModel model = new SpinnerNumberModel(0, 0, product.getStockLevel() - 1, 1);
         JSpinner spinner = new JSpinner();
         JFormattedTextField spin = ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
         spin.setEditable(false);
