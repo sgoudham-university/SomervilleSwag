@@ -8,6 +8,7 @@ import org.somerville.swag.data.entity.state.Guest;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Vector;
 
@@ -71,9 +72,9 @@ public class Basket {
         tblBasket.setModel(model);
     }
 
-    private BigDecimal getTotalRowPrice(OrderLine orderLine) {
+    private String getTotalRowPrice(OrderLine orderLine) {
         BigDecimal productPrice = new BigDecimal(String.valueOf(orderLine.getProduct().getPrice()));
         BigDecimal productQuantity = new BigDecimal(orderLine.getQuantity());
-        return productPrice.multiply(productQuantity);
+        return "£" + productPrice.multiply(productQuantity).setScale(2, RoundingMode.HALF_UP);
     }
 }

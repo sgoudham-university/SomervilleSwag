@@ -58,7 +58,7 @@ public class Order {
         return total;
     }
 
-    public String getFormattedTotal(){return "£" + getTotal().setScale(2, RoundingMode.HALF_UP);}
+    public String getFormattedTotal() { return "£" + getTotal().setScale(2, RoundingMode.HALF_UP); }
 
     @Override
     public boolean equals(Object o) {
