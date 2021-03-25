@@ -36,7 +36,7 @@
           <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="Berlin Sans FB Demi" size="72" style="1"/>
+          <font name="Berlin Sans FB Demi" size="48" style="1"/>
           <foreground color="-1"/>
           <text value="Log In"/>
         </properties>
@@ -64,7 +64,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="Username"/>
+          <text value="Username:"/>
         </properties>
       </component>
       <component id="eec2d" class="javax.swing.JLabel">
@@ -74,7 +74,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="Password"/>
+          <text value="Password:"/>
         </properties>
       </component>
     </children>

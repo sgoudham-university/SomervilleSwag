@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="org.somerville.swag.display.Purchase">
-  <grid id="27dc6" binding="root" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="root" layout-manager="GridLayoutManager" row-count="10" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="712" height="420"/>
     </constraints>
     <properties>
       <foreground color="-16175781"/>
     </properties>
     <border type="none"/>
     <children>
+      <component id="51379" class="javax.swing.JTextField" binding="txtCardNo">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="51f69" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Berlin Sans FB Demi" size="48" style="1"/>
+          <foreground color="-1"/>
+          <text value="Checkout"/>
+        </properties>
+      </component>
+      <component id="ef8ab" class="javax.swing.JButton" binding="backButton">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1630687"/>
+          <foreground color="-1"/>
+          <hideActionText value="true"/>
+          <text value="Back"/>
+        </properties>
+      </component>
+      <component id="63e8d" class="javax.swing.JButton" binding="confirmButton">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12992481"/>
+          <foreground color="-1"/>
+          <text value="Confirm"/>
+        </properties>
+      </component>
       <component id="ca1c7" class="javax.swing.JLabel">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
@@ -19,54 +58,30 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="20" style="1"/>
           <foreground color="-1"/>
-          <text value="Card No"/>
+          <text value="Forename:"/>
         </properties>
       </component>
-      <component id="d5a12" class="javax.swing.JLabel">
+      <component id="923d3" class="javax.swing.JLabel">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="56" height="15"/>
           </grid>
         </constraints>
         <properties>
           <font name="Berlin Sans FB Demi" size="20" style="1"/>
           <foreground color="-1"/>
-          <text value="CVV"/>
+          <text value="Card No:"/>
         </properties>
       </component>
-      <component id="51379" class="javax.swing.JTextField" binding="txtCardNo">
+      <component id="ba80b" class="javax.swing.JTextField" binding="txtForename">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="1" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
         <properties/>
       </component>
-      <component id="2b406" class="javax.swing.JTextField" binding="txtCvv">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="51f69" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font name="Berlin Sans FB Demi" size="48" style="1"/>
-          <foreground color="-1"/>
-          <text value="Checkout"/>
-        </properties>
-      </component>
-      <component id="c53f6" class="javax.swing.JComboBox" binding="comMonth">
-        <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties/>
-      </component>
-      <component id="3d961" class="javax.swing.JLabel">
+      <component id="9c948" class="javax.swing.JLabel">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="56" height="15"/>
@@ -75,34 +90,139 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="20" style="1"/>
           <foreground color="-1"/>
-          <text value="Exp Date"/>
+          <text value="Address Line 1:"/>
         </properties>
       </component>
-      <component id="ef8ab" class="javax.swing.JButton" binding="backButton">
+      <component id="ec4c3" class="javax.swing.JLabel">
         <constraints>
-          <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="56" height="15"/>
+          </grid>
         </constraints>
         <properties>
-          <background color="-1630687"/>
+          <font name="Berlin Sans FB Demi" size="20" style="1"/>
           <foreground color="-1"/>
-          <hideActionText value="true"/>
-          <text value="Back"/>
+          <text value="Address Line 2:"/>
         </properties>
       </component>
-      <component id="ce54c" class="javax.swing.JComboBox" binding="comYear">
+      <component id="278e0" class="javax.swing.JTextField" binding="txtAddressLine1">
         <constraints>
-          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
         </constraints>
         <properties/>
       </component>
-      <component id="63e8d" class="javax.swing.JButton" binding="confirmButton">
+      <component id="1b1b4" class="javax.swing.JTextField" binding="txtAddressLine2">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="cc863" class="javax.swing.JTextField" binding="txtPostcode">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="fad0b" class="javax.swing.JTextField" binding="txtCity">
+        <constraints>
+          <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="2b406" class="javax.swing.JTextField" binding="txtCvv">
+        <constraints>
+          <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="d5a12" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="56" height="15"/>
+          </grid>
         </constraints>
         <properties>
-          <background color="-12992481"/>
+          <font name="Berlin Sans FB Demi" size="20" style="1"/>
           <foreground color="-1"/>
-          <text value="Confirm"/>
+          <text value="CVV:"/>
+        </properties>
+      </component>
+      <component id="3d961" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="56" height="15"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Berlin Sans FB Demi" size="20" style="1"/>
+          <foreground color="-1"/>
+          <text value="Exp Date:"/>
+        </properties>
+      </component>
+      <component id="230a4" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="56" height="15"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Berlin Sans FB Demi" size="20" style="1"/>
+          <foreground color="-1"/>
+          <text value="Postcode:"/>
+        </properties>
+      </component>
+      <component id="c53f6" class="javax.swing.JComboBox" binding="comMonth">
+        <constraints>
+          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="ce54c" class="javax.swing.JComboBox" binding="comYear">
+        <constraints>
+          <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="23aa" class="javax.swing.JTextField" binding="txtSurname">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
+      <component id="8ae7e" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="56" height="15"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Berlin Sans FB Demi" size="20" style="1"/>
+          <foreground color="-1"/>
+          <text value="Surname:"/>
+        </properties>
+      </component>
+      <component id="4b87b" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="56" height="15"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Berlin Sans FB Demi" size="20" style="1"/>
+          <foreground color="-1"/>
+          <text value="City:"/>
         </properties>
       </component>
     </children>

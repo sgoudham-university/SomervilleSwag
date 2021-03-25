@@ -5,6 +5,8 @@ import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
 import org.somerville.swag.data.source.DBSource;
 import org.somerville.swag.data.source.SQLiteSource;
+import org.somerville.swag.display.JFrameBuilder;
+import org.somerville.swag.display.LandingPage;
 
 import javax.swing.*;
 import java.util.Iterator;
@@ -42,31 +44,35 @@ public class LoggedIn implements CustomerState {
     }
 
     @Override
-    public void addProductToBasket(Product product, int quantity) {
-        Order customerOrder = customer.getCurrentOrder();
-        Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
-        int productPreviousStockLevel = product.getStockLevel();
+    public void addProductToBasket(JPanel root, Product product, int quantity) {
+        if (quantity == 0) {
+            showMessage(root, "No Swag", "Your Quantity Of Swag Is Below The Minimum Swag Value",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            Order customerOrder = customer.getCurrentOrder();
+            Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
+            int productPreviousStockLevel = product.getStockLevel();
 
-        while (customerOrderIterator.hasNext()) {
-            OrderLine orderLine = customerOrderIterator.next();
-            Product productInBasket = orderLine.getProduct();
-            if (productInBasket.equals(product)) {
-                productPreviousStockLevel += orderLine.getQuantity();
-                quantity += orderLine.getQuantity();
-                customerOrderIterator.remove();
+            while (customerOrderIterator.hasNext()) {
+                OrderLine orderLine = customerOrderIterator.next();
+                Product productInBasket = orderLine.getProduct();
+                if (productInBasket.equals(product)) {
+                    productPreviousStockLevel += orderLine.getQuantity();
+                    quantity += orderLine.getQuantity();
+                    customerOrderIterator.remove();
+                }
             }
+            int productNewStockLevel = productPreviousStockLevel - quantity;
+            product.setStockLevel(productNewStockLevel);
+
+            customer.getCurrentOrder().add(new OrderLine(product, quantity));
+            dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
+            loggingService.logCustomerAddProductToBasket(customer.getCustomerId(), product.getProductId());
         }
-        int productNewStockLevel = productPreviousStockLevel - quantity;
-
-        customer.getCurrentOrder().add(new OrderLine(product, quantity));
-        product.setStockLevel(productNewStockLevel);
-        dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
-
-        loggingService.logCustomerAddProductToBasket(customer.getCustomerId(), product.getProductId());
     }
 
     @Override
-    public void removeProductFromBasket(OrderLine orderLine) {
+    public void removeProductFromBasket(JPanel root, OrderLine orderLine) {
         Product selectedProduct = orderLine.getProduct();
         int selectedProductQuantity = orderLine.getQuantity();
         Order customerOrder = customer.getCurrentOrder();
@@ -80,17 +86,20 @@ public class LoggedIn implements CustomerState {
     }
 
     @Override
-    public void purchaseProducts(JPanel root, String txtCardNo, String txtCvv) {
+    public void purchaseProducts(JFrame oldFrame, JPanel root, String txtCardNo, String txtCvv) {
         if (cardInvalid(txtCardNo, txtCvv)) {
             showMessage(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
                     "Card Number Error", JOptionPane.ERROR_MESSAGE);
         } else {
             showMessage(root, "Your Swag will be with you as soon as possible :)",
                     "Swag Success", JOptionPane.INFORMATION_MESSAGE);
-        }
 
-        customer.clearBasket();
-        loggingService.logCustomerCheckout(customer.getCustomerId(), customer.getCurrentOrder().getOrderId());
+            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
+            SwingUtilities.getWindowAncestor(root).dispose();
+
+            customer.clearBasket();
+            loggingService.logCustomerCheckout(customer.getCustomerId(), customer.getCurrentOrder().getOrderId());
+        }
     }
 
     private void showMessage(JPanel root, String message, String title, int type) {

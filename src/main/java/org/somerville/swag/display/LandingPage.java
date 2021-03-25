@@ -74,15 +74,9 @@ public class LandingPage {
         });
 
         addToBasketButton.addActionListener(actionEvent -> {
-            int quantity = (int) quantitySpinner.getValue();
-
-            if(quantity == 0) {
-                JOptionPane.showMessageDialog(root, "Your Quantity Of Swag Is Below The Minimum Swag Value","No Swag", JOptionPane.ERROR_MESSAGE);
-            } else {
-                Product selectedProduct = listOfProducts.getSelectedValue();
-                customer.addProductToBasket(selectedProduct, quantity);
-                showFrameWithProduct(selectedProduct);
-            }
+            Product selectedProduct = listOfProducts.getSelectedValue();
+            customer.addProductToBasket(root, selectedProduct, (int) quantitySpinner.getValue());
+            showFrameWithProduct(selectedProduct);
         });
     }
 

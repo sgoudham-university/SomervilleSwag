@@ -67,7 +67,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*Forename"/>
+          <text value="*Forename:"/>
         </properties>
       </component>
       <component id="54017" class="javax.swing.JLabel" binding="lblSurname">
@@ -77,7 +77,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*Surname"/>
+          <text value="*Surname:"/>
         </properties>
       </component>
       <component id="bf4c6" class="javax.swing.JLabel" binding="lblEmailAddress">
@@ -87,7 +87,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*Email"/>
+          <text value="*Email:"/>
         </properties>
       </component>
       <component id="bf35a" class="javax.swing.JLabel" binding="lblConfirmPassword">
@@ -97,7 +97,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*Confirm Password"/>
+          <text value="*Confirm Password:"/>
         </properties>
       </component>
       <component id="42f34" class="javax.swing.JLabel" binding="lblPassword">
@@ -107,7 +107,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*Password"/>
+          <text value="*Password:"/>
         </properties>
       </component>
       <component id="29c06" class="javax.swing.JLabel" binding="lblAddressLineOne">
@@ -117,7 +117,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*1st Line of Address"/>
+          <text value="*1st Line of Address:"/>
         </properties>
       </component>
       <component id="42b58" class="javax.swing.JLabel" binding="lblPhoneNumber">
@@ -127,7 +127,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*Phone Number"/>
+          <text value="*Phone Number:"/>
         </properties>
       </component>
       <component id="6a84b" class="javax.swing.JTextField" binding="txtFirstName">
@@ -169,7 +169,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="2nd Line of Address"/>
+          <text value="2nd Line of Address:"/>
         </properties>
       </component>
       <component id="fc4a2" class="javax.swing.JLabel">
@@ -179,7 +179,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*City"/>
+          <text value="*City:"/>
         </properties>
       </component>
       <component id="e434d" class="javax.swing.JTextField" binding="txtCity">
@@ -197,7 +197,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*Postcode"/>
+          <text value="*Postcode:"/>
         </properties>
       </component>
       <component id="54437" class="javax.swing.JTextField" binding="txtPostcode">

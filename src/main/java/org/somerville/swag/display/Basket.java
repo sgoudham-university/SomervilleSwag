@@ -23,6 +23,7 @@ public class Basket {
     public Basket(JFrame oldFrame, Customer customer) {
 
         List<OrderLine> lines = customer.getCurrentOrder().getOrderLines();
+
         refreshTable(lines, customer);
 
         backButton.addActionListener(actionEvent -> {
@@ -46,12 +47,17 @@ public class Basket {
         });
 
         removeFromBasketButton.addActionListener(actionEvent -> {
-            DefaultTableModel defaultTableModel = (DefaultTableModel) tblBasket.getModel();
-            Vector vector = defaultTableModel.getDataVector().elementAt(tblBasket.getSelectedRow());
-            OrderLine orderLine = new OrderLine((Product) vector.get(0), (Integer) vector.get(1));
+            if (customer.getCurrentOrder().getOrderLines().isEmpty()) {
+                JOptionPane.showMessageDialog(root, "Where's Your Swag at?",
+                        "No Swag in Basket", JOptionPane.ERROR_MESSAGE);
+            } else {
+                DefaultTableModel defaultTableModel = (DefaultTableModel) tblBasket.getModel();
+                Vector vector = defaultTableModel.getDataVector().elementAt(tblBasket.getSelectedRow());
+                OrderLine orderLine = new OrderLine((Product) vector.get(0), (Integer) vector.get(1));
 
-            customer.removeProductFromBasket(orderLine);
-            refreshTable(lines, customer);
+                customer.removeProductFromBasket(root, orderLine);
+                refreshTable(lines, customer);
+            }
         });
     }
 
@@ -69,6 +75,7 @@ public class Basket {
             model.addRow(newRow);
         }
         orderTotal.setText(customer.getCurrentOrder().getFormattedTotal());
+        tblBasket.setRowHeight(25);
         tblBasket.setModel(model);
     }
 
