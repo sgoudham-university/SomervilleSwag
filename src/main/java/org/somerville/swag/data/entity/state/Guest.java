@@ -40,15 +40,14 @@ public class Guest implements CustomerState {
         String phoneNumber = guestData.get(9);
 
         if (validateInformation(forename, surname, email, password, passwordConfirm, addressLine1, city, postcode, phoneNumber)) {
-            showMessage(root, "SwagIn Error", "Uh Oh! Details Are Not Swag! Please Ensure The Following: " +
-                    "" +
-                    "" +
-                    "" +
-                    "" +
-                    "" +
-                    "" +
-                    "" +
-                    "", JOptionPane.ERROR_MESSAGE);
+            showMessage(root, "SwagIn Error", "Uh Oh! Details Are Not Swag! Please Ensure The Following: \n" +
+                    "Name: First and Last name must be 1-15 swags long with no numbers\n" +
+                    "Email: You should know what an email looks like\n" +
+                    "Password: The password's first character must be a letter, it must contain at least 4 characters and no more than 15 characters and no characters other than letters, numbers and the underscores\n" +
+                    "Address: No special characters, whisepace premitted\n" +
+                    "Postcode: characters and numbers, 6-7 characters, whitespace permitted\n" +
+                    "Phone Number: Only 11 numbers \n"
+                    , JOptionPane.ERROR_MESSAGE);
         } else {
             if (dbSource.ifCustomerExists(email, password)) {
                 showMessage(root, "SwagIn Error", "Uh Oh! Customer Already Exists With Email: " + email, JOptionPane.ERROR_MESSAGE);
