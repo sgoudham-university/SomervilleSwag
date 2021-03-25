@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Order {
     private int orderId;
@@ -59,4 +60,17 @@ public class Order {
     }
 
     public String getFormattedTotal(){return "£" + getTotal().setScale(2, RoundingMode.HALF_UP);}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return orderId == order.orderId && customerId == order.customerId && Objects.equals(orderLine, order.orderLine) && Objects.equals(orderLines, order.orderLines);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, customerId, orderLine, orderLines);
+    }
 }
