@@ -3,6 +3,7 @@ package org.somerville.swag.display;
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.OrderLine;
 import org.somerville.swag.data.entity.Product;
+import org.somerville.swag.data.entity.state.Guest;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -29,8 +30,18 @@ public class Basket {
         });
 
         buyNowButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Checkout", new Purchase(oldFrame, customer).root, true);
-            SwingUtilities.getWindowAncestor(root).dispose();
+            List<OrderLine> customerBasket = customer.getCurrentOrder().getOrderLines();
+
+            if (customer.getCustomerState() instanceof Guest) {
+                JOptionPane.showMessageDialog(root, "Uh Oh! Can't SwagOut When Not SwaggedIn",
+                        "Not Swagged In", JOptionPane.ERROR_MESSAGE);
+            } else if (customerBasket.isEmpty()) {
+                JOptionPane.showMessageDialog(root, "No items in basket",
+                        "No Swag in Basket", JOptionPane.ERROR_MESSAGE);
+            } else {
+                new JFrameBuilder.Builder().buildDefaultJFrame("Checkout", new Purchase(oldFrame, customer).root, true);
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
         });
 
         removeFromBasketButton.addActionListener(actionEvent -> {
