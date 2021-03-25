@@ -1,6 +1,8 @@
 package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
+import org.somerville.swag.data.entity.CustomerState;
+import org.somerville.swag.data.entity.state.Guest;
 
 import javax.swing.*;
 import java.time.LocalDateTime;
@@ -30,12 +32,20 @@ public class Purchase {
         });
 
         confirmButton.addActionListener(actionEvent -> {
-            customer.purchaseItems(root);
+            //customer.purchaseItems(root);
 
-             if (!txtCardNo.getText().strip().matches("[0-9]{16}") || !txtCvv.getText().strip().matches("[0-9]{3}")){
-                JOptionPane.showMessageDialog(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
-                        "Card Number Error", JOptionPane.ERROR_MESSAGE);
-            } else {
+             if (!txtCardNo.getText().strip().matches("[0-9]{16}") || !txtCvv.getText().strip().matches("[0-9]{3}")) { //implement a chack for customer state == guest
+                 JOptionPane.showMessageDialog(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
+                         "Card Number Error", JOptionPane.ERROR_MESSAGE);
+             }
+             else if (customer.equals(customer)){
+                    customer.purchaseItems(root);
+                 }
+             else if (customer.getCurrentOrder().getOrderLines().size() == 0){
+                 JOptionPane.showMessageDialog(root, "No items in basket",
+                         "Order Error", JOptionPane.ERROR_MESSAGE);
+             }
+             else {
                 JOptionPane.showMessageDialog(root, "Your Swag will be with you as soon as possible :)","Swag Success", JOptionPane.INFORMATION_MESSAGE);
             }
         });
