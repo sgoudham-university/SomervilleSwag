@@ -37,7 +37,7 @@ public class Guest implements CustomerState {
         String postcode = guestData.get(8);
         String phoneNumber = guestData.get(9);
 
-        if (validateInformation(forename, surname, email, password, passwordConfirm, addressLine1, city, postcode, phoneNumber)) {
+        if (invalidInformation(forename, surname, email, password, passwordConfirm, addressLine1, city, postcode, phoneNumber)) {
             showMessage(root, "SwagIn Error", "Uh Oh! Details Are Not Swag! Please Ensure The Following: \n" +
                     "Name: First and Last name must be 1-15 swags long with no numbers\n" +
                     "Email: You should know what an email looks like\n" +
@@ -81,11 +81,6 @@ public class Guest implements CustomerState {
     }
 
     @Override
-    public void viewBasket() {
-
-    }
-
-    @Override
     public void addProductToBasket(Product product, int quantity) {
         Order customerOrder = customer.getCurrentOrder();
         Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
@@ -119,6 +114,7 @@ public class Guest implements CustomerState {
         selectedProduct.setStockLevel(selectedProduct.getStockLevel() + selectedProductQuantity);
 
         dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel());
+
     }
 
     @Override
@@ -127,9 +123,9 @@ public class Guest implements CustomerState {
                 "Check Out SwagNo", JOptionPane.ERROR_MESSAGE);
     }
 
-    private boolean validateInformation(String forename, String surname, String email, String password,
-                                        String passwordConfirm, String addressLineOne, String city, String postcode,
-                                        String phoneNumber) {
+    private boolean invalidInformation(String forename, String surname, String email, String password,
+                                       String passwordConfirm, String addressLineOne, String city, String postcode,
+                                       String phoneNumber) {
         return !forename.strip().matches("[a-zA-Z]{1,15}"); //|| //only characters, min length 1 - max length 15
 //                !surname.strip().matches("[a-zA-Z]{1,15}") || //only characters, min length 1 - max length 15
 //                !email.strip().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") || //Simple email expression. Doesn't allow numbers in the domain name and doesn't allow for top level domains that are less than 2 or more than 3 letters (which is fine until they allow more). Doesn't handle multiple &quot;.&quot; in the domain (joe@abc.co.uk).
