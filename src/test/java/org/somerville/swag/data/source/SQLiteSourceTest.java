@@ -81,60 +81,60 @@ class SQLiteSourceTest {
         verifyNoMoreInteractions(loggingService);
     }
 
-    @Test
-    void successfullyInsertCustomerIntoDatabase() throws SQLStatementException {
-        List<String> guestData = new ArrayList<>() {
-            {
-                add("testForename");
-                add("testSurname");
-                add("testEmail");
-                add("testPassword");
-                add("testAddressLine1");
-                add("testAddressLine2");
-                add("testCity");
-                add("testPostcode");
-                add("testPhoneNumber");
-            }
-        };
-        String expectedInsertCustomerStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
-                "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
+//    @Test
+//    void successfullyInsertCustomerIntoDatabase() throws SQLStatementException {
+//        List<String> guestData = new ArrayList<>() {
+//            {
+//                add("testForename");
+//                add("testSurname");
+//                add("testEmail");
+//                add("testPassword");
+//                add("testAddressLine1");
+//                add("testAddressLine2");
+//                add("testCity");
+//                add("testPostcode");
+//                add("testPhoneNumber");
+//            }
+//        };
+//        String expectedInsertCustomerStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
+//                "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
+//
+//        doNothing().when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
+//
+//        sqLiteSource.insertCustomer(guestData);
+//
+//        verify(loggingService, times(1)).logDatabaseInsertCustomerSuccess(expectedInsertCustomerStatement);
+//        verifyNoMoreInteractions(loggingService);
+//    }
 
-        doNothing().when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
-
-        sqLiteSource.insertCustomer(guestData);
-
-        verify(loggingService, times(1)).logDatabaseInsertCustomerSuccess(expectedInsertCustomerStatement);
-        verifyNoMoreInteractions(loggingService);
-    }
-
-    @Test
-    void failToInsertCustomerIntoDatabase() throws SQLStatementException {
-        List<String> guestData = new ArrayList<>() {
-            {
-                add("testForename");
-                add("testSurname");
-                add("testEmail");
-                add("testPassword");
-                add("testAddressLine1");
-                add("testAddressLine2");
-                add("testCity");
-                add("testPostcode");
-                add("testPhoneNumber");
-            }
-        };
-        String expectedInsertCustomerStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
-                "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
-
-        String expectedExceptionMessage = "Failure!";
-        SQLStatementException expectedException = new SQLStatementException(expectedExceptionMessage, new SQLException());
-
-        doThrow(expectedException).when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
-
-        sqLiteSource.insertCustomer(guestData);
-
-        verify(loggingService, times(1)).logDatabaseInsertCustomerFailure(expectedInsertCustomerStatement, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
-    }
+//    @Test
+//    void failToInsertCustomerIntoDatabase() throws SQLStatementException {
+//        List<String> guestData = new ArrayList<>() {
+//            {
+//                add("testForename");
+//                add("testSurname");
+//                add("testEmail");
+//                add("testPassword");
+//                add("testAddressLine1");
+//                add("testAddressLine2");
+//                add("testCity");
+//                add("testPostcode");
+//                add("testPhoneNumber");
+//            }
+//        };
+//        String expectedInsertCustomerStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
+//                "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
+//
+//        String expectedExceptionMessage = "Failure!";
+//        SQLStatementException expectedException = new SQLStatementException(expectedExceptionMessage, new SQLException());
+//
+//        doThrow(expectedException).when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
+//
+//        sqLiteSource.insertCustomer(guestData);
+//
+//        verify(loggingService, times(1)).logDatabaseInsertCustomerFailure(expectedInsertCustomerStatement, expectedExceptionMessage);
+//        verifyNoMoreInteractions(loggingService);
+//    }
 
     @Test
     void successfullyRetrieveAllProducts() {
