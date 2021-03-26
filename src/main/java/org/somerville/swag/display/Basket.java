@@ -74,17 +74,11 @@ public class Basket {
         };
 
         for (OrderLine orderLine : lines) {
-            Object[] newRow = { orderLine.getProduct(), orderLine.getQuantity(), getTotalRowPrice(orderLine) };
+            Object[] newRow = { orderLine.getProduct(), orderLine.getQuantity(), orderLine.getTotalRowPrice() };
             model.addRow(newRow);
         }
         orderTotal.setText(customer.getCurrentOrder().getFormattedTotal());
         tblBasket.setRowHeight(25);
         tblBasket.setModel(model);
-    }
-
-    private String getTotalRowPrice(OrderLine orderLine) {
-        BigDecimal productPrice = new BigDecimal(String.valueOf(orderLine.getProduct().getPrice()));
-        BigDecimal productQuantity = new BigDecimal(orderLine.getQuantity());
-        return "£" + productPrice.multiply(productQuantity).setScale(2, RoundingMode.HALF_UP);
     }
 }

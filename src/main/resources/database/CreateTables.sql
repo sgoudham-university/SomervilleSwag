@@ -26,6 +26,7 @@ DROP TABLE IF EXISTS "Order";
 CREATE TABLE "Order" (
     OrderId INTEGER PRIMARY KEY UNIQUE,
     CustomerId INTEGER NOT NULL,
+    hasPurchased INTEGER NOT NULL,
     foreign key (CustomerId) REFERENCES Customer (CustomerId)
 );
 

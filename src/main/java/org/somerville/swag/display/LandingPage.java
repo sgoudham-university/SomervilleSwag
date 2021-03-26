@@ -27,6 +27,7 @@ public class LandingPage {
     private JPanel productPanel;
     private JLabel lblProductTitle;
     private JLabel lblStatus;
+    private JLabel lblPrice;
 
     public LandingPage(JFrame oldFrame, Customer customer) {
 
@@ -93,6 +94,7 @@ public class LandingPage {
         quantitySpinner.setModel(model);
 
         lblDesc.setText(product.getDescription());
+        lblPrice.setText(product.getFormattedPrice());
         lblProductTitle.setText(product.getName());
 
         ImageIcon productImageIcon = new ImageIcon(product.getImagePath());
