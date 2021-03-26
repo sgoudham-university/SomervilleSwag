@@ -55,8 +55,9 @@
                 <properties>
                   <background color="-16175801"/>
                   <font name="Berlin Sans FB Demi" size="18" style="1"/>
-                  <foreground color="-1"/>
+                  <foreground color="-7105642"/>
                   <minimumSize width="0" height="0"/>
+                  <model/>
                   <opaque value="true"/>
                   <requestFocusEnabled value="false"/>
                   <selectionBackground color="-17688"/>

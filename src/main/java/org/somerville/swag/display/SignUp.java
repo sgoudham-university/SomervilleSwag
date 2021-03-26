@@ -32,7 +32,7 @@ public class SignUp {
     public SignUp(JFrame oldFrame, Customer customer) {
 
         backButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDE0E✨ Somerville Swag ✨\uD83D\uDE0E", new LandingPage(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 

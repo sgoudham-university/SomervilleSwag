@@ -27,7 +27,7 @@ public class Basket {
         refreshTable(lines, customer);
 
         backButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDE0E✨ Somerville Swag ✨\uD83D\uDE0E", new LandingPage(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 
@@ -36,12 +36,12 @@ public class Basket {
 
             if (customer.getCustomerState() instanceof Guest) {
                 JOptionPane.showMessageDialog(root, "Uh Oh! Can't SwagOut When Not SwaggedIn",
-                        "Not Swagged In", JOptionPane.ERROR_MESSAGE);
+                        "Not Swagged In \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else if (customerBasket.isEmpty()) {
                 JOptionPane.showMessageDialog(root, "No items in basket",
-                        "No Swag in Basket", JOptionPane.ERROR_MESSAGE);
+                        "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else {
-                new JFrameBuilder.Builder().buildDefaultJFrame("Checkout", new Purchase(oldFrame, customer).root, true);
+                new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDECD️\uD83D\uDCB2 Checkout \uD83D\uDCB2\uD83D\uDECD️", new Purchase(oldFrame, customer).root, true);
                 SwingUtilities.getWindowAncestor(root).dispose();
             }
         });
@@ -49,7 +49,7 @@ public class Basket {
         removeFromBasketButton.addActionListener(actionEvent -> {
             if (customer.getCurrentOrder().getOrderLines().isEmpty()) {
                 JOptionPane.showMessageDialog(root, "Where's Your Swag at?",
-                        "No Swag in Basket", JOptionPane.ERROR_MESSAGE);
+                        "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else {
                 DefaultTableModel defaultTableModel = (DefaultTableModel) tblBasket.getModel();
                 Vector vector = defaultTableModel.getDataVector().elementAt(tblBasket.getSelectedRow());

@@ -26,7 +26,7 @@ public class Purchase {
         setDefaultShippingAddress(customer);
 
         backButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Your Basket", new Basket(oldFrame, customer).root, true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDED2 Your Basket \uD83D\uDED2", new Basket(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
         });
 

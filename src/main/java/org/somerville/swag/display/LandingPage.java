@@ -45,9 +45,9 @@ public class LandingPage {
         signUpButton.addActionListener(actionEvent -> {
             if (customer.getCustomerState() instanceof LoggedIn) {
                 JOptionPane.showMessageDialog(root, "Uh Oh! Can't Sign Up When Logged In!",
-                        "SwagUp Swag-no", JOptionPane.ERROR_MESSAGE);
+                        "SwagIn Swag-No \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else {
-                new JFrameBuilder.Builder().buildDefaultJFrame("Sign Up", new SignUp(oldFrame, customer).root,true);
+                new JFrameBuilder.Builder().buildDefaultJFrame("✔️ Sign Up ✔️", new SignUp(oldFrame, customer).root,true);
                 SwingUtilities.getWindowAncestor(root).dispose();
             }
         });
@@ -55,9 +55,9 @@ public class LandingPage {
         logInButton.addActionListener(actionEvent -> {
             if (customer.getCustomerState() instanceof LoggedIn) {
                 JOptionPane.showMessageDialog(root, "D-money appreciates your effort to SwagIn Twice",
-                        "SwagIn Swag-No", JOptionPane.ERROR_MESSAGE);
+                        "SwagIn Swag-No \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else {
-                new JFrameBuilder.Builder().buildDefaultJFrame("Log In", new LogIn(oldFrame, customer).root, true);
+                new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDC4D Log In \uD83D\uDC4D", new LogIn(oldFrame, customer).root, true);
                 SwingUtilities.getWindowAncestor(root).dispose();
             }
         });
@@ -68,7 +68,7 @@ public class LandingPage {
         });
 
         viewBasketButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Your Basket", new Basket(oldFrame, customer).root,true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDED2 Your Basket \uD83D\uDED2", new Basket(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
 
         });
@@ -108,8 +108,10 @@ public class LandingPage {
     private void refreshState(Customer customer) {
         if (customer.getCustomerState() instanceof LoggedIn) {
             lblStatus.setText("Swagged In " + customer.getForename() + "!");
+            lblStatus.setForeground(Color.pink);
         } else {
             lblStatus.setText("Status: Not Swag");
+            lblStatus.setForeground(Color.red);
         }
     }
 }

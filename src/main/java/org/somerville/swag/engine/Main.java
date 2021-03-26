@@ -15,6 +15,6 @@ public class Main {
         dbPopulate.createTables();
         dbPopulate.populateProductTable();
 
-        new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(new JFrame(), customer).root, true);
+        new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDE0E✨ Somerville Swag ✨\uD83D\uDE0E", new LandingPage(new JFrame(), customer).root, true);
     }
 }
