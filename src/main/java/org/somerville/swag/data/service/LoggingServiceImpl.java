@@ -112,8 +112,50 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseCustomerNotFound() {
-        String logMessage = events.getDatabaseCustomerNotFound() + ": Customer Account Not Located";
+    public void logDatabaseCustomerNotFound(String email) {
+        String logMessage = events.getDatabaseCustomerNotFound() + ": Email -> " + email;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseCustomerAlreadyExists() {
+        String logMessage = events.getDatabaseCustomerAlreadyExists() + ": Customer Account Already Exists";
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerSignedUp(String customerEmail) {
+        String logMessage = events.getCustomerSignedUp() + ": Email -> " + customerEmail;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerLoggedIn(int customerId) {
+        String logMessage = events.getCustomerLoggedIn() + ": CustomerID -> " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerLoggedOut(int customerId) {
+        String logMessage = events.getCustomerLoggedOut() + ": CustomerID -> " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerAddProductToBasket(int customerId, int productId) {
+        String logMessage = events.getCustomerAddProductToBasket() + ": CustomerID -> " + customerId + ": ProductId -> " + productId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerRemoveProductFromBasket(int customerId, int productId) {
+        String logMessage = events.getCustomerRemoveProductFromBasket()+ ": CustomerID -> " + customerId + ": ProductId -> " + productId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerCheckout(int customerId, int orderId) {
+        String logMessage = events.getCustomerCheckout() + ": CustomerID -> " + customerId+ ": OrderId -> " + orderId;
         writeLog(logMessage);
     }
 

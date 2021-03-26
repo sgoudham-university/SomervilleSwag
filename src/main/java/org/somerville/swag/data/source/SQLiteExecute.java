@@ -34,7 +34,7 @@ public class SQLiteExecute implements DBExecute {
     }
 
     @Override
-    public void executeInsert(String insertStatement) throws SQLStatementException {
+    public void executeUpdate(String insertStatement) throws SQLStatementException {
         try (Statement statement = connection.connect().createStatement()) {
             int rowsUpdated = statement.executeUpdate(insertStatement);
             loggingService.logDatabaseInsertSuccess(insertStatement, rowsUpdated);

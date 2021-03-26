@@ -15,8 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class SQLiteSourceTest {
@@ -100,7 +99,7 @@ class SQLiteSourceTest {
         String expectedInsertCustomerStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
                 "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
 
-        doNothing().when(sqLiteExecute).executeInsert(expectedInsertCustomerStatement);
+        doNothing().when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
 
         sqLiteSource.insertCustomer(guestData);
 
@@ -129,7 +128,7 @@ class SQLiteSourceTest {
         String expectedExceptionMessage = "Failure!";
         SQLStatementException expectedException = new SQLStatementException(expectedExceptionMessage, new SQLException());
 
-        doThrow(expectedException).when(sqLiteExecute).executeInsert(expectedInsertCustomerStatement);
+        doThrow(expectedException).when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
 
         sqLiteSource.insertCustomer(guestData);
 
@@ -169,6 +168,26 @@ class SQLiteSourceTest {
 
         verify(loggingService, times(1)).logDatabaseGetAllProductsInStockFailure(expectedGetAllProductsQuery, expectedExceptionMessage);
         verifyNoMoreInteractions(loggingService);
+    }
+
+    @Test
+    void successfullyFindCustomerInDatabase() {
+        String expectedTestEmail = "testEmail";
+        String expectedTestPassword = "testPassword";
+
+        boolean actualIfCustomerExists = sqLiteSource.ifCustomerExists(expectedTestEmail, expectedTestPassword);
+
+        assertTrue(actualIfCustomerExists);
+    }
+
+    @Test
+    void failToFindCustomerInDatabase() {
+        String expectedTestEmail = "testInvalidEmail";
+        String expectedTestPassword = "testInvalidPassword";
+
+        boolean actualIfCustomerExists = sqLiteSource.ifCustomerExists(expectedTestEmail, expectedTestPassword);
+
+        assertFalse(actualIfCustomerExists);
     }
 
     private SQLiteConnection createSQLiteConnection() {

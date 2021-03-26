@@ -2,11 +2,14 @@ package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Product;
+import org.somerville.swag.data.entity.state.LoggedIn;
+import org.somerville.swag.data.source.DBPopulate;
+import org.somerville.swag.data.source.SQLiteConnection;
+import org.somerville.swag.data.source.SQLiteSource;
 
 import javax.swing.*;
 import java.awt.*;
-import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.List;
 
 public class LandingPage {
     private JButton signUpButton;
@@ -23,10 +26,13 @@ public class LandingPage {
     private JLabel lblTitle;
     private JPanel productPanel;
     private JLabel lblProductTitle;
+    private JLabel lblStatus;
 
     public LandingPage(JFrame oldFrame, Customer customer) {
 
-        HashMap<Integer, Product> allProducts = getAllProducts();
+        refreshState(customer);
+
+        List<Product> allProducts = getAllProducts();
         showFrameWithProduct(allProducts.get(0));
         displayProductList(allProducts, new DefaultListModel<>());
         listOfProducts.setSelectedValue(allProducts.get(0), true);
@@ -37,40 +43,50 @@ public class LandingPage {
         });
 
         signUpButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Sign Up", new SignUp(oldFrame, customer).root,true);
-            SwingUtilities.getWindowAncestor(root).dispose();
+            if (customer.getCustomerState() instanceof LoggedIn) {
+                JOptionPane.showMessageDialog(root, "Uh Oh! Can't Sign Up When Logged In!",
+                        "SwagIn Swag-No \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+            } else {
+                new JFrameBuilder.Builder().buildDefaultJFrame("✔️ Sign Up ✔️", new SignUp(oldFrame, customer).root,true);
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
         });
 
         logInButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Log In", new LogIn(oldFrame, customer).root,true);
-            SwingUtilities.getWindowAncestor(root).dispose();
+            if (customer.getCustomerState() instanceof LoggedIn) {
+                JOptionPane.showMessageDialog(root, "D-money appreciates your effort to SwagIn Twice",
+                        "SwagIn Swag-No \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+            } else {
+                new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDC4D Log In \uD83D\uDC4D", new LogIn(oldFrame, customer).root, true);
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
         });
 
-        logOutButton.addActionListener(e -> customer.logOut());
+        logOutButton.addActionListener(e -> {
+            customer.logOut(root);
+            refreshState(customer);
+        });
 
         viewBasketButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Your Basket", new Basket(oldFrame, customer).root,true);
+            new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDED2 Your Basket \uD83D\uDED2", new Basket(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
 
         });
 
-        addToBasketButton.addActionListener(actionEvent -> customer.addProductToBasket());
+        addToBasketButton.addActionListener(actionEvent -> {
+            Product selectedProduct = listOfProducts.getSelectedValue();
+            customer.addProductToBasket(root, selectedProduct, (int) quantitySpinner.getValue());
+            showFrameWithProduct(selectedProduct);
+        });
     }
 
-    private HashMap<Integer, Product> getAllProducts() {
-        Product productA = new Product(0,"Product A","Description C", BigDecimal.valueOf(19.99), 5, "src/main/resources/product.images/derek_crocs.png");
-        Product productB = new Product(0,"Product B","Description B", BigDecimal.valueOf(29.99), 10, "src/main/resources/product.images/derek_snowglobe.png");
-        Product productC = new Product(0,"Product C","Description B", BigDecimal.valueOf(29.99), 10, "src/main/resources/product.images/derek_snowglobe.png");
-
-        HashMap<Integer, Product> productMap = new HashMap<>(); //set this to the DB read function
-        productMap.put(0, productA);
-        productMap.put(1, productB);
-        productMap.put(2, productC);
-        return productMap;
+    private List<Product> getAllProducts() {
+        SQLiteSource sqLiteSource = new SQLiteSource();
+        return sqLiteSource.getAllProductsInStock();
     }
 
     private void showFrameWithProduct(Product product) {
-        SpinnerModel model = new SpinnerNumberModel(1, 1, product.getStockLevel(), 1);
+        SpinnerModel model = new SpinnerNumberModel(0, 0, product.getStockLevel() - 1, 1);
         JSpinner spinner = new JSpinner();
         JFormattedTextField spin = ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField();
         spin.setEditable(false);
@@ -79,18 +95,23 @@ public class LandingPage {
         lblDesc.setText(product.getDescription());
         lblProductTitle.setText(product.getName());
 
-        ImageIcon productImageIcon1 = new ImageIcon(product.getImagePath());
-        Image scaledProductImage1 = productImageIcon1.getImage().getScaledInstance(400, 350, Image.SCALE_SMOOTH);
-        imageDisplay.setIcon(new ImageIcon(scaledProductImage1));
+        ImageIcon productImageIcon = new ImageIcon(product.getImagePath());
+        Image scaledProductImage = productImageIcon.getImage().getScaledInstance(470, 390, Image.SCALE_SMOOTH);
+        imageDisplay.setIcon(new ImageIcon(scaledProductImage));
     }
 
-    private void displayProductList(HashMap<Integer, Product> productMap, DefaultListModel<Product> listModel) {
-        productMap.forEach((id, product) -> listModel.addElement(product));
+    private void displayProductList(List< Product> productMap, DefaultListModel<Product> listModel) {
+        productMap.forEach(listModel::addElement);
         listOfProducts.setModel(listModel);
     }
 
-    public static void main(String[] args) {
-        Customer customer = new Customer();
-        new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(new JFrame(), customer).root, true);
+    private void refreshState(Customer customer) {
+        if (customer.getCustomerState() instanceof LoggedIn) {
+            lblStatus.setText("Swagged In " + customer.getForename() + "!");
+            lblStatus.setForeground(Color.pink);
+        } else {
+            lblStatus.setText("Status: Not Swag");
+            lblStatus.setForeground(Color.red);
+        }
     }
 }

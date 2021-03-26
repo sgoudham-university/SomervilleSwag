@@ -3,6 +3,10 @@ package org.somerville.swag.data.entity;
 import org.somerville.swag.data.entity.state.Guest;
 import org.somerville.swag.data.entity.state.LoggedIn;
 
+import javax.swing.*;
+import java.util.List;
+import java.util.Objects;
+
 public class Customer {
     private CustomerState customerState;
     private Order currentOrder;
@@ -51,37 +55,51 @@ public class Customer {
         this.customerState = customerState;
     }
 
-    public void signUp() {
-        customerState.signUp();
+    public void signUp(JPanel root, JFrame oldFrame, List<String> guestData) {
+        customerState.signUp(root, oldFrame, guestData);
     }
 
-    public void logIn() {
-        customerState.logIn();
+    public void logIn(JPanel root, String email, String password) {
+        customerState.logIn(root, email, password);
     }
 
-    public void logOut() {
-        customerState.logOut();
+    public void logOut(JPanel root) {
+        customerState.logOut(root);
     }
 
-    public void viewBasket() {
-        customerState.viewBasket();
+    public void addProductToBasket(JPanel root, Product product, int quantity) {
+        customerState.addProductToBasket(root, product, quantity);
     }
 
-    public void addProductToBasket() {
-        customerState.addProductToBasket();
+    public void removeProductFromBasket(JPanel root, OrderLine orderLine) {
+        customerState.removeProductFromBasket(root, orderLine);
     }
 
-    public void removeProductFromBasket() {
-        customerState.removeProductFromBasket();
+    public void purchaseItems(JFrame oldFrame, JPanel root, String txtCardNo, String txtCvv) {
+        customerState.purchaseProducts(oldFrame, root, txtCardNo, txtCvv);
     }
 
-    public void purchaseItems() {
-        customerState.purchaseItems();
+    public void refresh() {
+        this.currentOrder = new Order();
+        this.customerId = 0;
+        this.forename = null;
+        this.surname = null;
+        this.email = null;
+        this.password = null;
+        this.addressLine1 = null;
+        this.addressLine2 = null;
+        this.city = null;
+        this.postcode = null;
+        this.phoneNumber = null;
     }
 
-    public void setCurrentOrder(Order currentOrder) { this.currentOrder = currentOrder; }
+    public void clearBasket() {
+        this.setCurrentOrder(new Order());
+    }
+
     public void setCustomerId(int customerId) { this.customerId = customerId; }
     public void setForename(String forename) { this.forename = forename; }
+    public void setCurrentOrder(Order order) { this.currentOrder = order; }
     public void setSurname(String surname) { this.surname = surname; }
     public void setEmail(String email) { this.email = email; }
     public void setPassword(String password) { this.password = password; }
@@ -92,7 +110,7 @@ public class Customer {
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     public CustomerState getCustomerState() { return customerState; }
-    public Order getCurrentOrder() { return currentOrder; }
+    public Order getCurrentOrder() {return currentOrder; }
     public int getCustomerId() { return customerId; }
     public String getForename() { return forename; }
     public String getSurname() { return surname; }
@@ -103,5 +121,18 @@ public class Customer {
     public String getCity() { return city; }
     public String getPostcode() { return postcode; }
     public String getPhoneNumber() { return phoneNumber; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return customerId == customer.customerId && Objects.equals(currentOrder, customer.currentOrder) && Objects.equals(forename, customer.forename) && Objects.equals(surname, customer.surname) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password) && Objects.equals(addressLine1, customer.addressLine1) && Objects.equals(addressLine2, customer.addressLine2) && Objects.equals(city, customer.city) && Objects.equals(postcode, customer.postcode) && Objects.equals(phoneNumber, customer.phoneNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(currentOrder, customerId, forename, surname, email, password, addressLine1, addressLine2, city, postcode, phoneNumber);
+    }
 }
 

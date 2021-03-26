@@ -1,15 +1,16 @@
 package org.somerville.swag.display;
 
 import org.somerville.swag.data.entity.Customer;
-import org.somerville.swag.data.entity.Order;
 import org.somerville.swag.data.entity.OrderLine;
 import org.somerville.swag.data.entity.Product;
+import org.somerville.swag.data.entity.state.Guest;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.Vector;
 
 public class Basket {
     private JTable tblBasket;
@@ -17,37 +18,52 @@ public class Basket {
     private JButton buyNowButton;
     private JButton backButton;
     private JLabel orderTotal;
+    private JButton removeFromBasketButton;
 
     public Basket(JFrame oldFrame, Customer customer) {
 
-        /**
-         * Load and display pretend order at page construction
-         */
+        List<OrderLine> lines = customer.getCurrentOrder().getOrderLines();
 
-        //STUB
-        Product productA = new Product(0,"Product A","Description A", BigDecimal.valueOf(19.99), 5, "Path");
-        Product productB = new Product(1,"Product B","Description B", BigDecimal.valueOf(29.99), 10, "Path");
-        Product productC = new Product(2,"Product C","Description C", BigDecimal.valueOf(29.99), 10, "Path");
-        OrderLine lineA = new OrderLine(productA, 1);
-        OrderLine lineB = new OrderLine(productB, 5);
-        OrderLine lineC = new OrderLine(productC, 5);
+        refreshTable(lines, customer);
 
-        Customer c = new Customer();
-        Order o = c.getCurrentOrder();
-        o.add(lineA);
-        o.add(lineB);
-        for(int i = 0; i<70;i++){
-            o.add(lineC);
-        }
-        //End STUB
+        backButton.addActionListener(actionEvent -> {
+            new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDE0E✨ Somerville Swag ✨\uD83D\uDE0E", new LandingPage(oldFrame, customer).root, true);
+            SwingUtilities.getWindowAncestor(root).dispose();
+        });
 
+        buyNowButton.addActionListener(actionEvent -> {
+            List<OrderLine> customerBasket = customer.getCurrentOrder().getOrderLines();
 
-        List<OrderLine> lines = o.getOrderLines(); //replace o.getOrderLines() with customer.getOrder().getOrderLinesAsList()
+            if (customer.getCustomerState() instanceof Guest) {
+                JOptionPane.showMessageDialog(root, "Uh Oh! Can't SwagOut When Not SwaggedIn",
+                        "Not Swagged In \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+            } else if (customerBasket.isEmpty()) {
+                JOptionPane.showMessageDialog(root, "No items in basket",
+                        "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+            } else {
+                new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDECD️\uD83D\uDCB2 Checkout \uD83D\uDCB2\uD83D\uDECD️", new Purchase(oldFrame, customer).root, true);
+                SwingUtilities.getWindowAncestor(root).dispose();
+            }
+        });
 
-        //---------------------TABLE LAYOUT-----------------------------------------------------------------------------
+        removeFromBasketButton.addActionListener(actionEvent -> {
+            if (customer.getCurrentOrder().getOrderLines().isEmpty()) {
+                JOptionPane.showMessageDialog(root, "Where's Your Swag at?",
+                        "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+            } else {
+                DefaultTableModel defaultTableModel = (DefaultTableModel) tblBasket.getModel();
+                Vector vector = defaultTableModel.getDataVector().elementAt(tblBasket.getSelectedRow());
+                OrderLine orderLine = new OrderLine((Product) vector.get(0), (Integer) vector.get(1));
 
-        String[] columNames = {"Product" , "Quantity", "Price"};
-        DefaultTableModel model = new DefaultTableModel(columNames,0) {
+                customer.removeProductFromBasket(root, orderLine);
+                refreshTable(lines, customer);
+            }
+        });
+    }
+
+    private void refreshTable(List<OrderLine> lines, Customer customer) {
+        String[] columnNames = {"Product" , "Quantity", "Price"};
+        DefaultTableModel model = new DefaultTableModel(columnNames,0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -55,27 +71,17 @@ public class Basket {
         };
 
         for (OrderLine orderLine : lines) {
-            Object[] newRow = { orderLine.getProductId(), orderLine.getQuantity(), orderLine.getProductId().getFormattedPrice()};
+            Object[] newRow = { orderLine.getProduct(), orderLine.getQuantity(), getTotalRowPrice(orderLine) };
             model.addRow(newRow);
-        }                           //we can set the order total in here also
-        orderTotal.setText(o.getFormattedTotal());
+        }
+        orderTotal.setText(customer.getCurrentOrder().getFormattedTotal());
+        tblBasket.setRowHeight(25);
         tblBasket.setModel(model);
-
-
-
-        //---------------------END TABLE LAYOUT-------------------------------------------------------------------------
-
-        backButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
-            SwingUtilities.getWindowAncestor(root).dispose();
-        });
-
-        buyNowButton.addActionListener(actionEvent -> {
-            new JFrameBuilder.Builder().buildDefaultJFrame("Checkout", new Purchase(oldFrame, customer).root, true);
-            SwingUtilities.getWindowAncestor(root).dispose();
-        });
     }
 
-
-
+    private String getTotalRowPrice(OrderLine orderLine) {
+        BigDecimal productPrice = new BigDecimal(String.valueOf(orderLine.getProduct().getPrice()));
+        BigDecimal productQuantity = new BigDecimal(orderLine.getQuantity());
+        return "£" + productPrice.multiply(productQuantity).setScale(2, RoundingMode.HALF_UP);
+    }
 }

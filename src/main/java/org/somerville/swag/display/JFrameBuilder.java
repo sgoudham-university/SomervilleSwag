@@ -50,7 +50,7 @@ public class JFrameBuilder {
             jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             jFrame.getContentPane().setBackground(new Color(9, 45, 71));
             jFrame.pack();
-            jFrame.setMinimumSize(new Dimension(750, 650));
+            jFrame.setMinimumSize(new Dimension(1000, 680));
             jFrame.setLocationRelativeTo(null);
             jFrame.setVisible(isVisible);
             return jFrame;

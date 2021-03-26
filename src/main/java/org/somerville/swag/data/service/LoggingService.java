@@ -16,11 +16,18 @@ public interface LoggingService {
     void logDatabaseSelectSuccess(String selectQuery);
     void logDatabaseSelectFailure(String selectQuery, String failureMessage);
 
-    void logDatabaseGetCustomerSuccess (int customerId);
-    void logDatabaseGetCustomerFailure (String selectQuery, String failureMessage);
-    void logDatabaseInsertCustomerSuccess (String insertStatement);
-    void logDatabaseInsertCustomerFailure (String insertStatement, String failureMessage);
-    void logDatabaseCustomerNotFound();
+    void logDatabaseGetCustomerSuccess(int customerId);
+    void logDatabaseGetCustomerFailure(String selectQuery, String failureMessage);
+    void logDatabaseInsertCustomerSuccess(String insertStatement);
+    void logDatabaseInsertCustomerFailure(String insertStatement, String failureMessage);
+    void logDatabaseCustomerNotFound(String email);
+    void logDatabaseCustomerAlreadyExists();
+    void logCustomerSignedUp(String email);
+    void logCustomerLoggedIn(int customerId);
+    void logCustomerLoggedOut(int customerId);
+    void logCustomerAddProductToBasket(int customerId, int productId);
+    void logCustomerRemoveProductFromBasket(int customerId, int productId);
+    void logCustomerCheckout(int customerId, int orderId);
     void logDatabaseCustomerMapSuccess(int customerId);
     void logDatabaseCustomerMapFailure(String failureMessage);
 

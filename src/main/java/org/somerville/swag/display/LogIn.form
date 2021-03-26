@@ -10,19 +10,14 @@
     </properties>
     <border type="none"/>
     <children>
-      <component id="226de" class="javax.swing.JTextField" binding="textField2" default-binding="true">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
       <component id="8b031" class="javax.swing.JButton" binding="confirmButton" default-binding="true">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-12992481"/>
+          <foreground color="-1"/>
+          <horizontalTextPosition value="0"/>
           <text value="Confirm"/>
         </properties>
       </component>
@@ -31,19 +26,22 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-1630687"/>
+          <foreground color="-1"/>
           <text value="Back"/>
         </properties>
       </component>
-      <component id="eec2d" class="javax.swing.JLabel">
+      <component id="6f261" class="javax.swing.JLabel">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Berlin Sans FB Demi" size="48" style="1"/>
           <foreground color="-1"/>
-          <text value="Password"/>
+          <text value="Log In"/>
         </properties>
       </component>
-      <component id="9e9e3" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+      <component id="9e9e3" class="javax.swing.JTextField" binding="txtEmail">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
@@ -51,23 +49,32 @@
         </constraints>
         <properties/>
       </component>
+      <component id="93933" class="javax.swing.JPasswordField" binding="txtPassword">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
       <component id="146b" class="javax.swing.JLabel">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="Username"/>
+          <text value="Username:"/>
         </properties>
       </component>
-      <component id="6f261" class="javax.swing.JLabel">
+      <component id="eec2d" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="Berlin Sans FB Demi" size="48" style="1"/>
+          <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="Log In"/>
+          <text value="Password:"/>
         </properties>
       </component>
     </children>

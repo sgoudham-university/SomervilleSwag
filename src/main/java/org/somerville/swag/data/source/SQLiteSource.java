@@ -55,7 +55,7 @@ public class SQLiteSource implements DBSource {
                 .replace("{phonenumber}", guestData.get(8));
 
         try {
-            dbExecute.executeInsert(insertCustomerStatement);
+            dbExecute.executeUpdate(insertCustomerStatement);
             loggingService.logDatabaseInsertCustomerSuccess(insertCustomerStatement);
         } catch (SQLStatementException sse) {
             loggingService.logDatabaseInsertCustomerFailure(insertCustomerStatement, sse.getMessage());
@@ -74,6 +74,36 @@ public class SQLiteSource implements DBSource {
         }
 
         return allProducts;
+    }
+
+    @Override
+    public boolean ifCustomerExists(String email, String password) {
+        boolean ifCustomerExists = false;
+        String getCustomerQuery = GET_CUSTOMER_QUERY
+                .replace("{email}", email)
+                .replace("{password}", password);
+
+        try (ResultSet customerData = dbExecute.executeSelect(getCustomerQuery)) {
+            ifCustomerExists = customerData.isBeforeFirst();
+        } catch (SQLStatementException | SQLException err) {
+            loggingService.logDatabaseGetCustomerFailure(getCustomerQuery, err.getMessage());
+        }
+
+        return ifCustomerExists;
+    }
+
+    @Override
+    public void updateProductStockLevel(int productId, int stockLevel) {
+        String updateProductStockLevelStatement = UPDATE_PRODUCT_STOCK_LEVEL_STATEMENT
+                .replace("{productId}", String.valueOf(productId))
+                .replace("{stockLevel}", String.valueOf(stockLevel));
+
+        try {
+            dbExecute.executeUpdate(updateProductStockLevelStatement);
+            // TODO: Add logging success
+        } catch (SQLStatementException sse) {
+            // TODO: Add logging failure
+        }
     }
 
     public void setDbExecute(DBExecute dbExecute) {
