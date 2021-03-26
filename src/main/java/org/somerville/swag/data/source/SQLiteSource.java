@@ -48,11 +48,11 @@ public class SQLiteSource implements DBSource {
                 .replace("{surname}", guestData.get(1))
                 .replace("{email}", guestData.get(2))
                 .replace("{password}", guestData.get(3))
-                .replace("{addressline1}", guestData.get(5))
-                .replace("{addressline2}", guestData.get(6))
-                .replace("{city}", guestData.get(7))
-                .replace("{postcode}", guestData.get(8))
-                .replace("{phonenumber}", guestData.get(9));
+                .replace("{addressline1}", guestData.get(4))
+                .replace("{addressline2}", guestData.get(5))
+                .replace("{city}", guestData.get(6))
+                .replace("{postcode}", guestData.get(7))
+                .replace("{phonenumber}", guestData.get(8));
 
         try {
             dbExecute.executeUpdate(insertCustomerStatement);
