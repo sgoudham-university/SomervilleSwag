@@ -38,7 +38,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="48" style="1"/>
           <foreground color="-1"/>
-          <text value="Log In"/>
+          <text value="Swag In"/>
         </properties>
       </component>
       <component id="9e9e3" class="javax.swing.JTextField" binding="txtEmail">

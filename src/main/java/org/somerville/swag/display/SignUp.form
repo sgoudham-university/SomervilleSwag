@@ -179,7 +179,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="*City:"/>
+          <text value="City:"/>
         </properties>
       </component>
       <component id="e434d" class="javax.swing.JTextField" binding="txtCity">
@@ -215,7 +215,7 @@
         <properties>
           <font name="Berlin Sans FB Demi" size="48" style="1"/>
           <foreground color="-1"/>
-          <text value="Sign Up"/>
+          <text value="Swag Up"/>
         </properties>
       </component>
     </children>

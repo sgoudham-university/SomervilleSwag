@@ -44,7 +44,7 @@ public class LandingPage {
 
         signUpButton.addActionListener(actionEvent -> {
             if (customer.getCustomerState() instanceof LoggedIn) {
-                JOptionPane.showMessageDialog(root, "Uh Oh! Can't Sign Up When Logged In!",
+                JOptionPane.showMessageDialog(root, "Uh Oh! Can't SwagUp When SwaggedIn!",
                         "SwagIn Swag-No \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else {
                 new JFrameBuilder.Builder().buildDefaultJFrame("✔️ Sign Up ✔️", new SignUp(oldFrame, customer).root,true);
