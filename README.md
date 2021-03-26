@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-0.6.2-informational" alt="version-shield">
+  <img src="https://img.shields.io/badge/version-1.0.0-informational" alt="version-shield">
   <img src="https://img.shields.io/badge/project%20type-group_project-blueviolet" alt="project-type-shield">
   <img src="https://img.shields.io/github/contributors/sgoudham-university/SomervilleSwag" alt="contributors-shield">
   <img src="https://img.shields.io/github/issues/sgoudham-university/SomervilleSwag?label=issues" alt="issues-shield">
@@ -48,7 +48,7 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 - **Data**
   - SQLite Database Used
 - **Engine**
-  - Design Patterns Used - Singleton, State, Adapter
+  - Design Patterns Used - Singleton, State, Adapter, Builder
 - **Display** 
   - JavaX.Swing (JFrames/JPanels)
   - Logging Information Exported to File
@@ -68,6 +68,8 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
      such as the LoggingService. 
      
      - States allow us to remove lots of conditional logic from the main engine and distribute through classes and methods.
+    
+     - Builder classes improve the readability of code through providing clear, easy to read methods when instantiating/building new objects.
      
      - Adapters are used here to stub out classes in order to achieve more test coverage and enforce the Single Responsibility principle, 
      in which functions should only perform one action.
@@ -76,13 +78,33 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
     
 - **Challenges**
   
-  1. Implementing State Design Patterns is quite difficult when dealing with asynchronous event listeners of the JFrames/JPanels
+  1. Implementing State Design Patterns is quite difficult when dealing with asynchronous event listeners of the JFrames/JPanels.
+    
+  2. Unit Testing of the UI is virtually impossible through only common libraries of JUnit5 and Mockito. To work around this, we are only unit testing the core business logic.
+
+  3. Displaying product images within the UI proves to be somewhat difficult 
 
 ### Class Diagrams
 
 PlaceHolder
 
-### Retrospective Actions
+### Retrospective
 
-PlaceHolder
+We held our retrospective on [MetroRetro](https://metroretro.io/board/LBWNBAXK6Q48) using the Sailboat method. As a direct result of this, actions were taken to improve
+our teams workflow and processes. 
 
+![MetroRetro Board](https://i.imgur.com/unU1tyc.png)
+
+#### Actions Taken 
+
+1. Project has gotten larger and increased in complexity with group members working on different aspects of the program, 
+  in order for all group members to reacquaint themselves with the whole project. A meeting will be scheduled to walk through
+  the project in its entirety, focusing on all classes and the dataflow. - **Owned By Goudham Suresh**
+2. All group members have time constraints, whether it be real life, work commitments or other University coursework / reports. 
+   To boost productivity and promote more collaboration between group members, regular meetings will be scheduled at times agreed upon
+   by everyone. Attendance will be optional but allows for group members to collaborate at specific times and provide more structure for working
+   on the group project. - **Owned By Robert Ranson**
+3. All skill levels are present in our group, varying from beginner/intermediate to experienced/advanced. Pair programming sessions are incredibly
+   valuable as they provide the lesser experienced person with more knowledge while also reinforcing concepts/knowledge for the more experienced programmer.
+   More pair programming sessions will be scheduled and advocated for within the group. A Microsoft Teams call should always be up if someone is 
+   working on the project, encouraging other group members to join in and pick up new concepts. - **Owned By Alan Robinson**

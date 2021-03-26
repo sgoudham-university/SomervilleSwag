@@ -43,12 +43,14 @@ public class JFrameBuilder {
             return jFrame;
         }
 
-        public JFrame buildDefaultJFrame(Container contentPane, boolean isVisible) {
+        public JFrame buildDefaultJFrame(String title, Container contentPane, boolean isVisible) {
             JFrame jFrame = new JFrame();
-            jFrame.setTitle("Somerville Swag");
+            jFrame.setTitle(title);
             jFrame.setContentPane(contentPane);
             jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            jFrame.getContentPane().setBackground(new Color(9, 45, 71));
             jFrame.pack();
+            jFrame.setMinimumSize(new Dimension(1000, 680));
             jFrame.setLocationRelativeTo(null);
             jFrame.setVisible(isVisible);
             return jFrame;

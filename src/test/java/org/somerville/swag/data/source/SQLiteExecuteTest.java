@@ -9,64 +9,54 @@ import org.somerville.swag.data.service.LoggingService;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class SQLiteExecuteTest {
-
-    private SQLiteExecute sqLiteExecute;
 
     @Mock
     LoggingService loggingService;
 
+    SQLiteExecute sqLiteExecute;
+
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         sqLiteExecute = new SQLiteExecute(createSQLiteConnection());
         sqLiteExecute.setLoggingService(loggingService);
     }
 
     @Test
     void successfullyReadFromDatabase() throws SQLStatementException {
-        String expectedDatabasePath = "src/test/resources/database/";
-        String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
-        String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
-        String expectedSuccessMessage = "Successful Connection to Database: " + expectedDatabaseUrl;
-
+        String expectedDatabaseUrl = getExpectedDatabaseUrl();
         String expectedQuery = "SELECT * FROM Customer WHERE CustomerId = 1;";
 
         sqLiteExecute.executeSelect(expectedQuery);
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSuccessMessage);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
         verify(loggingService, times(1)).logDatabaseSelectSuccess(expectedQuery);
         verifyNoMoreInteractions(loggingService);
     }
 
     @Test
     void successfullyWriteToDatabase() throws SQLStatementException {
-        String expectedDatabasePath = "src/test/resources/database/";
-        String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
-        String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
-        String expectedSuccessMessage = "Successful Connection to Database: " + expectedDatabaseUrl;
-
+        String expectedDatabaseUrl = getExpectedDatabaseUrl();
         String expectedStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
-                "VALUES ('testForename', 'testSurname', 'testEmail@email.com', 'testPassword', 'testAddressLine1','testAddressLine2','testCity','testPostcode','testPhoneNumber');";
+                "VALUES ('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1','testAddressLine2','testCity','testPostcode','testPhoneNumber');";
+        int expectedRowsUpdated = 1;
 
-        sqLiteExecute.executeInsert(expectedStatement);
+        sqLiteExecute.executeUpdate(expectedStatement);
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSuccessMessage);
-        verify(loggingService, times(1)).logDatabaseInsertSuccess(expectedStatement, 1);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingService, times(1)).logDatabaseInsertSuccess(expectedStatement, expectedRowsUpdated);
         verifyNoMoreInteractions(loggingService);
     }
 
     @Test
     void failToReadFromDatabase() {
-        String expectedDatabasePath = "src/test/resources/database/";
-        String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
-        String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
-        String expectedSuccessMessage = "Successful Connection to Database: " + expectedDatabaseUrl;
+        String expectedDatabaseUrl = getExpectedDatabaseUrl();
 
         String expectedExceptionMessage = "[SQLITE_ERROR] SQL error or missing database (near \"WHERE\": syntax error)";
         SQLStatementException expectedException = new SQLStatementException(expectedExceptionMessage, new SQLException());
@@ -76,27 +66,24 @@ class SQLiteExecuteTest {
         SQLStatementException thrownException = assertThrows(SQLStatementException.class, () -> sqLiteExecute.executeSelect(expectedQuery));
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSuccessMessage);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
         verify(loggingService, times(1)).logDatabaseSelectFailure(expectedQuery, expectedExceptionMessage);
         verifyNoMoreInteractions(loggingService);
     }
 
     @Test
     void failToWriteToDatabase() {
-        String expectedDatabasePath = "src/test/resources/database/";
-        String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
-        String expectedDatabaseUrl = "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
-        String expectedSuccessMessage = "Successful Connection to Database: " + expectedDatabaseUrl;
+        String expectedDatabaseUrl = getExpectedDatabaseUrl();
 
         String expectedExceptionMessage = "[SQLITE_ERROR] SQL error or missing database (near \";\": syntax error)";
         SQLStatementException expectedException = new SQLStatementException(expectedExceptionMessage, new SQLException());
 
         String expectedStatement = "INSERT INTO Customer;";
 
-        SQLStatementException thrownException = assertThrows(SQLStatementException.class, () -> sqLiteExecute.executeInsert(expectedStatement));
+        SQLStatementException thrownException = assertThrows(SQLStatementException.class, () -> sqLiteExecute.executeUpdate(expectedStatement));
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSuccessMessage);
+        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
         verify(loggingService, times(1)).logDatabaseInsertFailure(expectedStatement, expectedExceptionMessage);
         verifyNoMoreInteractions(loggingService);
     }
@@ -107,5 +94,11 @@ class SQLiteExecuteTest {
         sqLiteConnection.setDatabaseUrl(testDatabaseUrl);
         sqLiteConnection.setLoggingService(loggingService);
         return sqLiteConnection;
+    }
+
+    private String getExpectedDatabaseUrl() {
+        String expectedDatabasePath = "src/test/resources/database/";
+        String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
+        return "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
     }
 }
