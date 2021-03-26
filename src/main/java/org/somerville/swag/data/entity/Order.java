@@ -60,6 +60,22 @@ public class Order {
 
     public String getFormattedTotal() { return "£" + getTotal().setScale(2, RoundingMode.HALF_UP); }
 
+    public String getReceipt(String forename) {
+        StringBuilder receipt = new StringBuilder("Thanks For Ordering " + forename + "! Your Swag Will Be With You Soon :D\n\nPurchased Swag:");
+        for (OrderLine orderLine : orderLines) {
+            Product product = orderLine.getProduct();
+            receipt.append("\n")
+                    .append(orderLine.getQuantity())
+                    .append(" x ")
+                    .append(product.getName())
+                    .append(" [")
+                    .append(orderLine.getTotalRowPrice())
+                    .append("]");
+        }
+        receipt.append("\n\nGrand Total: ").append(getFormattedTotal());
+        return receipt.toString();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -9,6 +9,7 @@ import org.somerville.swag.display.JFrameBuilder;
 import org.somerville.swag.display.LandingPage;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -32,6 +33,7 @@ public class Guest implements CustomerState {
         String password = guestData.get(3);
         String passwordConfirm = guestData.get(4);
         String addressLine1 = guestData.get(5);
+        String addressLine2 = guestData.get(6);
         String city = guestData.get(7);
         String postcode = guestData.get(8);
         String phoneNumber = guestData.get(9);
@@ -49,7 +51,19 @@ public class Guest implements CustomerState {
                 showMessage(root, "SwagIn Error", "Uh Oh! Customer Already Exists With Email: " + email, JOptionPane.ERROR_MESSAGE);
                 loggingService.logDatabaseCustomerAlreadyExists();
             } else {
-                dbSource.insertCustomer(guestData);
+                List<String> customerData = new ArrayList<>() {{
+                    add(forename);
+                    add(surname);
+                    add(email);
+                    add(password);
+                    add(addressLine1);
+                    add(addressLine2);
+                    add(city);
+                    add(postcode);
+                    add(phoneNumber);
+                }};
+
+                dbSource.insertCustomer(customerData);
                 showMessage(root, "Sign Up Swagsess", "Congrats! You've Created A Swag Account", JOptionPane.INFORMATION_MESSAGE);
                 loggingService.logCustomerSignedUp(email);
 

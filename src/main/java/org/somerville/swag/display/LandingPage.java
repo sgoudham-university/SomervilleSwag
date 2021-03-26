@@ -27,6 +27,7 @@ public class LandingPage {
     private JPanel productPanel;
     private JLabel lblProductTitle;
     private JLabel lblStatus;
+    private JLabel lblPrice;
 
     public LandingPage(JFrame oldFrame, Customer customer) {
 
@@ -44,7 +45,7 @@ public class LandingPage {
 
         signUpButton.addActionListener(actionEvent -> {
             if (customer.getCustomerState() instanceof LoggedIn) {
-                JOptionPane.showMessageDialog(root, "Uh Oh! Can't Sign Up When Logged In!",
+                JOptionPane.showMessageDialog(root, "Uh Oh! Can't SwagUp When SwaggedIn!",
                         "SwagIn Swag-No \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else {
                 new JFrameBuilder.Builder().buildDefaultJFrame("✔️ Sign Up ✔️", new SignUp(oldFrame, customer).root,true);
@@ -93,6 +94,7 @@ public class LandingPage {
         quantitySpinner.setModel(model);
 
         lblDesc.setText(product.getDescription());
+        lblPrice.setText(product.getFormattedPrice());
         lblProductTitle.setText(product.getName());
 
         ImageIcon productImageIcon = new ImageIcon(product.getImagePath());

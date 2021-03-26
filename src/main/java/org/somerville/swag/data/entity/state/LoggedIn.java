@@ -41,6 +41,19 @@ public class LoggedIn implements CustomerState {
 
         showMessage(root, "SwaggedOut Success. D-money will miss you","Swagcess", JOptionPane.INFORMATION_MESSAGE);
         loggingService.logCustomerLoggedOut(customer.getCustomerId());
+
+        // TODO: Check if basket is empty or not,
+        // TODO: If basket is not not empty, then store current order in database
+        if (!customer.getCurrentOrder().getOrderLines().isEmpty()) {
+
+            // TODO If OrderID already exists, delete all occurrences of orderID in OrderLine
+//            DELETE Order, OrderLine
+//            INNER JOIN contacts ON students.student_id=contacts.college_id
+//            ON table1.joining_column= table2.joining_column
+//            WHERE   condition
+
+            // TODO: First insert OrderID and CustomerID into Order Table
+        }
     }
 
     @Override
@@ -68,6 +81,8 @@ public class LoggedIn implements CustomerState {
             customer.getCurrentOrder().add(new OrderLine(product, quantity));
             dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
             loggingService.logCustomerAddProductToBasket(customer.getCustomerId(), product.getProductId());
+
+            // TODO: If customer.getCurrentOrder() is empty, create new order in database
         }
     }
 
@@ -91,7 +106,7 @@ public class LoggedIn implements CustomerState {
             showMessage(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
                     "Card Number Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            showMessage(root, "Your Swag will be with you as soon as possible :)",
+            showMessage(root, customer.getCurrentOrder().getReceipt(customer.getForename()),
                     "Swag Success", JOptionPane.INFORMATION_MESSAGE);
 
             new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);

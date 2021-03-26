@@ -23,7 +23,6 @@ public class Basket {
     public Basket(JFrame oldFrame, Customer customer) {
 
         List<OrderLine> lines = customer.getCurrentOrder().getOrderLines();
-
         refreshTable(lines, customer);
 
         backButton.addActionListener(actionEvent -> {
@@ -47,9 +46,13 @@ public class Basket {
         });
 
         removeFromBasketButton.addActionListener(actionEvent -> {
-            if (customer.getCurrentOrder().getOrderLines().isEmpty()) {
+            if (tblBasket.getModel().getRowCount() == 0) {
                 JOptionPane.showMessageDialog(root, "Where's Your Swag at?",
                         "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+            }
+            else if (tblBasket.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(root, "No SwagRow Selected",
+                        "SwagRow Not Found 404 \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else {
                 DefaultTableModel defaultTableModel = (DefaultTableModel) tblBasket.getModel();
                 Vector vector = defaultTableModel.getDataVector().elementAt(tblBasket.getSelectedRow());
@@ -71,17 +74,11 @@ public class Basket {
         };
 
         for (OrderLine orderLine : lines) {
-            Object[] newRow = { orderLine.getProduct(), orderLine.getQuantity(), getTotalRowPrice(orderLine) };
+            Object[] newRow = { orderLine.getProduct(), orderLine.getQuantity(), orderLine.getTotalRowPrice() };
             model.addRow(newRow);
         }
         orderTotal.setText(customer.getCurrentOrder().getFormattedTotal());
         tblBasket.setRowHeight(25);
         tblBasket.setModel(model);
-    }
-
-    private String getTotalRowPrice(OrderLine orderLine) {
-        BigDecimal productPrice = new BigDecimal(String.valueOf(orderLine.getProduct().getPrice()));
-        BigDecimal productQuantity = new BigDecimal(orderLine.getQuantity());
-        return "£" + productPrice.multiply(productQuantity).setScale(2, RoundingMode.HALF_UP);
     }
 }
