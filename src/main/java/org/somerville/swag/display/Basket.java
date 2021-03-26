@@ -23,7 +23,6 @@ public class Basket {
     public Basket(JFrame oldFrame, Customer customer) {
 
         List<OrderLine> lines = customer.getCurrentOrder().getOrderLines();
-
         refreshTable(lines, customer);
 
         backButton.addActionListener(actionEvent -> {
@@ -47,9 +46,13 @@ public class Basket {
         });
 
         removeFromBasketButton.addActionListener(actionEvent -> {
-            if (customer.getCurrentOrder().getOrderLines().isEmpty()) {
+            if (tblBasket.getModel().getRowCount() == 0) {
                 JOptionPane.showMessageDialog(root, "Where's Your Swag at?",
                         "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+            }
+            else if (tblBasket.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(root, "No SwagRow Selected",
+                        "SwagRow Not Found 404 \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
             } else {
                 DefaultTableModel defaultTableModel = (DefaultTableModel) tblBasket.getModel();
                 Vector vector = defaultTableModel.getDataVector().elementAt(tblBasket.getSelectedRow());
