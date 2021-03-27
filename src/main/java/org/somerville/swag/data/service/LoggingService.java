@@ -11,8 +11,8 @@ public interface LoggingService {
     void logDatabaseCreateTablesFailure(String fileName, String failureMessage);
     void logDatabasePopulateProductTableSuccess(String fileName);
     void logDatabasePopulateProductTableFailure(String fileName, String failureMessage);
-    void logDatabaseInsertSuccess(String insertStatement, int rowsUpdated);
-    void logDatabaseInsertFailure(String insertStatement, String failureMessage);
+    void logDatabaseUpdateSuccess(String insertStatement, int rowsUpdated);
+    void logDatabaseUpdateFailure(String insertStatement, String failureMessage);
     void logDatabaseSelectSuccess(String selectQuery);
     void logDatabaseSelectFailure(String selectQuery, String failureMessage);
     void logDatabaseGetCustomerSuccess(int customerId);

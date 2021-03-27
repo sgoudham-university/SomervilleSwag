@@ -64,13 +64,13 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseInsertSuccess(String insertStatement, int rowsUpdated) {
+    public void logDatabaseUpdateSuccess(String insertStatement, int rowsUpdated) {
         String logMessage = events.getDatabaseWriteSuccess() + " - Rows Updated: " + rowsUpdated + " - " + insertStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseInsertFailure(String insertStatement, String failureMessage) {
+    public void logDatabaseUpdateFailure(String insertStatement, String failureMessage) {
         String logMessage = events.getDatabaseWriteFailure() + ": " + failureMessage + " - Statement: " + insertStatement;
         writeLog(logMessage);
     }
