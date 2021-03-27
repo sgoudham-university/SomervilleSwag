@@ -25,6 +25,8 @@ public class Events {
     private static final String DATABASE_ALL_PRODUCTS_MAP_SUCCESS_SUFFIX = ".database_all_products_map_success";
     private static final String DATABASE_ALL_PRODUCTS_MAP_FAILURE_SUFFIX = ".database_all_products_map_failure";
     private static final String DATABASE_CUSTOMER_ALREADY_EXISTS_SUFFIX = ".database_customer_already_exists";
+    private static final String DATABASE_UPDATE_PRODUCT_STOCK_LEVEL_SUCCESS_SUFFIX = ".database_update_product_stock_level_success";
+    private static final String DATABASE_UPDATE_PRODUCT_STOCK_LEVEL_FAILURE_SUFFIX = ".database_update_product_stock_level_failure";
 
     private static final String CUSTOMER_SIGNED_UP_SUFFIX = ".customer_signed_up";
     private static final String CUSTOMER_LOGGED_IN_SUFFIX = ".customer_logged_in";
@@ -72,6 +74,10 @@ public class Events {
     public String getDatabaseAllProductsMapFailure() { return getProjectPrefix() + DATABASE_ALL_PRODUCTS_MAP_FAILURE_SUFFIX; }
 
     public String getDatabaseCustomerAlreadyExists() { return getProjectPrefix() + DATABASE_CUSTOMER_ALREADY_EXISTS_SUFFIX; }
+
+    public String getDatabaseUpdateProductStockLevelSuccess() { return getProjectPrefix() + DATABASE_UPDATE_PRODUCT_STOCK_LEVEL_SUCCESS_SUFFIX; }
+    public String getDatabaseUpdateProductStockLevelFailure() { return getProjectPrefix() + DATABASE_UPDATE_PRODUCT_STOCK_LEVEL_FAILURE_SUFFIX; }
+
     public String getCustomerSignedUp(){ return getProjectPrefix() + CUSTOMER_SIGNED_UP_SUFFIX; }
 
     public String getCustomerLoggedIn(){ return  getProjectPrefix() + CUSTOMER_LOGGED_IN_SUFFIX; }

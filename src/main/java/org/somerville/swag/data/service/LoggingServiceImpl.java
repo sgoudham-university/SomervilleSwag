@@ -64,14 +64,14 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseUpdateSuccess(String insertStatement, int rowsUpdated) {
-        String logMessage = events.getDatabaseWriteSuccess() + " - Rows Updated: " + rowsUpdated + " - " + insertStatement;
+    public void logDatabaseUpdateSuccess(String updateStatement, int rowsUpdated) {
+        String logMessage = events.getDatabaseWriteSuccess() + " - Rows Updated: " + rowsUpdated + " - " + updateStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseUpdateFailure(String insertStatement, String failureMessage) {
-        String logMessage = events.getDatabaseWriteFailure() + ": " + failureMessage + " - Statement: " + insertStatement;
+    public void logDatabaseUpdateFailure(String updateStatement, String failureMessage) {
+        String logMessage = events.getDatabaseWriteFailure() + ": " + failureMessage + " - Statement: " + updateStatement;
         writeLog(logMessage);
     }
 
@@ -101,8 +101,7 @@ public class LoggingServiceImpl implements LoggingService {
 
     @Override
     public void logDatabaseInsertCustomerSuccess() {
-        String logMessage = events.getDatabaseInsertCustomerSuccess();
-        writeLog(logMessage);
+        writeLog(events.getDatabaseInsertCustomerSuccess());
     }
 
     @Override
@@ -120,6 +119,17 @@ public class LoggingServiceImpl implements LoggingService {
     @Override
     public void logDatabaseCustomerAlreadyExists() {
         String logMessage = events.getDatabaseCustomerAlreadyExists() + ": Customer Account Already Exists";
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logDatabaseUpdateProductStockLevelSuccess() {
+        writeLog(events.getDatabaseUpdateProductStockLevelSuccess());
+    }
+
+    @Override
+    public void logDatabaseUpdateProductStockLevelFailure(String updateStatement, String failureMessage) {
+        String logMessage = events.getDatabaseUpdateProductStockLevelFailure() + ": " + failureMessage + " - Statement: " + updateStatement;
         writeLog(logMessage);
     }
 

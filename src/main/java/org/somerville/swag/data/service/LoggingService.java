@@ -20,7 +20,6 @@ public interface LoggingService {
     void logDatabaseInsertCustomerSuccess();
     void logDatabaseInsertCustomerFailure(String insertStatement, String failureMessage);
     void logDatabaseCustomerNotFound(String email);
-    void logDatabaseCustomerAlreadyExists();
     void logDatabaseCustomerMapSuccess(int customerId);
     void logDatabaseCustomerMapFailure(String failureMessage);
     void logDatabaseGetAllProductsInStockSuccess();
@@ -28,6 +27,9 @@ public interface LoggingService {
     void logDatabaseNoProductsInStock();
     void logDatabaseAllProductsMapSuccess();
     void logDatabaseAllProductsMapFailure(String failureMessage);
+    void logDatabaseCustomerAlreadyExists();
+    void logDatabaseUpdateProductStockLevelSuccess();
+    void logDatabaseUpdateProductStockLevelFailure(String updateStatement, String failureMessage);
 
     void logCustomerSignedUp(String email);
     void logCustomerLoggedIn(int customerId);
