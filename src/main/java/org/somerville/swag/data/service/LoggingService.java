@@ -17,7 +17,7 @@ public interface LoggingService {
     void logDatabaseSelectFailure(String selectQuery, String failureMessage);
     void logDatabaseGetCustomerSuccess(int customerId);
     void logDatabaseGetCustomerFailure(String selectQuery, String failureMessage);
-    void logDatabaseInsertCustomerSuccess(String insertStatement);
+    void logDatabaseInsertCustomerSuccess();
     void logDatabaseInsertCustomerFailure(String insertStatement, String failureMessage);
     void logDatabaseCustomerNotFound(String email);
     void logDatabaseCustomerAlreadyExists();

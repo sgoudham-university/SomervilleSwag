@@ -56,7 +56,7 @@ public class SQLiteSource implements DBSource {
 
         try {
             dbExecute.executeUpdate(insertCustomerStatement);
-            loggingService.logDatabaseInsertCustomerSuccess(insertCustomerStatement);
+            loggingService.logDatabaseInsertCustomerSuccess();
         } catch (SQLStatementException sse) {
             loggingService.logDatabaseInsertCustomerFailure(insertCustomerStatement, sse.getMessage());
         }

@@ -100,8 +100,8 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseInsertCustomerSuccess(String insertStatement) {
-        String logMessage = events.getDatabaseInsertCustomerSuccess() + ": " + insertStatement;
+    public void logDatabaseInsertCustomerSuccess() {
+        String logMessage = events.getDatabaseInsertCustomerSuccess();
         writeLog(logMessage);
     }
 
