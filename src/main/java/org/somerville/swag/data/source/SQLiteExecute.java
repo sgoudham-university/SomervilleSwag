@@ -34,12 +34,12 @@ public class SQLiteExecute implements DBExecute {
     }
 
     @Override
-    public void executeUpdate(String insertStatement) throws SQLStatementException {
+    public void executeUpdate(String updateStatement) throws SQLStatementException {
         try (Statement statement = connection.connect().createStatement()) {
-            int rowsUpdated = statement.executeUpdate(insertStatement);
-            loggingService.logDatabaseInsertSuccess(insertStatement, rowsUpdated);
+            int rowsUpdated = statement.executeUpdate(updateStatement);
+            loggingService.logDatabaseUpdateSuccess(updateStatement, rowsUpdated);
         } catch (SQLConnectionException | SQLException err) {
-            loggingService.logDatabaseInsertFailure(insertStatement, err.getMessage());
+            loggingService.logDatabaseUpdateFailure(updateStatement, err.getMessage());
             throw new SQLStatementException(err.getMessage(), err);
         }
     }
