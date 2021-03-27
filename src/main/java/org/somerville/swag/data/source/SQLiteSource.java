@@ -100,9 +100,9 @@ public class SQLiteSource implements DBSource {
 
         try {
             dbExecute.executeUpdate(updateProductStockLevelStatement);
-            // TODO: Add logging success
+            loggingService.logDatabaseUpdateProductStockLevelSuccess();
         } catch (SQLStatementException sse) {
-            // TODO: Add logging failure
+            loggingService.logDatabaseUpdateProductStockLevelFailure(updateProductStockLevelStatement, sse.getMessage());
         }
     }
 
