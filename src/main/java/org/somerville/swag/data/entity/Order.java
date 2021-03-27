@@ -38,7 +38,7 @@ public class Order {
         return orderLines;
     }
 
-    public void setOrderLines(ArrayList<OrderLine> orderLines) {
+    public void setOrderLines(List<OrderLine> orderLines) {
         this.orderLines = orderLines;
     }
 
