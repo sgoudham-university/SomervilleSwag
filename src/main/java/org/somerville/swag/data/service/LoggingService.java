@@ -15,27 +15,26 @@ public interface LoggingService {
     void logDatabaseInsertFailure(String insertStatement, String failureMessage);
     void logDatabaseSelectSuccess(String selectQuery);
     void logDatabaseSelectFailure(String selectQuery, String failureMessage);
-
     void logDatabaseGetCustomerSuccess(int customerId);
     void logDatabaseGetCustomerFailure(String selectQuery, String failureMessage);
     void logDatabaseInsertCustomerSuccess(String insertStatement);
     void logDatabaseInsertCustomerFailure(String insertStatement, String failureMessage);
     void logDatabaseCustomerNotFound(String email);
     void logDatabaseCustomerAlreadyExists();
+    void logDatabaseCustomerMapSuccess(int customerId);
+    void logDatabaseCustomerMapFailure(String failureMessage);
+    void logDatabaseGetAllProductsInStockSuccess();
+    void logDatabaseGetAllProductsInStockFailure(String getAllProductsQuery, String failureMessage);
+    void logDatabaseNoProductsInStock();
+    void logDatabaseAllProductsMapSuccess();
+    void logDatabaseAllProductsMapFailure(String failureMessage);
+
     void logCustomerSignedUp(String email);
     void logCustomerLoggedIn(int customerId);
     void logCustomerLoggedOut(int customerId);
     void logCustomerAddProductToBasket(int customerId, int productId);
     void logCustomerRemoveProductFromBasket(int customerId, int productId);
     void logCustomerCheckout(int customerId, int orderId);
-    void logDatabaseCustomerMapSuccess(int customerId);
-    void logDatabaseCustomerMapFailure(String failureMessage);
-
-    void logDatabaseGetAllProductsInStockSuccess();
-    void logDatabaseGetAllProductsInStockFailure(String getAllProductsQuery, String failureMessage);
-    void logDatabaseNoProductsInStock();
-    void logDatabaseAllProductsMapSuccess();
-    void logDatabaseAllProductsMapFailure(String failureMessage);
 
     String retrieveLogMessage(String logMessage);
     void setClock(Clock clock);
