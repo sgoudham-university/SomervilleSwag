@@ -43,11 +43,6 @@ public class SQLiteConnection implements DBConnection {
         return connection;
     }
 
-    public void setDatabaseUrlAndConnectTo(String databaseUrl) throws SQLConnectionException {
-        this.databaseUrl = databaseUrl;
-        connect(this.databaseUrl);
-    }
-
     public void setDatabaseUrl(String databaseUrl) {
         this.databaseUrl = databaseUrl;
     }
