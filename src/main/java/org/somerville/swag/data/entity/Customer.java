@@ -80,7 +80,7 @@ public class Customer {
     }
 
     public void refresh() {
-        this.currentOrder = new Order();
+        currentOrder.getOrderLines().clear();
         this.customerId = 0;
         this.forename = null;
         this.surname = null;
@@ -93,9 +93,7 @@ public class Customer {
         this.phoneNumber = null;
     }
 
-    public void clearBasket() {
-        this.setCurrentOrder(new Order());
-    }
+    public void clearBasket() { currentOrder.refresh(); }
 
     public void setCustomerId(int customerId) { this.customerId = customerId; }
     public void setForename(String forename) { this.forename = forename; }

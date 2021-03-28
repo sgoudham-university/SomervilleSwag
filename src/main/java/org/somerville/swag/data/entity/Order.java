@@ -11,7 +11,9 @@ public class Order {
     private int customerId;
     private List<OrderLine> orderLines = new ArrayList<>();
 
-    public Order() { }
+    public Order() {
+        orderId++;
+    }
 
     public Order(int orderId, int customerId) {
         this.orderId = orderId;
@@ -50,6 +52,11 @@ public class Order {
         return orderLines.get(index);
     }
 
+    public void refresh() {
+        orderLines.clear();
+        orderId++;
+    }
+
     public BigDecimal getTotal() {
         BigDecimal total = BigDecimal.ZERO;
         for (OrderLine order : orderLines) {
@@ -81,11 +88,11 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return orderId == order.orderId && customerId == order.customerId && Objects.equals(orderLines, order.orderLines);
+        return customerId == order.customerId && Objects.equals(orderLines, order.orderLines);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(orderId, customerId, orderLines);
+        return Objects.hash(customerId, orderLines);
     }
 }
