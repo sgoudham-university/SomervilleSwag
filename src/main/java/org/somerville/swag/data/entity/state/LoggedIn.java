@@ -1,9 +1,13 @@
 package org.somerville.swag.data.entity.state;
 
 import org.somerville.swag.data.entity.*;
+import org.somerville.swag.data.entity.util.Common;
+import org.somerville.swag.data.exception.FileWriterException;
 import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
 import org.somerville.swag.data.source.DBSource;
+import org.somerville.swag.data.source.MyFileWriter;
+import org.somerville.swag.data.source.MyTextFileWriter;
 import org.somerville.swag.data.source.SQLiteSource;
 import org.somerville.swag.display.JFrameBuilder;
 import org.somerville.swag.display.LandingPage;
@@ -16,7 +20,8 @@ import java.util.Objects;
 public class LoggedIn implements CustomerState {
 
     private final Customer customer;
-    private final DBSource dbSource = new SQLiteSource();
+    private final Common commonCode = new Common();
+    private final MyFileWriter myFileWriter = new MyTextFileWriter();
 
     private LoggingService loggingService = LoggingServiceImpl.getInstance();
 
@@ -42,17 +47,13 @@ public class LoggedIn implements CustomerState {
         showMessage(root, "SwaggedOut Success. D-money will miss you","Swagcess", JOptionPane.INFORMATION_MESSAGE);
         loggingService.logCustomerLoggedOut(customer.getCustomerId());
 
-        // TODO: Check if basket is empty or not,
         // TODO: If basket is not not empty, then store current order in database
         if (!customer.getCurrentOrder().getOrderLines().isEmpty()) {
+            // TODO: Delete previous basket (orderlines)
+//            DELETE FROM main."OrderLine"
+//            WHERE EXISTS(SELECT * FROM main."Order" where main."Order".OrderId = main."OrderLine".OrderID AND main."Order".hasPurchased = 0);
 
-            // TODO If OrderID already exists, delete all occurrences of orderID in OrderLine
-//            DELETE Order, OrderLine
-//            INNER JOIN contacts ON students.student_id=contacts.college_id
-//            ON table1.joining_column= table2.joining_column
-//            WHERE   condition
-
-            // TODO: First insert OrderID and CustomerID into Order Table
+            // TODO: Insert all the products in current basket into OrderLines table, mapping quantity, orderID, productID properly
         }
     }
 
@@ -62,41 +63,16 @@ public class LoggedIn implements CustomerState {
             showMessage(root, "No Swag", "Your Quantity Of Swag Is Below The Minimum Swag Value",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            Order customerOrder = customer.getCurrentOrder();
-            Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
-            int productPreviousStockLevel = product.getStockLevel();
+            commonCode.addProductToBasket(root, customer, product, quantity);
 
-            while (customerOrderIterator.hasNext()) {
-                OrderLine orderLine = customerOrderIterator.next();
-                Product productInBasket = orderLine.getProduct();
-                if (productInBasket.equals(product)) {
-                    productPreviousStockLevel += orderLine.getQuantity();
-                    quantity += orderLine.getQuantity();
-                    customerOrderIterator.remove();
-                }
-            }
-            int productNewStockLevel = productPreviousStockLevel - quantity;
-            product.setStockLevel(productNewStockLevel);
-
-            customer.getCurrentOrder().add(new OrderLine(product, quantity));
-            dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
             loggingService.logCustomerAddProductToBasket(customer.getCustomerId(), product.getProductId());
-
-            // TODO: If customer.getCurrentOrder() is empty, create new order in database
         }
     }
 
     @Override
     public void removeProductFromBasket(JPanel root, OrderLine orderLine) {
-        Product selectedProduct = orderLine.getProduct();
-        int selectedProductQuantity = orderLine.getQuantity();
-        Order customerOrder = customer.getCurrentOrder();
-        List<OrderLine> customerOrderLines = customerOrder.getOrderLines();
+        commonCode.removeProductFromBasket(customer, orderLine);
 
-        customerOrderLines.remove(orderLine);
-        selectedProduct.setStockLevel(selectedProduct.getStockLevel() + selectedProductQuantity);
-
-        dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel());
         loggingService.logCustomerRemoveProductFromBasket(customer.getCustomerId(), orderLine.getProduct().getProductId());
     }
 
@@ -106,14 +82,22 @@ public class LoggedIn implements CustomerState {
             showMessage(root, "Incorrect Card Number \n-Format as 1234123412341234 \n-Format as 123",
                     "Card Number Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            showMessage(root, customer.getCurrentOrder().getReceipt(customer.getForename()),
-                    "Swag Success", JOptionPane.INFORMATION_MESSAGE);
+            Order customerOrder = customer.getCurrentOrder();
+            String customerOrderReceipt = customerOrder.getReceipt(customer.getForename());
+
+            myFileWriter.setFileToWrite("src/main/resources/customer.orders/Customer" + customer.getCustomerId() + "-Order-" + customerOrder.getOrderId() );
+            try {
+                myFileWriter.writeToFile(customerOrderReceipt, false);
+            } catch (FileWriterException e) {
+                e.printStackTrace();
+            }
+            showMessage(root, customerOrderReceipt, "Swag Success", JOptionPane.INFORMATION_MESSAGE);
+
+            customer.clearBasket();
+            loggingService.logCustomerCheckout(customer.getCustomerId(), customerOrder.getOrderId());
 
             new JFrameBuilder.Builder().buildDefaultJFrame("Somerville Swag", new LandingPage(oldFrame, customer).root, true);
             SwingUtilities.getWindowAncestor(root).dispose();
-
-            customer.clearBasket();
-            loggingService.logCustomerCheckout(customer.getCustomerId(), customer.getCurrentOrder().getOrderId());
         }
     }
 

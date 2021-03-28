@@ -1,6 +1,7 @@
 package org.somerville.swag.data.entity.state;
 
 import org.somerville.swag.data.entity.*;
+import org.somerville.swag.data.entity.util.Common;
 import org.somerville.swag.data.service.LoggingService;
 import org.somerville.swag.data.service.LoggingServiceImpl;
 import org.somerville.swag.data.source.DBSource;
@@ -17,6 +18,7 @@ import java.util.Objects;
 public class Guest implements CustomerState {
 
     private final Customer customer;
+    private final Common commonCode = new Common();
     private final DBSource dbSource = new SQLiteSource();
 
     private LoggingService loggingService = LoggingServiceImpl.getInstance();
@@ -98,38 +100,13 @@ public class Guest implements CustomerState {
             showMessage(root, "No Swag", "Your Quantity Of Swag Is Below The Minimum Swag Value",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            Order customerOrder = customer.getCurrentOrder();
-            Iterator<OrderLine> customerOrderIterator = customerOrder.getOrderLines().iterator();
-            int productPreviousStockLevel = product.getStockLevel();
-
-            while (customerOrderIterator.hasNext()) {
-                OrderLine orderLine = customerOrderIterator.next();
-                Product productInBasket = orderLine.getProduct();
-                if (productInBasket.equals(product)) {
-                    productPreviousStockLevel += orderLine.getQuantity();
-                    quantity += orderLine.getQuantity();
-                    customerOrderIterator.remove();
-                }
-            }
-            int productNewStockLevel = productPreviousStockLevel - quantity;
-            product.setStockLevel(productNewStockLevel);
-
-            customer.getCurrentOrder().add(new OrderLine(product, quantity));
-            dbSource.updateProductStockLevel(product.getProductId(), productNewStockLevel);
+            commonCode.addProductToBasket(root, customer, product, quantity);
         }
     }
 
     @Override
     public void removeProductFromBasket(JPanel root, OrderLine orderLine) {
-        Product selectedProduct = orderLine.getProduct();
-        int selectedProductQuantity = orderLine.getQuantity();
-        Order customerOrder = customer.getCurrentOrder();
-        List<OrderLine> customerOrderLines = customerOrder.getOrderLines();
-
-        customerOrderLines.remove(orderLine);
-        selectedProduct.setStockLevel(selectedProduct.getStockLevel() + selectedProductQuantity);
-
-        dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel());
+        commonCode.removeProductFromBasket(customer, orderLine);
     }
 
     @Override
