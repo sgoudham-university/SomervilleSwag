@@ -46,15 +46,6 @@ public class LoggedIn implements CustomerState {
 
         showMessage(root, "SwaggedOut Success. D-money will miss you","Swagcess", JOptionPane.INFORMATION_MESSAGE);
         loggingService.logCustomerLoggedOut(customer.getCustomerId());
-
-        // TODO: If basket is not not empty, then store current order in database
-        if (!customer.getCurrentOrder().getOrderLines().isEmpty()) {
-            // TODO: Delete previous basket (orderlines)
-//            DELETE FROM main."OrderLine"
-//            WHERE EXISTS(SELECT * FROM main."Order" where main."Order".OrderId = main."OrderLine".OrderID AND main."Order".hasPurchased = 0);
-
-            // TODO: Insert all the products in current basket into OrderLines table, mapping quantity, orderID, productID properly
-        }
     }
 
     @Override
@@ -85,7 +76,7 @@ public class LoggedIn implements CustomerState {
             Order customerOrder = customer.getCurrentOrder();
             String customerOrderReceipt = customerOrder.getReceipt(customer.getForename());
 
-            myFileWriter.setFileToWrite("src/main/resources/customer.orders/Customer" + customer.getCustomerId() + "-Order-" + customerOrder.getOrderId() );
+            myFileWriter.setFileToWrite("src/main/resources/customer.orders/Customer" + customer.getCustomerId() + "-Order-" + customerOrder.getOrderId() + ".txt");
             try {
                 myFileWriter.writeToFile(customerOrderReceipt, false);
             } catch (FileWriterException e) {
