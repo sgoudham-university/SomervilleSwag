@@ -48,24 +48,10 @@ public class Order {
         orderLines.add(orderLine);
     }
 
-    public OrderLine getSingleOrderLine(int index) {
-        return orderLines.get(index);
-    }
-
     public void refresh() {
         orderLines.clear();
         orderId++;
     }
-
-    public BigDecimal getTotal() {
-        BigDecimal total = BigDecimal.ZERO;
-        for (OrderLine order : orderLines) {
-            total = total.add(order.getProduct().getPrice().multiply(new BigDecimal(order.getQuantity())));
-        }
-        return total;
-    }
-
-    public String getFormattedTotal() { return "£" + getTotal().setScale(2, RoundingMode.HALF_UP); }
 
     public String getReceipt(String forename) {
         StringBuilder receipt = new StringBuilder("Thanks For Ordering " + forename + "! Your Swag Will Be With You Soon :D\n\nPurchased Swag:");
@@ -82,6 +68,16 @@ public class Order {
         receipt.append("\n\nGrand Total: ").append(getFormattedTotal());
         return receipt.toString();
     }
+
+    public BigDecimal getTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (OrderLine order : orderLines) {
+            total = total.add(order.getProduct().getPrice().multiply(new BigDecimal(order.getQuantity())));
+        }
+        return total;
+    }
+
+    public String getFormattedTotal() { return "£" + getTotal().setScale(2, RoundingMode.HALF_UP); }
 
     @Override
     public boolean equals(Object o) {
