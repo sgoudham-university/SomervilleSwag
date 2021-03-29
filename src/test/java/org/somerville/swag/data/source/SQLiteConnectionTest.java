@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.is;
 class SQLiteConnectionTest {
 
     @Mock
-    LoggingService loggingService;
+    LoggingService loggingServiceMock;
 
     DBConnection sqLiteConnection;
 
@@ -25,7 +25,7 @@ class SQLiteConnectionTest {
     void setup() {
         MockitoAnnotations.openMocks(this);
         sqLiteConnection = SQLiteConnection.getInstance();
-        sqLiteConnection.setLoggingService(loggingService);
+        sqLiteConnection.setLoggingService(loggingServiceMock);
     }
 
     @Test
@@ -44,8 +44,8 @@ class SQLiteConnectionTest {
         sqLiteConnection.setDatabaseUrl(expectedDatabaseUrl);
         sqLiteConnection.connect();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -60,9 +60,9 @@ class SQLiteConnectionTest {
         sqLiteConnection.setDatabaseUrl(expectedSecondDatabaseUrl);
         sqLiteConnection.connect();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseUrl);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseUrl);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseUrl);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -76,8 +76,8 @@ class SQLiteConnectionTest {
         Throwable thrownException = assertThrows(SQLConnectionException.class, sqLiteConnection::connect);
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
-        verify(loggingService, times(1)).logDatabaseConnectFailure(expectedDatabaseUrl, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectFailure(expectedDatabaseUrl, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     private String getExpectedDatabaseUrl(String expectedDatabaseName) {
