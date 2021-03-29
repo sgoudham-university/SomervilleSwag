@@ -81,6 +81,7 @@ public class Customer {
 
     public void refresh() {
         currentOrder.getOrderLines().clear();
+        currentOrder.setOrderId(1);
         this.customerId = 0;
         this.forename = null;
         this.surname = null;
