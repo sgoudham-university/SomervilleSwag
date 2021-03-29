@@ -84,9 +84,9 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 
   3. Displaying product images within the UI proves to be somewhat difficult 
 
-### Class Diagrams
+### Class Diagram
 
-PlaceHolder
+![Class Diagram](https://i.imgur.com/hJEw3ny.png)
 
 ### Retrospective
 
