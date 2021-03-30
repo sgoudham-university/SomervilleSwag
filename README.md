@@ -24,8 +24,10 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 - [App Functionality](#App-Functionality)
 - [Architecture](#Architecture)
     - [Benefits & Challenges](#benefits--challenges)
-    - [Class Diagrams](#Class-Diagrams)
-    - [Retrospective Actions](#Retrospective-Actions)
+    - [Class Diagrams](#Class-Diagram)
+    - [Retrospective](#Retrospective)
+        - [Actions Taken](#Actions-Taken)
+- [Code Reviews](#Code-Reviews)
 
 ## Project Purpose & Description
 
@@ -108,3 +110,7 @@ our teams workflow and processes.
    valuable as they provide the lesser experienced person with more knowledge while also reinforcing concepts/knowledge for the more experienced programmer.
    More pair programming sessions will be scheduled and advocated for within the group. A Microsoft Teams call should always be up if someone is 
    working on the project, encouraging other group members to join in and pick up new concepts. - **Owned By Alan Robinson**
+
+# Code Reviews
+
+Placeholder
