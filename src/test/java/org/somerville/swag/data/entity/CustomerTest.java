@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerTest {
 
     @Test
-    void customerShouldInstantiateWithLoggedInState() {
+    void successfullyInstantiateCustomerWithLoggedInState() {
         String expectedEmail = "testEmail";
         String expectedPassword = "testPassword";
         Customer actualCustomer = new Customer(expectedEmail, expectedPassword, new Order());
@@ -27,7 +27,7 @@ class CustomerTest {
     }
 
     @Test
-    void customerShouldInstantiateWithGuestState() {
+    void successfullyInstantiateCustomerWithGuestState() {
         Customer actualCustomer = new Customer();
         CustomerState expectedCustomerState = new Guest(actualCustomer);
 

@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 class DBMapperTest {
 
     @Mock
-    LoggingService loggingService;
+    LoggingService loggingServiceMock;
 
     @Mock
     ResultSet resultSetMock;
@@ -34,7 +34,7 @@ class DBMapperTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         dbMapper = new DBMapper();
-        dbMapper.setLoggingService(loggingService);
+        dbMapper.setLoggingService(loggingServiceMock);
     }
 
     @Test
@@ -60,8 +60,8 @@ class DBMapperTest {
         dbMapper.mapToCustomer(resultSetMock, actualCustomer);
 
         assertThat(actualCustomer, is(expectedCustomer));
-        verify(loggingService, times(1)).logDatabaseCustomerMapSuccess(expectedCustomer.getCustomerId());
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseCustomerMapSuccess(expectedCustomer.getCustomerId());
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -75,8 +75,8 @@ class DBMapperTest {
 
         dbMapper.mapToCustomer(resultSetMock, actualCustomer);
 
-        verify(loggingService, times(1)).logDatabaseCustomerMapFailure(expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseCustomerMapFailure(expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -113,8 +113,8 @@ class DBMapperTest {
         dbMapper.mapToProducts(resultSetMock, actualAllProducts);
 
         assertThat(actualAllProducts, is(expectedAllProducts));
-        verify(loggingService, times(1)).logDatabaseAllProductsMapSuccess();
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseAllProductsMapSuccess();
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -125,8 +125,8 @@ class DBMapperTest {
 
         dbMapper.mapToProducts(resultSetMock, actualAllProducts);
 
-        verify(loggingService, times(1)).logDatabaseNoProductsInStock();
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseNoProductsInStock();
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -140,8 +140,8 @@ class DBMapperTest {
 
         dbMapper.mapToProducts(resultSetMock, actualAllProducts);
 
-        verify(loggingService, times(1)).logDatabaseAllProductsMapFailure(expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseAllProductsMapFailure(expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     private Customer createTestCustomer() {
