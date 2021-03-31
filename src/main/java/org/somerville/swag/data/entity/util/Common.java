@@ -74,7 +74,7 @@ public class Common {
         dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel());
     }
 
-    public static void showMessage(JPanel root, String message, String title, int type) {
+    public static void showMessage(JPanel root, String title, String message, int type) {
         JOptionPane.showMessageDialog(root, message, title, type);
     }
 }
