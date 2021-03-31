@@ -44,11 +44,11 @@ public class Purchase {
 
     private void initialiseCheckout() {
         int year = LocalDateTime.now().getYear();
-        for( int i = 0; i < 6; i++){
-            comYear.addItem(year + i);
-        }
-        for(int j = 1; j <= 12; j++){
-            comMonth.addItem( j );
+        for(int i = 0; i < 12; i++) {
+            if (i < 6) {
+                comYear.addItem(year + i);
+            }
+            comMonth.addItem(i + 1);
         }
     }
 }
