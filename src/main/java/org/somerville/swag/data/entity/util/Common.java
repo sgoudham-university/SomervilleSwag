@@ -13,9 +13,21 @@ import java.util.List;
 
 public class Common {
 
-    private final DBSource dbSource = new SQLiteSource();
+    private static final DBSource dbSource = new SQLiteSource();
 
-    public void addProductToBasket(JPanel root, Customer customer, Product product, int quantity) {
+    /**
+     * Allows the Customer to add products to their basket, up to the current stock level.
+     * The product (if found within the customer basket) is removed and then added with the updated stock level.
+     * When no existing product is found, it is added into the Customer Basket.
+     *
+     * All actions involve updating the product stock level within the database.
+     *
+     * @param root The root panel of the Display JFrame
+     * @param customer The current Customer logged in
+     * @param product The product that will be added to the Customer Basket
+     * @param quantity The amount of product the Customer wants to add to their basket
+     */
+    public static void addProductToBasket(JPanel root, Customer customer, Product product, int quantity) {
         if (quantity == 0) {
             showMessage(root, "No Swag", "Your Quantity Of Swag Is Below The Minimum Swag Value",
                     JOptionPane.ERROR_MESSAGE);
@@ -43,7 +55,14 @@ public class Common {
         }
     }
 
-    public void removeProductFromBasket(Customer customer, OrderLine orderLine) {
+    /**
+     * Allows the Customer to remove products from their basket.
+     * The product is removed from the customer basket and the product stock level is updated within the database
+     *
+     * @param customer The current Customer logged in
+     * @param orderLine The OrderLine that will be removed from the Customer's Order
+     */
+    public static void removeProductFromBasket(Customer customer, OrderLine orderLine) {
         Product selectedProduct = orderLine.getProduct();
         int selectedProductQuantity = orderLine.getQuantity();
         Order customerOrder = customer.getCurrentOrder();
@@ -55,7 +74,7 @@ public class Common {
         dbSource.updateProductStockLevel(selectedProduct.getProductId(), selectedProduct.getStockLevel());
     }
 
-    private void showMessage(JPanel root, String message, String title, int type) {
+    public static void showMessage(JPanel root, String message, String title, int type) {
         JOptionPane.showMessageDialog(root, message, title, type);
     }
 }

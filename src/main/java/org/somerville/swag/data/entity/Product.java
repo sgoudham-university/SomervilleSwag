@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
+/**
+ * A product contains all details about an item within the SomervilleSwag store.
+ */
 public class Product {
 
     private int productId;

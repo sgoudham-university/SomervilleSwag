@@ -7,6 +7,11 @@ import javax.swing.*;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This represents a Customer that is able to navigate the SomervilleSwag storefront.
+ * They can perform various actions such as signing up, logging in, adding and removing products from their basket
+ * and finally checking out.
+ */
 public class Customer {
     private CustomerState customerState;
     private Order currentOrder;
@@ -94,7 +99,9 @@ public class Customer {
         this.phoneNumber = null;
     }
 
-    public void clearBasket() { currentOrder.refresh(); }
+    public void clearBasket() {
+        currentOrder.refresh();
+    }
 
     public void setCustomerId(int customerId) { this.customerId = customerId; }
     public void setForename(String forename) { this.forename = forename; }
@@ -126,7 +133,17 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return customerId == customer.customerId && Objects.equals(currentOrder, customer.currentOrder) && Objects.equals(forename, customer.forename) && Objects.equals(surname, customer.surname) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password) && Objects.equals(addressLine1, customer.addressLine1) && Objects.equals(addressLine2, customer.addressLine2) && Objects.equals(city, customer.city) && Objects.equals(postcode, customer.postcode) && Objects.equals(phoneNumber, customer.phoneNumber);
+        return customerId == customer.customerId
+                && Objects.equals(currentOrder, customer.currentOrder)
+                && Objects.equals(forename, customer.forename)
+                && Objects.equals(surname, customer.surname)
+                && Objects.equals(email, customer.email)
+                && Objects.equals(password, customer.password)
+                && Objects.equals(addressLine1, customer.addressLine1)
+                && Objects.equals(addressLine2, customer.addressLine2)
+                && Objects.equals(city, customer.city)
+                && Objects.equals(postcode, customer.postcode)
+                && Objects.equals(phoneNumber, customer.phoneNumber);
     }
 
     @Override

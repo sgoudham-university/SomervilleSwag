@@ -7,6 +7,9 @@ import java.util.List;
 
 import static org.somerville.swag.data.source.util.Constants.*;
 
+/**
+ * A Fake of MyTextFileWriter, allows for advanced testing.
+ */
 public class MyFakeTextFileWriter implements MyFileWriter {
 
     private String fileToWrite;

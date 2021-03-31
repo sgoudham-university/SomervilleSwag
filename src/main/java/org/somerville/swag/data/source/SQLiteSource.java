@@ -13,6 +13,10 @@ import java.util.List;
 
 import static org.somerville.swag.data.source.util.Constants.*;
 
+/**
+ * SQLiteSource implements specific methods for the SomervilleSwag backend,
+ * Such as getCustomer(), insertCustomer() and getAllProductsInStock()
+ */
 public class SQLiteSource implements DBSource {
 
     private DBExecute dbExecute;

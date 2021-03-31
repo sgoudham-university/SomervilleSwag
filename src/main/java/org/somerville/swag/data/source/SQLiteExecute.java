@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * SQLiteExecute executes generic SQL queries on the given database.
+ */
 public class SQLiteExecute implements DBExecute {
 
     private DBConnection connection;

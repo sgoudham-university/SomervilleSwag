@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import static org.somerville.swag.data.source.util.Constants.DATABASE_URL;
 import static org.somerville.swag.data.source.util.Constants.JDBC_URL;
 
+/**
+ * SQLiteConnection opens a valid connection to the specified database (Default - SomervilleSwag.db)
+ */
 public class SQLiteConnection implements DBConnection {
 
     private static SQLiteConnection instance;
