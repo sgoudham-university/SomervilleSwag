@@ -25,12 +25,12 @@ public class LoggedIn implements CustomerState {
 
     @Override
     public void signUp(JPanel root, JFrame oldFrame, List<String> guestData) {
-        Common.showMessage(root, "Uh Oh! Can't SwagUp When SwaggedIn!", "SwagUp Swag-No", JOptionPane.ERROR_MESSAGE);
+        Common.showMessage(root, "SwagUp Swag-No", "Uh Oh! Can't SwagUp When SwaggedIn!", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
     public void logIn(JPanel root, String email, String password) {
-        Common.showMessage(root, "Uh Oh! Can't SwagIn When SwaggedIn!", "SwagIn Swag-No", JOptionPane.ERROR_MESSAGE);
+        Common.showMessage(root, "SwagIn Swag-No", "Uh Oh! Can't SwagIn When SwaggedIn!", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class LoggedIn implements CustomerState {
         customer.changeCustomerState(new Guest(customer));
         customer.refresh();
 
-        Common.showMessage(root, "SwaggedOut Success. D-money will miss you","Swagcess", JOptionPane.INFORMATION_MESSAGE);
+        Common.showMessage(root, "Swagcess", "SwaggedOut Success. D-money will miss you", JOptionPane.INFORMATION_MESSAGE);
         loggingService.logCustomerLoggedOut(customer.getCustomerId());
     }
 
@@ -62,13 +62,12 @@ public class LoggedIn implements CustomerState {
     @Override
     public void purchaseProducts(JFrame oldFrame, JPanel root, String txtCardNo, String txtCvv) {
         if (isCardInvalid(txtCardNo, txtCvv)) {
-            Common.showMessage(root, "Incorrect Swag Number \n- Format as 1234123412341234 \n- Format as 123",
-                    "Money Not Swag", JOptionPane.ERROR_MESSAGE);
+            Common.showMessage(root, "Money Not Swag", "Incorrect Swag Number \n- Format as 1234123412341234 \n- Format as 123", JOptionPane.ERROR_MESSAGE);
         } else {
             Order customerOrder = customer.getCurrentOrder();
             String customerOrderReceipt = customerOrder.getReceipt(customer);
 
-            Common.showMessage(root, customerOrderReceipt, "Swag Success", JOptionPane.INFORMATION_MESSAGE);
+            Common.showMessage(root, "Swag Success", customerOrderReceipt, JOptionPane.INFORMATION_MESSAGE);
 
             customer.clearBasket();
             loggingService.logCustomerCheckout(customer.getCustomerId(), customerOrder.getOrderId());
