@@ -13,13 +13,13 @@ class DBPopulateTest {
     DBPopulate dbPopulate;
 
     @Mock
-    LoggingService loggingService;
+    LoggingService loggingServiceMock;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
         dbPopulate = spy(new DBPopulate(createSQLiteConnection()));
-        dbPopulate.setLoggingService(loggingService);
+        dbPopulate.setLoggingService(loggingServiceMock);
     }
 
     @Test
@@ -31,9 +31,9 @@ class DBPopulateTest {
         dbPopulate.setCreateTablesScript(expectedCreateTablesScript);
         dbPopulate.createTables();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedLogConnectionSuccessMessage);
-        verify(loggingService, times(1)).logDatabaseCreateTablesSuccess(expectedCreateTablesScript);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedLogConnectionSuccessMessage);
+        verify(loggingServiceMock, times(1)).logDatabaseCreateTablesSuccess(expectedCreateTablesScript);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -45,9 +45,9 @@ class DBPopulateTest {
         dbPopulate.setPopulateProductTableScript(expectedPopulateProductTableScript);
         dbPopulate.populateProductTable();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedLogConnectionSuccessMessage);
-        verify(loggingService, times(1)).logDatabasePopulateProductTableSuccess(expectedPopulateProductTableScript);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedLogConnectionSuccessMessage);
+        verify(loggingServiceMock, times(1)).logDatabasePopulateProductTableSuccess(expectedPopulateProductTableScript);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -61,9 +61,9 @@ class DBPopulateTest {
         dbPopulate.setCreateTablesScript(expectedCreateTablesScript);
         dbPopulate.createTables();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedLogConnectionSuccessMessage);
-        verify(loggingService, times(1)).logDatabaseCreateTablesFailure(expectedCreateTablesScript, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedLogConnectionSuccessMessage);
+        verify(loggingServiceMock, times(1)).logDatabaseCreateTablesFailure(expectedCreateTablesScript, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -77,9 +77,9 @@ class DBPopulateTest {
         dbPopulate.setPopulateProductTableScript(expectedPopulateProductTableScript);
         dbPopulate.populateProductTable();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedLogConnectionSuccessMessage);
-        verify(loggingService, times(1)).logDatabasePopulateProductTableFailure(expectedPopulateProductTableScript, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedLogConnectionSuccessMessage);
+        verify(loggingServiceMock, times(1)).logDatabasePopulateProductTableFailure(expectedPopulateProductTableScript, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     private String getExpectedLogDatabaseSuccessfulConnection() {
@@ -102,7 +102,7 @@ class DBPopulateTest {
         String testDatabaseUrl = "jdbc:sqlite:src/test/resources/database/TestFirstSomervilleSwagDB.db";
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setDatabaseUrl(testDatabaseUrl);
-        sqLiteConnection.setLoggingService(loggingService);
+        sqLiteConnection.setLoggingService(loggingServiceMock);
         return sqLiteConnection;
     }
 }

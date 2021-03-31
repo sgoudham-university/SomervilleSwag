@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductTest {
 
     @Test
-    void getFormattedPriceIsFormattedCorrectly() {
+    void successfullyRetrieveProductFormattedPrice() {
         String expectedFormattedPrice = "£19.99";
         BigDecimal actualPrice = BigDecimal.valueOf(19.99);
         Product actualProduct = new Product(1,"Name","Desc", actualPrice,10,"Path");

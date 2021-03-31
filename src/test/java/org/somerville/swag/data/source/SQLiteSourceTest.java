@@ -21,10 +21,10 @@ import static org.mockito.Mockito.*;
 class SQLiteSourceTest {
 
     @Mock
-    LoggingService loggingService;
+    LoggingService loggingServiceMock;
 
     @Mock
-    DBMapper sqLiteMapper;
+    DBMapper sqLiteMapperMock;
 
     @Mock
     ResultSet resultSetMock;
@@ -38,10 +38,10 @@ class SQLiteSourceTest {
         MockitoAnnotations.openMocks(this);
         sqLiteSource = new SQLiteSource();
         sqLiteExecute = spy(new SQLiteExecute(createSQLiteConnection()));
-        sqLiteExecute.setLoggingService(loggingService);
-        sqLiteSource.setLoggingService(loggingService);
+        sqLiteExecute.setLoggingService(loggingServiceMock);
+        sqLiteSource.setLoggingService(loggingServiceMock);
         sqLiteSource.setDbExecute(sqLiteExecute);
-        sqLiteSource.setDbMapper(sqLiteMapper);
+        sqLiteSource.setDbMapper(sqLiteMapperMock);
     }
 
     @Test
@@ -52,15 +52,15 @@ class SQLiteSourceTest {
         String expectedGetCustomerQuery = getCustomerQuery(expectedTestEmail, expectedTestPassword);
         Customer expectedCustomer = new Customer();
 
-        doNothing().when(sqLiteMapper).mapToCustomer(resultSetMock, expectedCustomer);
+        doNothing().when(sqLiteMapperMock).mapToCustomer(resultSetMock, expectedCustomer);
 
         Customer actualCustomer = sqLiteSource.getCustomer(expectedTestEmail, expectedTestPassword, expectedCustomer);
 
         assertSame(actualCustomer, expectedCustomer);
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseSelectSuccess(expectedGetCustomerQuery);
-        verify(loggingService, times(1)).logDatabaseGetCustomerSuccess(expectedCustomer.getCustomerId());
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingServiceMock, times(1)).logDatabaseSelectSuccess(expectedGetCustomerQuery);
+        verify(loggingServiceMock, times(1)).logDatabaseGetCustomerSuccess(expectedCustomer.getCustomerId());
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -77,8 +77,8 @@ class SQLiteSourceTest {
 
         sqLiteSource.getCustomer(expectedTestEmail, expectedTestPassword, expectedCustomer);
 
-        verify(loggingService, times(1)).logDatabaseGetCustomerFailure(expectedGetCustomerQuery, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseGetCustomerFailure(expectedGetCustomerQuery, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -90,8 +90,8 @@ class SQLiteSourceTest {
 
         sqLiteSource.insertCustomer(guestData);
 
-        verify(loggingService, times(1)).logDatabaseInsertCustomerSuccess();
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseInsertCustomerSuccess();
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -106,8 +106,8 @@ class SQLiteSourceTest {
 
         sqLiteSource.insertCustomer(guestData);
 
-        verify(loggingService, times(1)).logDatabaseInsertCustomerFailure(expectedInsertCustomerStatement, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseInsertCustomerFailure(expectedInsertCustomerStatement, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -117,17 +117,17 @@ class SQLiteSourceTest {
         String expectedGetAllProductsQuery = "SELECT * FROM Product WHERE StockLevel >= 1;";
 
         DBMapper sqLiteMapper = new DBMapper();
-        sqLiteMapper.setLoggingService(loggingService);
+        sqLiteMapper.setLoggingService(loggingServiceMock);
         sqLiteSource.setDbMapper(sqLiteMapper);
 
         List<Product> actualAllProducts = sqLiteSource.getAllProductsInStock();
 
         assertArrayEquals(actualAllProducts.toArray(), expectedAllProducts.toArray());
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseSelectSuccess(expectedGetAllProductsQuery);
-        verify(loggingService, times(1)).logDatabaseAllProductsMapSuccess();
-        verify(loggingService, times(1)).logDatabaseGetAllProductsInStockSuccess();
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingServiceMock, times(1)).logDatabaseSelectSuccess(expectedGetAllProductsQuery);
+        verify(loggingServiceMock, times(1)).logDatabaseAllProductsMapSuccess();
+        verify(loggingServiceMock, times(1)).logDatabaseGetAllProductsInStockSuccess();
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -141,8 +141,8 @@ class SQLiteSourceTest {
 
         sqLiteSource.getAllProductsInStock();
 
-        verify(loggingService, times(1)).logDatabaseGetAllProductsInStockFailure(expectedGetAllProductsQuery, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseGetAllProductsInStockFailure(expectedGetAllProductsQuery, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -175,8 +175,8 @@ class SQLiteSourceTest {
 
         sqLiteSource.updateProductStockLevel(expectedProductId, expectedStockLevel);
 
-        verify(loggingService, times(1)).logDatabaseUpdateProductStockLevelSuccess();
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseUpdateProductStockLevelSuccess();
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -192,14 +192,14 @@ class SQLiteSourceTest {
 
         sqLiteSource.updateProductStockLevel(expectedProductId, expectedStockLevel);
 
-        verify(loggingService, times(1)).logDatabaseUpdateProductStockLevelFailure(expectedUpdateProductStockLevelStatement, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseUpdateProductStockLevelFailure(expectedUpdateProductStockLevelStatement, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     private SQLiteConnection createSQLiteConnection() {
         String testDatabaseUrl = getExpectedDatabaseUrl();
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
-        sqLiteConnection.setLoggingService(loggingService);
+        sqLiteConnection.setLoggingService(loggingServiceMock);
         sqLiteConnection.setDatabaseUrl(testDatabaseUrl);
         return sqLiteConnection;
     }
