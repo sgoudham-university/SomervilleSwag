@@ -41,7 +41,7 @@ public class Guest implements CustomerState {
         String phoneNumber = guestData.get(9);
 
         if (isCustomerInfoInvalid(forename, surname, email, password, passwordConfirm, addressLine1, city, postcode, phoneNumber)) {
-            Common.showMessage(root, "SwagIn Error", "Uh Oh! Details Are Not Swag! Please Ensure The Following:\n" +
+            Common.showMessage(root, "SwagUp Error", "Uh Oh! Details Are Not Swag! Please Ensure The Following:\n" +
                     "Name: Forename & Surname must be 1-15 Swags Wide With No Numbers\n" +
                     "Email: You Should Know What an Email Looks Like :D\n" +
                     "Password: [4-15] Characters Please, No Special Characters Except Underscores\n" +
@@ -112,8 +112,7 @@ public class Guest implements CustomerState {
 
     @Override
     public void purchaseProducts(JFrame oldFrame, JPanel root, String txtCardNo, String txtCvv) {
-        JOptionPane.showMessageDialog(root, "Can't Checkout If You Ain't Swagged In!",
-                "Check Out SwagNo", JOptionPane.ERROR_MESSAGE);
+        Common.showMessage(root, "Check Out SwagNo", "Can't Checkout If You Ain't Swagged In!", JOptionPane.ERROR_MESSAGE);
     }
 
     public void setLoggingService(LoggingService loggingService) {
