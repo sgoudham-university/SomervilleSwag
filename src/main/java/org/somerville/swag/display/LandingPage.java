@@ -3,8 +3,6 @@ package org.somerville.swag.display;
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Product;
 import org.somerville.swag.data.entity.state.LoggedIn;
-import org.somerville.swag.data.source.DBPopulate;
-import org.somerville.swag.data.source.SQLiteConnection;
 import org.somerville.swag.data.source.SQLiteSource;
 
 import javax.swing.*;
@@ -71,7 +69,6 @@ public class LandingPage {
         viewBasketButton.addActionListener(actionEvent -> {
             new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDED2 Your Basket \uD83D\uDED2", new Basket(oldFrame, customer).root,true);
             SwingUtilities.getWindowAncestor(root).dispose();
-
         });
 
         addToBasketButton.addActionListener(actionEvent -> {
