@@ -4,11 +4,10 @@ import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.OrderLine;
 import org.somerville.swag.data.entity.Product;
 import org.somerville.swag.data.entity.state.Guest;
+import org.somerville.swag.data.entity.util.Common;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Vector;
 
@@ -34,11 +33,9 @@ public class Basket {
             List<OrderLine> customerBasket = customer.getCurrentOrder().getOrderLines();
 
             if (customer.getCustomerState() instanceof Guest) {
-                JOptionPane.showMessageDialog(root, "Uh Oh! Can't SwagOut When Not SwaggedIn",
-                        "Not Swagged In \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+                Common.showMessage(root, "Not Swagged In \uD83E\uDD2F", "Uh Oh! Can't SwagOut When Not SwaggedIn", JOptionPane.ERROR_MESSAGE);
             } else if (customerBasket.isEmpty()) {
-                JOptionPane.showMessageDialog(root, "No items in basket",
-                        "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+                Common.showMessage(root, "No Swag in Basket \uD83E\uDD2F", "No items in basket", JOptionPane.ERROR_MESSAGE);
             } else {
                 new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDECD️\uD83D\uDCB2 Checkout \uD83D\uDCB2\uD83D\uDECD️", new Purchase(oldFrame, customer).root, true);
                 SwingUtilities.getWindowAncestor(root).dispose();
@@ -47,12 +44,10 @@ public class Basket {
 
         removeFromBasketButton.addActionListener(actionEvent -> {
             if (tblBasket.getModel().getRowCount() == 0) {
-                JOptionPane.showMessageDialog(root, "Where's Your Swag at?",
-                        "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+                Common.showMessage(root, "No Swag in Basket \uD83E\uDD2F", "Where's Your Swag at?", JOptionPane.ERROR_MESSAGE);
             }
             else if (tblBasket.getSelectedRow() == -1) {
-                JOptionPane.showMessageDialog(root, "No SwagRow Selected",
-                        "SwagRow Not Found 404 \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+                Common.showMessage(root, "SwagRow Not Found 404 \uD83E\uDD2F", "No SwagRow Selected", JOptionPane.ERROR_MESSAGE);
             } else {
                 DefaultTableModel defaultTableModel = (DefaultTableModel) tblBasket.getModel();
                 Vector vector = defaultTableModel.getDataVector().elementAt(tblBasket.getSelectedRow());

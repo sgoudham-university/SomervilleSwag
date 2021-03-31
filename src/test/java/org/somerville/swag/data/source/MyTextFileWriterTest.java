@@ -25,38 +25,6 @@ class MyTextFileWriterTest {
     }
 
     @Test
-    void successfullyWriteToFileFake() throws FileWriterException {
-        String expectedFirstMessage = "firstTestMessage";
-        String expectedSecondMessage = "secondTestMessage";
-        MyFakeTextFileWriter actualFakeTextFileWriter = new MyFakeTextFileWriter();
-
-        actualFakeTextFileWriter.writeToFile(expectedFirstMessage, true);
-        actualFakeTextFileWriter.writeToFile(expectedSecondMessage, true);
-        List<String> actualFakeFile = actualFakeTextFileWriter.getFakeFile();
-
-        assertThat(actualFakeFile.get(0), is(expectedFirstMessage));
-        assertThat(actualFakeFile.get(1), is(expectedSecondMessage));
-    }
-
-    @Test
-    void failToWriteToFileFake() throws FileWriterException {
-        String expectedMessage = "testMessage";
-        String expectedInvalidFile = "";
-        String expectedExceptionMessage = "Failed to Write To File!";
-        FileWriterException expectedException = new FileWriterException(expectedExceptionMessage, new IOException());
-        MyFakeTextFileWriter actualFakeTextFileWriter = spy(new MyFakeTextFileWriter());
-
-        doThrow(expectedException).when(actualFakeTextFileWriter).writeToFile(expectedMessage, true);
-
-        actualFakeTextFileWriter.setFileToWrite(expectedInvalidFile);
-        Throwable thrownException = assertThrows(FileWriterException.class, () -> actualFakeTextFileWriter.writeToFile(expectedMessage, true));
-
-        assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
-        assertThat(actualFakeTextFileWriter.getFileToWrite(), is(expectedInvalidFile));
-        assertThat(actualFakeTextFileWriter.getFakeFile(), is(empty()));
-    }
-
-    @Test
     void successfullyWriteToFile() {
         String expectedMessage = "testMessage";
         assertDoesNotThrow(() -> myFileWriter.writeToFile(expectedMessage, true));
@@ -92,31 +60,11 @@ class MyTextFileWriterTest {
     }
 
     @Test
-    void successfullyGetLogPathWithConstructorArgsFake() {
-        String expectedFilePath = "src/test/resources/testLogs.txt";
-
-        MyFakeTextFileWriter actualFakeFileWriter = new MyFakeTextFileWriter("testLogs.txt", true);
-        String actualFilePath = actualFakeFileWriter.getFileToWrite();
-
-        assertThat(actualFilePath, is(expectedFilePath));
-    }
-
-    @Test
     void successfullyGetLogPathWithoutConstructorArgs() {
         String expectedFilePath = "src/main/resources/logs.txt";
 
         MyFileWriter myFileWriter = new MyTextFileWriter();
         String actualFilePath = myFileWriter.getFileToWrite();
-
-        assertThat(actualFilePath, is(expectedFilePath));
-    }
-
-    @Test
-    void successfullyGetLogPathWithoutConstructorArgsFake() {
-        String expectedFilePath = "src/main/resources/logs.txt";
-
-        MyFakeTextFileWriter actualFakeFileWriter = new MyFakeTextFileWriter();
-        String actualFilePath = actualFakeFileWriter.getFileToWrite();
 
         assertThat(actualFilePath, is(expectedFilePath));
     }
