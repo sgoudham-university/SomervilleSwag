@@ -64,14 +64,14 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseInsertSuccess(String insertStatement, int rowsUpdated) {
-        String logMessage = events.getDatabaseWriteSuccess() + " - Rows Updated: " + rowsUpdated + " - " + insertStatement;
+    public void logDatabaseUpdateSuccess(String updateStatement, int rowsUpdated) {
+        String logMessage = events.getDatabaseWriteSuccess() + " - Rows Updated: " + rowsUpdated + " - " + updateStatement;
         writeLog(logMessage);
     }
 
     @Override
-    public void logDatabaseInsertFailure(String insertStatement, String failureMessage) {
-        String logMessage = events.getDatabaseWriteFailure() + ": " + failureMessage + " - Statement: " + insertStatement;
+    public void logDatabaseUpdateFailure(String updateStatement, String failureMessage) {
+        String logMessage = events.getDatabaseWriteFailure() + ": " + failureMessage + " - Statement: " + updateStatement;
         writeLog(logMessage);
     }
 
@@ -100,9 +100,8 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logDatabaseInsertCustomerSuccess(String insertStatement) {
-        String logMessage = events.getDatabaseInsertCustomerSuccess() + ": " + insertStatement;
-        writeLog(logMessage);
+    public void logDatabaseInsertCustomerSuccess() {
+        writeLog(events.getDatabaseInsertCustomerSuccess());
     }
 
     @Override
@@ -124,38 +123,13 @@ public class LoggingServiceImpl implements LoggingService {
     }
 
     @Override
-    public void logCustomerSignedUp(String customerEmail) {
-        String logMessage = events.getCustomerSignedUp() + ": Email -> " + customerEmail;
-        writeLog(logMessage);
+    public void logDatabaseUpdateProductStockLevelSuccess() {
+        writeLog(events.getDatabaseUpdateProductStockLevelSuccess());
     }
 
     @Override
-    public void logCustomerLoggedIn(int customerId) {
-        String logMessage = events.getCustomerLoggedIn() + ": CustomerID -> " + customerId;
-        writeLog(logMessage);
-    }
-
-    @Override
-    public void logCustomerLoggedOut(int customerId) {
-        String logMessage = events.getCustomerLoggedOut() + ": CustomerID -> " + customerId;
-        writeLog(logMessage);
-    }
-
-    @Override
-    public void logCustomerAddProductToBasket(int customerId, int productId) {
-        String logMessage = events.getCustomerAddProductToBasket() + ": CustomerID -> " + customerId + ": ProductId -> " + productId;
-        writeLog(logMessage);
-    }
-
-    @Override
-    public void logCustomerRemoveProductFromBasket(int customerId, int productId) {
-        String logMessage = events.getCustomerRemoveProductFromBasket()+ ": CustomerID -> " + customerId + ": ProductId -> " + productId;
-        writeLog(logMessage);
-    }
-
-    @Override
-    public void logCustomerCheckout(int customerId, int orderId) {
-        String logMessage = events.getCustomerCheckout() + ": CustomerID -> " + customerId+ ": OrderId -> " + orderId;
+    public void logDatabaseUpdateProductStockLevelFailure(String updateStatement, String failureMessage) {
+        String logMessage = events.getDatabaseUpdateProductStockLevelFailure() + ": " + failureMessage + " - Statement: " + updateStatement;
         writeLog(logMessage);
     }
 
@@ -195,6 +169,42 @@ public class LoggingServiceImpl implements LoggingService {
     @Override
     public void logDatabaseAllProductsMapFailure(String failureMessage) {
         String logMessage = events.getDatabaseAllProductsMapFailure() + ": " + failureMessage;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerSignedUp(String customerEmail) {
+        String logMessage = events.getCustomerSignedUp() + ": Email -> " + customerEmail;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerLoggedIn(int customerId) {
+        String logMessage = events.getCustomerLoggedIn() + ": CustomerID -> " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerLoggedOut(int customerId) {
+        String logMessage = events.getCustomerLoggedOut() + ": CustomerID -> " + customerId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerAddProductToBasket(int customerId, int productId) {
+        String logMessage = events.getCustomerAddProductToBasket() + ": CustomerID -> " + customerId + ": ProductId -> " + productId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerRemoveProductFromBasket(int customerId, int productId) {
+        String logMessage = events.getCustomerRemoveProductFromBasket()+ ": CustomerID -> " + customerId + ": ProductId -> " + productId;
+        writeLog(logMessage);
+    }
+
+    @Override
+    public void logCustomerCheckout(int customerId, int orderId) {
+        String logMessage = events.getCustomerCheckout() + ": CustomerID -> " + customerId+ ": OrderId -> " + orderId;
         writeLog(logMessage);
     }
 

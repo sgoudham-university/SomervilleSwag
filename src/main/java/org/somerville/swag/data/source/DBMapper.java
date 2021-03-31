@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * DBMapper takes in a ResultSet and maps all data to the correct attributes of the specified object.
+ */
 public class DBMapper {
 
     private LoggingService loggingService = LoggingServiceImpl.getInstance();

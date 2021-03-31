@@ -49,7 +49,7 @@ class SQLiteSourceTest {
         String expectedDatabaseUrl = getExpectedDatabaseUrl();
         String expectedTestEmail = "testEmail";
         String expectedTestPassword = "testPassword";
-        String expectedGetCustomerQuery = "SELECT * FROM Customer WHERE Email = '" + expectedTestEmail + "' AND Password = '" + expectedTestPassword + "';";
+        String expectedGetCustomerQuery = getCustomerQuery(expectedTestEmail, expectedTestPassword);
         Customer expectedCustomer = new Customer();
 
         doNothing().when(sqLiteMapper).mapToCustomer(resultSetMock, expectedCustomer);
@@ -67,7 +67,7 @@ class SQLiteSourceTest {
     void failToGetCustomerFromDatabase() throws SQLStatementException {
         String expectedTestEmail = "testEmail";
         String expectedTestPassword = "testPassword";
-        String expectedGetCustomerQuery = "SELECT * FROM Customer WHERE Email = '" + expectedTestEmail + "' AND Password = '" + expectedTestPassword + "';";
+        String expectedGetCustomerQuery = getCustomerQuery(expectedTestEmail, expectedTestPassword);
         Customer expectedCustomer = new Customer();
 
         String expectedExceptionMessage = "Failure!";
@@ -83,47 +83,21 @@ class SQLiteSourceTest {
 
     @Test
     void successfullyInsertCustomerIntoDatabase() throws SQLStatementException {
-        List<String> guestData = new ArrayList<>() {
-            {
-                add("testForename");
-                add("testSurname");
-                add("testEmail");
-                add("testPassword");
-                add("testAddressLine1");
-                add("testAddressLine2");
-                add("testCity");
-                add("testPostcode");
-                add("testPhoneNumber");
-            }
-        };
-        String expectedInsertCustomerStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
-                "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
+        List<String> guestData = getGuestData();
+        String expectedInsertCustomerStatement = insertCustomerStatement();
 
         doNothing().when(sqLiteExecute).executeUpdate(expectedInsertCustomerStatement);
 
         sqLiteSource.insertCustomer(guestData);
 
-        verify(loggingService, times(1)).logDatabaseInsertCustomerSuccess(expectedInsertCustomerStatement);
+        verify(loggingService, times(1)).logDatabaseInsertCustomerSuccess();
         verifyNoMoreInteractions(loggingService);
     }
 
     @Test
     void failToInsertCustomerIntoDatabase() throws SQLStatementException {
-        List<String> guestData = new ArrayList<>() {
-            {
-                add("testForename");
-                add("testSurname");
-                add("testEmail");
-                add("testPassword");
-                add("testAddressLine1");
-                add("testAddressLine2");
-                add("testCity");
-                add("testPostcode");
-                add("testPhoneNumber");
-            }
-        };
-        String expectedInsertCustomerStatement = "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
-                "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
+        List<String> guestData = getGuestData();
+        String expectedInsertCustomerStatement = insertCustomerStatement();
 
         String expectedExceptionMessage = "Failure!";
         SQLStatementException expectedException = new SQLStatementException(expectedExceptionMessage, new SQLException());
@@ -138,9 +112,10 @@ class SQLiteSourceTest {
 
     @Test
     void successfullyRetrieveAllProducts() {
-        String expectedGetAllProductsQuery = "SELECT * FROM Product WHERE StockLevel >= 1;";
-        String expectedDatabaseUrl = getExpectedDatabaseUrl();
         List<Product> expectedAllProducts = getAllExpectedProducts();
+        String expectedDatabaseUrl = getExpectedDatabaseUrl();
+        String expectedGetAllProductsQuery = "SELECT * FROM Product WHERE StockLevel >= 1;";
+
         DBMapper sqLiteMapper = new DBMapper();
         sqLiteMapper.setLoggingService(loggingService);
         sqLiteSource.setDbMapper(sqLiteMapper);
@@ -190,6 +165,37 @@ class SQLiteSourceTest {
         assertFalse(actualIfCustomerExists);
     }
 
+    @Test
+    void successfullyUpdateProductStockLevelInDatabase() throws SQLStatementException {
+        int expectedStockLevel = 1;
+        int expectedProductId = 1;
+        String expectedUpdateProductStockLevelStatement = updateProductStockLevelStatement(expectedProductId, expectedStockLevel);
+
+        doNothing().when(sqLiteExecute).executeUpdate(expectedUpdateProductStockLevelStatement);
+
+        sqLiteSource.updateProductStockLevel(expectedProductId, expectedStockLevel);
+
+        verify(loggingService, times(1)).logDatabaseUpdateProductStockLevelSuccess();
+        verifyNoMoreInteractions(loggingService);
+    }
+
+    @Test
+    void failToUpdateProductStockLevelInDatabase() throws SQLStatementException {
+        int expectedStockLevel = 1;
+        int expectedProductId = 1;
+        String expectedUpdateProductStockLevelStatement = updateProductStockLevelStatement(expectedProductId, expectedStockLevel);
+
+        String expectedExceptionMessage = "Failure!";
+        SQLStatementException expectedException = new SQLStatementException(expectedExceptionMessage, new SQLException());
+
+        doThrow(expectedException).when(sqLiteExecute).executeUpdate(expectedUpdateProductStockLevelStatement);
+
+        sqLiteSource.updateProductStockLevel(expectedProductId, expectedStockLevel);
+
+        verify(loggingService, times(1)).logDatabaseUpdateProductStockLevelFailure(expectedUpdateProductStockLevelStatement, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingService);
+    }
+
     private SQLiteConnection createSQLiteConnection() {
         String testDatabaseUrl = getExpectedDatabaseUrl();
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
@@ -202,6 +208,35 @@ class SQLiteSourceTest {
         String expectedDatabasePath = "src/test/resources/database/";
         String expectedDatabaseName = "TestSecondSomervilleSwagDB.db";
         return "jdbc:sqlite:" + expectedDatabasePath + expectedDatabaseName;
+    }
+
+    private String getCustomerQuery(String email, String password) {
+        return "SELECT * FROM Customer WHERE Email = '" + email + "' AND Password = '" + password + "';";
+    }
+
+    private String insertCustomerStatement() {
+        return "INSERT INTO Customer (Forename, Surname, Email, Password, AddressLine1, AddressLine2, City, Postcode, PhoneNumber) " +
+                "VALUES('testForename', 'testSurname', 'testEmail', 'testPassword', 'testAddressLine1', 'testAddressLine2', 'testCity', 'testPostcode', 'testPhoneNumber');";
+    }
+
+    private String updateProductStockLevelStatement(int productId, int stockLevel) {
+        return "UPDATE Product SET StockLevel = " + stockLevel + " WHERE ProductId = " + productId + ";";
+    }
+
+    private List<String> getGuestData() {
+        return new ArrayList<>() {
+            {
+                add("testForename");
+                add("testSurname");
+                add("testEmail");
+                add("testPassword");
+                add("testAddressLine1");
+                add("testAddressLine2");
+                add("testCity");
+                add("testPostcode");
+                add("testPhoneNumber");
+            }
+        };
     }
 
     private List<Product> getAllExpectedProducts() {

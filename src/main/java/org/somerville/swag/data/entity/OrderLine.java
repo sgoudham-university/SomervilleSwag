@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
+/**
+ * An OrderLine consists of one product and the quantity of the product within the Customer Order.
+ */
 public class OrderLine {
 
     private Product product;

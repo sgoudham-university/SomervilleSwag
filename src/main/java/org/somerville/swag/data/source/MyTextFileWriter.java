@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import static org.somerville.swag.data.source.util.Constants.*;
 
+/**
+ * MyTextFileWriter writes to a text file.
+ */
 public class MyTextFileWriter implements MyFileWriter {
 
     private String fileToWrite;

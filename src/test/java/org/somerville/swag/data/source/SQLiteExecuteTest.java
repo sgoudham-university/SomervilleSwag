@@ -50,7 +50,7 @@ class SQLiteExecuteTest {
         sqLiteExecute.executeUpdate(expectedStatement);
 
         verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseInsertSuccess(expectedStatement, expectedRowsUpdated);
+        verify(loggingService, times(1)).logDatabaseUpdateSuccess(expectedStatement, expectedRowsUpdated);
         verifyNoMoreInteractions(loggingService);
     }
 
@@ -84,7 +84,7 @@ class SQLiteExecuteTest {
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
         verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseInsertFailure(expectedStatement, expectedExceptionMessage);
+        verify(loggingService, times(1)).logDatabaseUpdateFailure(expectedStatement, expectedExceptionMessage);
         verifyNoMoreInteractions(loggingService);
     }
 

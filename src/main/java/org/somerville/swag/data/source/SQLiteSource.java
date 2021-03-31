@@ -13,6 +13,10 @@ import java.util.List;
 
 import static org.somerville.swag.data.source.util.Constants.*;
 
+/**
+ * SQLiteSource implements specific methods for the SomervilleSwag backend,
+ * Such as getCustomer(), insertCustomer() and getAllProductsInStock()
+ */
 public class SQLiteSource implements DBSource {
 
     private DBExecute dbExecute;
@@ -56,7 +60,7 @@ public class SQLiteSource implements DBSource {
 
         try {
             dbExecute.executeUpdate(insertCustomerStatement);
-            loggingService.logDatabaseInsertCustomerSuccess(insertCustomerStatement);
+            loggingService.logDatabaseInsertCustomerSuccess();
         } catch (SQLStatementException sse) {
             loggingService.logDatabaseInsertCustomerFailure(insertCustomerStatement, sse.getMessage());
         }
@@ -100,9 +104,9 @@ public class SQLiteSource implements DBSource {
 
         try {
             dbExecute.executeUpdate(updateProductStockLevelStatement);
-            // TODO: Add logging success
+            loggingService.logDatabaseUpdateProductStockLevelSuccess();
         } catch (SQLStatementException sse) {
-            // TODO: Add logging failure
+            loggingService.logDatabaseUpdateProductStockLevelFailure(updateProductStockLevelStatement, sse.getMessage());
         }
     }
 
