@@ -3,6 +3,7 @@ package org.somerville.swag.display;
 import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.Product;
 import org.somerville.swag.data.entity.state.LoggedIn;
+import org.somerville.swag.data.entity.util.Common;
 import org.somerville.swag.data.source.SQLiteSource;
 
 import javax.swing.*;
@@ -43,8 +44,7 @@ public class LandingPage {
 
         signUpButton.addActionListener(actionEvent -> {
             if (customer.getCustomerState() instanceof LoggedIn) {
-                JOptionPane.showMessageDialog(root, "Uh Oh! Can't SwagUp When SwaggedIn!",
-                        "SwagIn Swag-No \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+                Common.showMessage(root, "SwagIn Swag-No \uD83E\uDD2F", "Uh Oh! Can't SwagUp When SwaggedIn!", JOptionPane.ERROR_MESSAGE);
             } else {
                 new JFrameBuilder.Builder().buildDefaultJFrame("✔️ Sign Up ✔️", new SignUp(oldFrame, customer).root,true);
                 SwingUtilities.getWindowAncestor(root).dispose();
@@ -53,8 +53,7 @@ public class LandingPage {
 
         logInButton.addActionListener(actionEvent -> {
             if (customer.getCustomerState() instanceof LoggedIn) {
-                JOptionPane.showMessageDialog(root, "D-money appreciates your effort to SwagIn Twice",
-                        "SwagIn Swag-No \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+                Common.showMessage(root, "SwagIn Swag-No \uD83E\uDD2F", "D-money appreciates your effort to SwagIn Twice", JOptionPane.ERROR_MESSAGE);
             } else {
                 new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDC4D Log In \uD83D\uDC4D", new LogIn(oldFrame, customer).root, true);
                 SwingUtilities.getWindowAncestor(root).dispose();
