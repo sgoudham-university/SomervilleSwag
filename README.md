@@ -81,9 +81,11 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
   
   1. Implementing State Design Patterns is quite difficult when dealing with asynchronous event listeners of the JFrames/JPanels.
     
-  2. Unit Testing of the UI is virtually impossible through only common libraries of JUnit5 and Mockito. To work around this, we are only unit testing the core business logic.
+  2. Unit Testing of the UI is virtually impossible through only common libraries of JUnit5 and Mockito. 
+     To work around this, we are only unit testing the core business logic.
 
-  3. Displaying product images within the UI proves to be somewhat difficult 
+  3. Displaying product images within the UI and using the built-in Intellij Swing Designer for the UI is unforgiving as 
+     our team has no prior experience using Intellij to develop using JFrames.
 
 ### Class Diagram
 
