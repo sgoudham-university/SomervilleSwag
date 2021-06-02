@@ -17,17 +17,17 @@ pipeline {
     }
 
     stages {
-        stage("Building SomervilleSwag") {
+        stage("Building") {
             steps {
                 sh "mvn -B -DskipTests clean install"
             }
         }
-        stage("Testing SomervilleSwag") {
+        stage("Testing") {
             steps {
                 sh "mvn test"
             }
         }
-        stage("Deploying SomervilleSwag To Nexus") {
+        stage("Deploying To Nexus") {
             when {
                 branch 'release'
             }
