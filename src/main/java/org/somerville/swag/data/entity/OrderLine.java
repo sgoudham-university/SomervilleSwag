@@ -1,7 +1,12 @@
 package org.somerville.swag.data.entity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
+/**
+ * An OrderLine consists of one product and the quantity of the product within the Customer Order.
+ */
 public class OrderLine {
 
     private Product product;
@@ -28,6 +33,12 @@ public class OrderLine {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getTotalRowPrice() {
+        BigDecimal productPrice = new BigDecimal(String.valueOf(product.getPrice()));
+        BigDecimal productQuantity = new BigDecimal(quantity);
+        return "£" + productPrice.multiply(productQuantity).setScale(2, RoundingMode.HALF_UP);
     }
 
     @Override

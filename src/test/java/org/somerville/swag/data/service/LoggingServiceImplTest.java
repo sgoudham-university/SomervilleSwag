@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.somerville.swag.data.exception.FileWriterException;
 import org.somerville.swag.data.service.util.Clock;
 import org.somerville.swag.data.service.util.ClockStub;
-import org.somerville.swag.data.source.MyTextFileWriter;
+import org.somerville.swag.data.source.MyFileWriter;
 
 import java.io.IOException;
 
@@ -22,10 +22,10 @@ import static org.mockito.Mockito.*;
 class LoggingServiceImplTest {
 
     @Mock
-    MyTextFileWriter myTextFileWriter;
+    MyFileWriter myFileWriterMock;
 
     @Mock
-    Logger logger;
+    Logger loggerMock;
 
     @Spy
     LoggingService loggingService = LoggingServiceImpl.getInstance();
@@ -63,15 +63,15 @@ class LoggingServiceImplTest {
         Clock clockStub = new ClockStub();
 
         loggingService.setClock(clockStub);
-        loggingService.setTextFileWriter(myTextFileWriter);
+        loggingService.setTextFileWriter(myFileWriterMock);
 
-        doNothing().when(myTextFileWriter).writeToFile(expectedFullLogMessage, true);
+        doNothing().when(myFileWriterMock).writeToFile(expectedFullLogMessage, true);
 
         assertDoesNotThrow(() -> loggingService.writeLog(expectedLogMessage));
 
         verify(loggingService, times(1)).retrieveLogMessage(expectedLogMessage);
-        verify(myTextFileWriter, times(1)).writeToFile(expectedFullLogMessage, true);
-        verifyNoMoreInteractions(myTextFileWriter);
+        verify(myFileWriterMock, times(1)).writeToFile(expectedFullLogMessage, true);
+        verifyNoMoreInteractions(myFileWriterMock);
     }
 
     @Test
@@ -84,17 +84,17 @@ class LoggingServiceImplTest {
         String expectedExceptionMessage = "Failure!";
         FileWriterException expectedException = new FileWriterException(expectedExceptionMessage, new IOException());
 
-        loggingService.setLogger(logger);
+        loggingService.setLogger(loggerMock);
         loggingService.setClock(clockStub);
-        loggingService.setTextFileWriter(myTextFileWriter);
+        loggingService.setTextFileWriter(myFileWriterMock);
 
-        doThrow(expectedException).when(myTextFileWriter).writeToFile(expectedFullLogMessage, true);
+        doThrow(expectedException).when(myFileWriterMock).writeToFile(expectedFullLogMessage, true);
 
         loggingService.writeLog(expectedLogMessage);
 
-        verify(logger, times(1)).info(expectedFullLogMessage);
-        verify(logger, times(1)).info(expectedExceptionMessage);
-        verifyNoMoreInteractions(logger);
+        verify(loggerMock, times(1)).info(expectedFullLogMessage);
+        verify(loggerMock, times(1)).info(expectedExceptionMessage);
+        verifyNoMoreInteractions(loggerMock);
     }
 
     @Test

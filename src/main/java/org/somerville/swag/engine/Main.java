@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) {
         DBPopulate dbPopulate = new DBPopulate(SQLiteConnection.getInstance());
         Customer customer = new Customer();
+
         dbPopulate.createTables();
         dbPopulate.populateProductTable();
 

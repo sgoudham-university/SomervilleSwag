@@ -9,7 +9,9 @@
   <img src="https://img.shields.io/github/issues/sgoudham-university/SomervilleSwag?label=issues" alt="issues-shield">
   <img src="https://img.shields.io/github/issues-pr/sgoudham-university/SomervilleSwag?label=pull%20requests" alt="pull-requests-shield">
   <img src="https://img.shields.io/github/last-commit/sgoudham-university/SomervilleSwag" alt="last-commit-shield">
-  <img src="https://travis-ci.com/sgoudham-university/SomervilleSwag.svg?branch=main" alt="travisci-build-shield">
+  <a href='https://goudham.me/jenkins/job/SomervilleSwag/job/main/'>
+    <img src='https://goudham.me/jenkins/job/SomervilleSwag/job/main/badge/icon' alt="build-shield">
+  </a>
   <a href="https://codecov.io/gh/sgoudham-university/SomervilleSwag">
     <img src="https://codecov.io/gh/sgoudham-university/SomervilleSwag/branch/main/graph/badge.svg?token=ZucNh1lSYR" alt="codecov-shield"/>
   </a>
@@ -24,8 +26,9 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
 - [App Functionality](#App-Functionality)
 - [Architecture](#Architecture)
     - [Benefits & Challenges](#benefits--challenges)
-    - [Class Diagrams](#Class-Diagrams)
-    - [Retrospective Actions](#Retrospective-Actions)
+    - [Class Diagrams](#Class-Diagram)
+    - [Retrospective](#Retrospective)
+        - [Actions Taken](#Actions-Taken)
 
 ## Project Purpose & Description
 
@@ -80,13 +83,15 @@ Goudham Suresh, Alan Robinson, Erin Heath, Hazel Fulton, Robert Ranson, Steven F
   
   1. Implementing State Design Patterns is quite difficult when dealing with asynchronous event listeners of the JFrames/JPanels.
     
-  2. Unit Testing of the UI is virtually impossible through only common libraries of JUnit5 and Mockito. To work around this, we are only unit testing the core business logic.
+  2. Unit Testing of the UI is virtually impossible through only common libraries of JUnit5 and Mockito. 
+     To work around this, we are only unit testing the core business logic.
 
-  3. Displaying product images within the UI proves to be somewhat difficult 
+  3. Displaying product images within the UI and using the built-in Intellij Swing Designer for the UI is unforgiving as 
+     our team has no prior experience using Intellij to develop using JFrames.
 
-### Class Diagrams
+### Class Diagram
 
-PlaceHolder
+![Class Diagram](https://i.imgur.com/hJEw3ny.png)
 
 ### Retrospective
 

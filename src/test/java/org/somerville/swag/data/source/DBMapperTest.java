@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 class DBMapperTest {
 
     @Mock
-    LoggingService loggingService;
+    LoggingService loggingServiceMock;
 
     @Mock
     ResultSet resultSetMock;
@@ -34,12 +34,12 @@ class DBMapperTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         dbMapper = new DBMapper();
-        dbMapper.setLoggingService(loggingService);
+        dbMapper.setLoggingService(loggingServiceMock);
     }
 
     @Test
     void successfullyMapResultSetToCustomer() throws SQLException {
-        Customer expectedCustomer = createExpectedCustomer();
+        Customer expectedCustomer = createTestCustomer();
         Customer actualCustomer = new Customer();
 
         when(resultSetMock.isBeforeFirst()).thenReturn(true);
@@ -59,20 +59,9 @@ class DBMapperTest {
 
         dbMapper.mapToCustomer(resultSetMock, actualCustomer);
 
-        assertAll("Should Return Fully Populated Customer",
-                () -> assertThat(actualCustomer.getCustomerId(), is(expectedCustomer.getCustomerId())),
-                () -> assertThat(actualCustomer.getForename(), is(expectedCustomer.getForename())),
-                () -> assertThat(actualCustomer.getSurname(), is(expectedCustomer.getSurname())),
-                () -> assertThat(actualCustomer.getEmail(), is(expectedCustomer.getEmail())),
-                () -> assertThat(actualCustomer.getPassword(), is(expectedCustomer.getPassword())),
-                () -> assertThat(actualCustomer.getAddressLine1(), is(expectedCustomer.getAddressLine1())),
-                () -> assertThat(actualCustomer.getAddressLine2(), is(expectedCustomer.getAddressLine2())),
-                () -> assertThat(actualCustomer.getCity(), is(expectedCustomer.getCity())),
-                () -> assertThat(actualCustomer.getPostcode(), is(expectedCustomer.getPostcode())),
-                () -> assertThat(actualCustomer.getPhoneNumber(), is(expectedCustomer.getPhoneNumber()))
-        );
-        verify(loggingService, times(1)).logDatabaseCustomerMapSuccess(expectedCustomer.getCustomerId());
-        verifyNoMoreInteractions(loggingService);
+        assertThat(actualCustomer, is(expectedCustomer));
+        verify(loggingServiceMock, times(1)).logDatabaseCustomerMapSuccess(expectedCustomer.getCustomerId());
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -86,16 +75,16 @@ class DBMapperTest {
 
         dbMapper.mapToCustomer(resultSetMock, actualCustomer);
 
-        verify(loggingService, times(1)).logDatabaseCustomerMapFailure(expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseCustomerMapFailure(expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
     void successfullyMapResultSetToListOfProducts() throws SQLException {
-        List<Product> expectedAllProducts = createExpectedListOfProducts();
+        List<Product> expectedAllProducts = createTestListOfProducts();
+        List<Product> actualAllProducts = new ArrayList<>();
         Product expectedFirstProduct = expectedAllProducts.get(0);
         Product expectedSecondProduct = expectedAllProducts.get(1);
-        List<Product> actualAllProducts = new ArrayList<>();
 
         when(resultSetMock.isBeforeFirst()).thenReturn(true);
         when(resultSetMock.next())
@@ -123,26 +112,9 @@ class DBMapperTest {
 
         dbMapper.mapToProducts(resultSetMock, actualAllProducts);
 
-        Product actualFirstProduct = actualAllProducts.get(0);
-        Product actualSecondProduct = actualAllProducts.get(1);
-        assertAll("Should Return First Fully Populated Product",
-                () -> assertThat(actualFirstProduct.getProductId(), is(expectedFirstProduct.getProductId())),
-                () -> assertThat(actualFirstProduct.getName(), is(expectedFirstProduct.getName())),
-                () -> assertThat(actualFirstProduct.getDescription(), is(expectedFirstProduct.getDescription())),
-                () -> assertThat(actualFirstProduct.getPrice(), is(expectedFirstProduct.getPrice())),
-                () -> assertThat(actualFirstProduct.getStockLevel(), is(expectedFirstProduct.getStockLevel())),
-                () -> assertThat(actualFirstProduct.getImagePath(), is(expectedFirstProduct.getImagePath()))
-        );
-        assertAll("Should Return Second Fully Populated Product",
-                () -> assertThat(actualSecondProduct.getProductId(), is(expectedSecondProduct.getProductId())),
-                () -> assertThat(actualSecondProduct.getName(), is(expectedSecondProduct.getName())),
-                () -> assertThat(actualSecondProduct.getDescription(), is(expectedSecondProduct.getDescription())),
-                () -> assertThat(actualSecondProduct.getPrice(), is(expectedSecondProduct.getPrice())),
-                () -> assertThat(actualSecondProduct.getStockLevel(), is(expectedSecondProduct.getStockLevel())),
-                () -> assertThat(actualSecondProduct.getImagePath(), is(expectedSecondProduct.getImagePath()))
-        );
-        verify(loggingService, times(1)).logDatabaseAllProductsMapSuccess();
-        verifyNoMoreInteractions(loggingService);
+        assertThat(actualAllProducts, is(expectedAllProducts));
+        verify(loggingServiceMock, times(1)).logDatabaseAllProductsMapSuccess();
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -153,8 +125,8 @@ class DBMapperTest {
 
         dbMapper.mapToProducts(resultSetMock, actualAllProducts);
 
-        verify(loggingService, times(1)).logDatabaseNoProductsInStock();
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseNoProductsInStock();
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -168,11 +140,11 @@ class DBMapperTest {
 
         dbMapper.mapToProducts(resultSetMock, actualAllProducts);
 
-        verify(loggingService, times(1)).logDatabaseAllProductsMapFailure(expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseAllProductsMapFailure(expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
-    private Customer createExpectedCustomer() {
+    private Customer createTestCustomer() {
         return new Customer(
                 new Order(),
                 1,
@@ -188,7 +160,7 @@ class DBMapperTest {
         );
     }
 
-    private List<Product> createExpectedListOfProducts() {
+    private List<Product> createTestListOfProducts() {
         List<Product> allProducts = new ArrayList<>();
         allProducts.add(new Product(
                 1,

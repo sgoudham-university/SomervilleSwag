@@ -4,15 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.somerville.swag.data.entity.state.Guest;
 import org.somerville.swag.data.entity.state.LoggedIn;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
 
     @Test
-    void customerShouldInstantiateWithLoggedInState() {
+    void successfullyInstantiateCustomerWithLoggedInState() {
         String expectedEmail = "testEmail";
         String expectedPassword = "testPassword";
         Customer actualCustomer = new Customer(expectedEmail, expectedPassword, new Order());
@@ -24,7 +27,7 @@ class CustomerTest {
     }
 
     @Test
-    void customerShouldInstantiateWithGuestState() {
+    void successfullyInstantiateCustomerWithGuestState() {
         Customer actualCustomer = new Customer();
         CustomerState expectedCustomerState = new Guest(actualCustomer);
 
@@ -40,36 +43,30 @@ class CustomerTest {
     }
 
     @Test
-    void customerDetailsAreRefreshed() {
-        int expectedCustomerId = 0;
-        String expectedForename = null;
-        String expectedSurname = null;
-        String expectedEmail = null;
-        String expectedPassword = null;
-        String expectedAddressLine1 = null;
-        String expectedAddressLine2 = null;
-        String expectedCity = null;
-        String expectedPostcode = null;
-        String expectedPhoneNumber = null;
+    void successfullyClearCustomerBasket() {
+        String expectedEmail = "testEmail";
+        String expectedPassword = "testPassword";
+        Order expectedOrder = new Order();
+        expectedOrder.setOrderLines(createTestListOfProducts());
 
-        Customer actualCustomer = createExpectedCustomer();
-        actualCustomer.refresh();
+        Customer actualCustomer = new Customer(expectedEmail, expectedPassword, expectedOrder);
 
-        assertAll("Should Return Fully Populated Customer",
-                () -> assertThat(actualCustomer.getCustomerId(), is(expectedCustomerId)),
-                () -> assertThat(actualCustomer.getForename(), is(expectedForename)),
-                () -> assertThat(actualCustomer.getSurname(), is(expectedSurname)),
-                () -> assertThat(actualCustomer.getEmail(), is(expectedEmail)),
-                () -> assertThat(actualCustomer.getPassword(), is(expectedPassword)),
-                () -> assertThat(actualCustomer.getAddressLine1(), is(expectedAddressLine1)),
-                () -> assertThat(actualCustomer.getAddressLine2(), is(expectedAddressLine2)),
-                () -> assertThat(actualCustomer.getCity(), is(expectedCity)),
-                () -> assertThat(actualCustomer.getPostcode(), is(expectedPostcode)),
-                () -> assertThat(actualCustomer.getPhoneNumber(), is(expectedPhoneNumber))
-        );
+        actualCustomer.clearBasket();
+
+        assertThat(actualCustomer.getCurrentOrder(), is(new Order()));
     }
 
-    private Customer createExpectedCustomer() {
+    @Test
+    void successfullyRefreshCustomerDetails() {
+        Customer expectedCustomer = new Customer();
+        Customer actualCustomer = createTestCustomer();
+
+        actualCustomer.refresh();
+
+        assertThat(actualCustomer, is(expectedCustomer));
+    }
+
+    private Customer createTestCustomer() {
         return new Customer(
                 new Order(),
                 1,
@@ -85,4 +82,12 @@ class CustomerTest {
         );
     }
 
+    private List<OrderLine> createTestListOfProducts() {
+        List<OrderLine> allProducts = new ArrayList<>();
+        Product testFirstProduct = new Product(1, "testName1", "testDescription1", new BigDecimal(1), 1, "testImagePath1");
+        Product testSecondProduct = new Product(2, "testName2", "testDescription2", new BigDecimal(2), 1, "testImagePath2");
+        allProducts.add(new OrderLine(testFirstProduct, 1));
+        allProducts.add(new OrderLine(testSecondProduct, 1));
+        return allProducts;
+    }
 }

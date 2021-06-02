@@ -4,11 +4,10 @@ import org.somerville.swag.data.entity.Customer;
 import org.somerville.swag.data.entity.OrderLine;
 import org.somerville.swag.data.entity.Product;
 import org.somerville.swag.data.entity.state.Guest;
+import org.somerville.swag.data.entity.util.Common;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Vector;
 
@@ -23,7 +22,6 @@ public class Basket {
     public Basket(JFrame oldFrame, Customer customer) {
 
         List<OrderLine> lines = customer.getCurrentOrder().getOrderLines();
-
         refreshTable(lines, customer);
 
         backButton.addActionListener(actionEvent -> {
@@ -35,11 +33,9 @@ public class Basket {
             List<OrderLine> customerBasket = customer.getCurrentOrder().getOrderLines();
 
             if (customer.getCustomerState() instanceof Guest) {
-                JOptionPane.showMessageDialog(root, "Uh Oh! Can't SwagOut When Not SwaggedIn",
-                        "Not Swagged In \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+                Common.showMessage(root, "Not Swagged In \uD83E\uDD2F", "Uh Oh! Can't SwagOut When Not SwaggedIn", JOptionPane.ERROR_MESSAGE);
             } else if (customerBasket.isEmpty()) {
-                JOptionPane.showMessageDialog(root, "No items in basket",
-                        "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+                Common.showMessage(root, "No Swag in Basket \uD83E\uDD2F", "No items in basket", JOptionPane.ERROR_MESSAGE);
             } else {
                 new JFrameBuilder.Builder().buildDefaultJFrame("\uD83D\uDECD️\uD83D\uDCB2 Checkout \uD83D\uDCB2\uD83D\uDECD️", new Purchase(oldFrame, customer).root, true);
                 SwingUtilities.getWindowAncestor(root).dispose();
@@ -47,9 +43,11 @@ public class Basket {
         });
 
         removeFromBasketButton.addActionListener(actionEvent -> {
-            if (customer.getCurrentOrder().getOrderLines().isEmpty()) {
-                JOptionPane.showMessageDialog(root, "Where's Your Swag at?",
-                        "No Swag in Basket \uD83E\uDD2F", JOptionPane.ERROR_MESSAGE);
+            if (tblBasket.getModel().getRowCount() == 0) {
+                Common.showMessage(root, "No Swag in Basket \uD83E\uDD2F", "Where's Your Swag at?", JOptionPane.ERROR_MESSAGE);
+            }
+            else if (tblBasket.getSelectedRow() == -1) {
+                Common.showMessage(root, "SwagRow Not Found 404 \uD83E\uDD2F", "No SwagRow Selected", JOptionPane.ERROR_MESSAGE);
             } else {
                 DefaultTableModel defaultTableModel = (DefaultTableModel) tblBasket.getModel();
                 Vector vector = defaultTableModel.getDataVector().elementAt(tblBasket.getSelectedRow());
@@ -71,17 +69,11 @@ public class Basket {
         };
 
         for (OrderLine orderLine : lines) {
-            Object[] newRow = { orderLine.getProduct(), orderLine.getQuantity(), getTotalRowPrice(orderLine) };
+            Object[] newRow = { orderLine.getProduct(), orderLine.getQuantity(), orderLine.getTotalRowPrice() };
             model.addRow(newRow);
         }
         orderTotal.setText(customer.getCurrentOrder().getFormattedTotal());
         tblBasket.setRowHeight(25);
         tblBasket.setModel(model);
-    }
-
-    private String getTotalRowPrice(OrderLine orderLine) {
-        BigDecimal productPrice = new BigDecimal(String.valueOf(orderLine.getProduct().getPrice()));
-        BigDecimal productQuantity = new BigDecimal(orderLine.getQuantity());
-        return "£" + productPrice.multiply(productQuantity).setScale(2, RoundingMode.HALF_UP);
     }
 }

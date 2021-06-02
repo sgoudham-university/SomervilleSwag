@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 class SQLiteExecuteTest {
 
     @Mock
-    LoggingService loggingService;
+    LoggingService loggingServiceMock;
 
     SQLiteExecute sqLiteExecute;
 
@@ -25,7 +25,7 @@ class SQLiteExecuteTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         sqLiteExecute = new SQLiteExecute(createSQLiteConnection());
-        sqLiteExecute.setLoggingService(loggingService);
+        sqLiteExecute.setLoggingService(loggingServiceMock);
     }
 
     @Test
@@ -35,9 +35,9 @@ class SQLiteExecuteTest {
 
         sqLiteExecute.executeSelect(expectedQuery);
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseSelectSuccess(expectedQuery);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingServiceMock, times(1)).logDatabaseSelectSuccess(expectedQuery);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -49,9 +49,9 @@ class SQLiteExecuteTest {
 
         sqLiteExecute.executeUpdate(expectedStatement);
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseInsertSuccess(expectedStatement, expectedRowsUpdated);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingServiceMock, times(1)).logDatabaseUpdateSuccess(expectedStatement, expectedRowsUpdated);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -66,9 +66,9 @@ class SQLiteExecuteTest {
         SQLStatementException thrownException = assertThrows(SQLStatementException.class, () -> sqLiteExecute.executeSelect(expectedQuery));
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseSelectFailure(expectedQuery, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingServiceMock, times(1)).logDatabaseSelectFailure(expectedQuery, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -83,16 +83,16 @@ class SQLiteExecuteTest {
         SQLStatementException thrownException = assertThrows(SQLStatementException.class, () -> sqLiteExecute.executeUpdate(expectedStatement));
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseInsertFailure(expectedStatement, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verify(loggingServiceMock, times(1)).logDatabaseUpdateFailure(expectedStatement, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     private SQLiteConnection createSQLiteConnection() {
         String testDatabaseUrl = "jdbc:sqlite:src/test/resources/database/TestFirstSomervilleSwagDB.db";
         SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
         sqLiteConnection.setDatabaseUrl(testDatabaseUrl);
-        sqLiteConnection.setLoggingService(loggingService);
+        sqLiteConnection.setLoggingService(loggingServiceMock);
         return sqLiteConnection;
     }
 

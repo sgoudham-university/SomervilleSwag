@@ -17,11 +17,15 @@ import static org.hamcrest.Matchers.is;
 class SQLiteConnectionTest {
 
     @Mock
-    LoggingService loggingService;
+    LoggingService loggingServiceMock;
+
+    DBConnection sqLiteConnection;
 
     @BeforeEach
-    void init_mocks() {
+    void setup() {
         MockitoAnnotations.openMocks(this);
+        sqLiteConnection = SQLiteConnection.getInstance();
+        sqLiteConnection.setLoggingService(loggingServiceMock);
     }
 
     @Test
@@ -37,14 +41,11 @@ class SQLiteConnectionTest {
         String expectedDatabaseName = "TestFirstSomervilleSwagDB.db";
         String expectedDatabaseUrl = getExpectedDatabaseUrl(expectedDatabaseName);
 
-        SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
-        sqLiteConnection.setLoggingService(loggingService);
         sqLiteConnection.setDatabaseUrl(expectedDatabaseUrl);
-
         sqLiteConnection.connect();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedDatabaseUrl);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -54,35 +55,14 @@ class SQLiteConnectionTest {
         String expectedFirstDatabaseUrl = getExpectedDatabaseUrl(expectedFirstDatabaseName);
         String expectedSecondDatabaseUrl = getExpectedDatabaseUrl(expectedSecondDatabaseName);
 
-        SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
-        sqLiteConnection.setLoggingService(loggingService);
-
         sqLiteConnection.setDatabaseUrl(expectedFirstDatabaseUrl);
         sqLiteConnection.connect();
         sqLiteConnection.setDatabaseUrl(expectedSecondDatabaseUrl);
         sqLiteConnection.connect();
 
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseUrl);
-        verifyNoMoreInteractions(loggingService);
-    }
-
-    @Test
-    void successfullySwitchConnectionWithNewDatabaseUrl() throws SQLConnectionException {
-        String expectedFirstDatabaseName = "TestFirstSomervilleSwagDB.db";
-        String expectedSecondDatabaseName = "TestSecondSomervilleSwagDB.db";
-        String expectedFirstDatabaseUrl = getExpectedDatabaseUrl(expectedFirstDatabaseName);
-        String expectedSecondDatabaseUrl = getExpectedDatabaseUrl(expectedSecondDatabaseName);
-
-        SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
-        sqLiteConnection.setLoggingService(loggingService);
-
-        sqLiteConnection.connect(expectedFirstDatabaseUrl);
-        sqLiteConnection.setDatabaseUrlAndConnectTo(expectedSecondDatabaseUrl);
-
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseUrl);
-        verify(loggingService, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseUrl);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedFirstDatabaseUrl);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectSuccess(expectedSecondDatabaseUrl);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     @Test
@@ -92,15 +72,12 @@ class SQLiteConnectionTest {
         String expectedExceptionMessage = "No suitable driver found for InvalidDatabase.db";
         SQLConnectionException expectedException = new SQLConnectionException(expectedExceptionMessage, new SQLException());
 
-        SQLiteConnection sqLiteConnection = SQLiteConnection.getInstance();
-        sqLiteConnection.setLoggingService(loggingService);
         sqLiteConnection.setDatabaseUrl(expectedDatabaseUrl);
-
-        SQLConnectionException thrownException = assertThrows(SQLConnectionException.class, sqLiteConnection::connect);
+        Throwable thrownException = assertThrows(SQLConnectionException.class, sqLiteConnection::connect);
 
         assertThat(thrownException.getMessage(), is(expectedException.getMessage()));
-        verify(loggingService, times(1)).logDatabaseConnectFailure(expectedDatabaseUrl, expectedExceptionMessage);
-        verifyNoMoreInteractions(loggingService);
+        verify(loggingServiceMock, times(1)).logDatabaseConnectFailure(expectedDatabaseUrl, expectedExceptionMessage);
+        verifyNoMoreInteractions(loggingServiceMock);
     }
 
     private String getExpectedDatabaseUrl(String expectedDatabaseName) {

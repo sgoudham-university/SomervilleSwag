@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import static org.somerville.swag.data.source.util.Constants.CREATE_TABLES_SCRIPT;
 import static org.somerville.swag.data.source.util.Constants.POPULATE_TABLES_SCRIPT;
 
+/**
+ * DBPopulate handles the instantiation and population of Customer, Product, Order, OrderLine tables upon program start.
+ */
 public class DBPopulate {
 
     private String populateProductTableScript = POPULATE_TABLES_SCRIPT;
