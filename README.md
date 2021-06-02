@@ -9,7 +9,9 @@
   <img src="https://img.shields.io/github/issues/sgoudham-university/SomervilleSwag?label=issues" alt="issues-shield">
   <img src="https://img.shields.io/github/issues-pr/sgoudham-university/SomervilleSwag?label=pull%20requests" alt="pull-requests-shield">
   <img src="https://img.shields.io/github/last-commit/sgoudham-university/SomervilleSwag" alt="last-commit-shield">
-  <img src="https://travis-ci.com/sgoudham-university/SomervilleSwag.svg?branch=main" alt="travisci-build-shield">
+  <a href='https://goudham.me/jenkins/job/SomervilleSwag/job/main/'>
+    <img src='https://goudham.me/jenkins/job/SomervilleSwag/job/main/badge/icon' alt="build-shield">
+  </a>
   <a href="https://codecov.io/gh/sgoudham-university/SomervilleSwag">
     <img src="https://codecov.io/gh/sgoudham-university/SomervilleSwag/branch/main/graph/badge.svg?token=ZucNh1lSYR" alt="codecov-shield"/>
   </a>
