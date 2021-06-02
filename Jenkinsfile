@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         NEXUS_VERSION = "nexus3"
-        NEXUS_PROTOCOL = "http"
+        NEXUS_PROTOCOL = "https"
         NEXUS_REPOSITORY = "maven-goudham"
         NEXUS_URL = credentials('6a83eb53-ea59-45d0-9cd1-7c70b2720ba2')
         NEXUS_CREDENTIAL_ID = credentials('e5582b32-3507-4e88-ab7c-d16d701c46e9')
@@ -68,7 +68,7 @@ pipeline {
                                 file: "pom.xml",
                                 type: "pom"]
                             ]
-                        );
+                        )
                     } else {
                         error "*** File: ${artifactPath}, could not be found";
                     }
