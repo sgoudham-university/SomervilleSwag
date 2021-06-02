@@ -15,11 +15,6 @@
   </properties>
 
   <repositories>
-    <repository>
-      <id>central</id>
-      <name>bintray</name>
-      <url>http://jcenter.bintray.com</url>
-    </repository>
   </repositories>
 
   <dependencies>
@@ -103,50 +98,26 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.2.0</version>
-        <inherited>false</inherited>
-        <configuration>
-          <outputDirectory>${basedir}/target</outputDirectory>
-          <resources>
-            <resource>
-              <directory>${basedir}</directory>
-              <include>bintray.json</include>
-              <filtering>true</filtering>
-            </resource>
-          </resources>
-        </configuration>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
 
-      <plugin>
+    <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.6</version>
+        <version>0.8.7</version>
         <executions>
-          <execution>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>report</id>
-            <phase>test</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
+            <execution>
+                <goals>
+                    <goal>prepare-agent</goal>
+                </goals>
+            </execution>
+            <execution>
+                <id>report</id>
+                <phase>test</phase>
+                <goals>
+                    <goal>report</goal>
+                </goals>
+            </execution>
         </executions>
-      </plugin>
+    </plugin>
     </plugins>
   </build>
 </project>
