@@ -11,7 +11,7 @@ pipeline {
         NEXUS_PROTOCOL = "https"
         NEXUS_REPOSITORY = "maven-goudham"
         NEXUS_URL = credentials('6a83eb53-ea59-45d0-9cd1-7c70b2720ba2')
-        NEXUS_CREDENTIAL_ID = credentials('e5582b32-3507-4e88-ab7c-d16d701c46e9')
+        NEXUS_CREDENTIAL_ID = credentials('fe3e0c7e-bcb1-4d55-9591-f55f71f42356')
 
         CODECOV_TOKEN = credentials('e218fcc3-0253-4e98-ab9a-c0abfc97fb1b')
     }
